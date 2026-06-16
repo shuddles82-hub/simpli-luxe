@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simpli Luxe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#C9A96E;--gold-l:#D4B87A;--obs:#0D0D0D;--cream:#F5F0E8;--ww:#FDFAF5;--taupe:#8C7B6B;--sb:rgba(201,169,110,0.18);--nh:60px;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);font-family:'Jost',sans-serif;color:var(--obs);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.45;}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nh);background:rgba(253,250,245,0.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--sb);display:flex;align-items:center;justify-content:space-between;padding:0 18px;}
+.nl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;color:var(--obs);cursor:pointer;}
+.nl span{color:var(--gold);}
+.nt{display:flex;gap:2px;align-items:center;overflow-x:auto;scrollbar-width:none;}
+.nt::-webkit-scrollbar{display:none;}
+.ntb{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--taupe);padding:7px 10px;border:none;background:none;cursor:pointer;border-radius:2px;transition:all 0.2s;white-space:nowrap;}
+.ntb:hover{color:var(--obs);}
+.ntb.on{background:var(--obs);color:var(--ww);}
+.nd{width:2px;height:2px;background:var(--sb);border-radius:50%;flex-shrink:0;}
+/* SECTIONS */
+section{display:none;min-height:100vh;padding-top:var(--nh);}
+section.active{display:block;}
+/* HERO */
+.hero{min-height:calc(100vh - var(--nh));background:var(--obs);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 24px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(201,169,110,0.09) 0%,transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(201,169,110,0.06) 0%,transparent 55%);}
+.hi{position:relative;z-index:1;text-align:center;max-width:530px;}
+.hey{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.48em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;justify-content:center;gap:13px;}
+.hey::before,.hey::after{content:'';flex:1;max-width:30px;height:1px;background:rgba(201,169,110,0.28);}
+.hsl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:88px;color:var(--gold);line-height:1;letter-spacing:-0.03em;margin-bottom:3px;text-shadow:0 0 80px rgba(201,169,110,0.12);}
+.hbr{font-family:'Jost',sans-serif;font-weight:200;font-size:8px;letter-spacing:0.58em;color:rgba(201,169,110,0.4);text-transform:uppercase;margin-bottom:38px;}
+.hln{width:1px;height:46px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:0 auto 38px;}
+.htitle{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:var(--ww);line-height:1.15;letter-spacing:0.02em;margin-bottom:7px;}
+.htitle em{font-style:italic;color:var(--gold-l);}
+.hsub{font-family:'Jost',sans-serif;font-weight:300;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(253,250,245,0.3);margin-bottom:32px;}
+.hqw{margin-bottom:28px;min-height:56px;display:flex;align-items:center;justify-content:center;padding:0 12px;}
+.hq{font-family:'Dancing Script',cursive;font-size:19px;color:rgba(201,169,110,0.7);text-align:center;line-height:1.4;transition:opacity 0.55s;}
+.hq.fade{opacity:0;}
+.era-b{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(201,169,110,0.2);padding:7px 15px;margin-bottom:28px;}
+.era-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.era-txt{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);}
+.hpills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.hpill{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.17em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,0.19);padding:7px 13px;cursor:pointer;transition:background 0.2s;}
+.hpill:hover{background:rgba(201,169,110,0.08);}
+.hcta{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--obs);background:var(--gold);border:none;padding:13px 30px;cursor:pointer;transition:background 0.2s;}
+.hcta:hover{background:var(--gold-l);}
+/* LLL */
+.lll{background:var(--ww);padding:48px 24px;}
+.li{max-width:820px;margin:0 auto;}
+.sey{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.stitle{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:var(--obs);line-height:1.05;margin-bottom:5px;}
+.stitle em{font-style:italic;color:var(--taupe);}
+.sscript{font-family:'Dancing Script',cursive;font-size:19px;color:var(--gold);margin-bottom:14px;}
+.sbody{font-family:'Jost',sans-serif;font-weight:300;font-size:13px;color:var(--taupe);line-height:1.85;margin-bottom:22px;}
+.lcats{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:24px;}
+.lcat{background:var(--cream);padding:17px 11px;text-align:center;cursor:pointer;transition:all 0.2s;border-top:2px solid transparent;}
+.lcat:hover{background:#EDD9B0;border-top-color:var(--gold);}
+.lcat-i{font-size:17px;margin-bottom:5px;}
+.lcat-n{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--obs);}
+/* SERIES */
+.ser-sec{padding:40px 24px 0;max-width:820px;margin:0 auto;}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--sb);max-width:820px;margin:0 auto;}
+.sc{background:var(--ww);padding:26px 18px;cursor:pointer;position:relative;overflow:hidden;transition:background 0.2s;}
+.sc:hover{background:var(--cream);}
+.scn{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:38px;color:rgba(201,169,110,0.09);line-height:1;margin-bottom:9px;transition:color 0.2s;}
+.sc:hover .scn{color:rgba(201,169,110,0.2);}
+.sct{font-family:'Jost',sans-serif;font-weight:300;font-size:7.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.sctitle{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--obs);line-height:1.2;margin-bottom:6px;}
+.scdesc{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.7;}
+.scarr{position:absolute;bottom:14px;right:14px;font-size:12px;color:var(--gold);opacity:0;transition:opacity 0.2s;}
+.sc:hover .scarr{opacity:1;}
+/* QUOTE */
+.qs{background:var(--obs);padding:44px 24px;text-align:center;}
+.qs p{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:21px;color:var(--ww);line-height:1.5;max-width:520px;margin:0 auto 8px;}
+.qs cite{font-family:'Jost',sans-serif;font-weight:300;font-size:7.5px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);font-style:normal;}
+/* PAGE HEADER */
+.ph{background:var(--obs);padding:58px 24px 46px;text-align:center;}
+.ph-ey{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:13px;}
+.ph-t{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:44px;color:var(--ww);line-height:1.05;margin-bottom:7px;}
+.ph-t em{font-style:italic;color:var(--gold-l);}
+.ph-s{font-family:'Jost',sans-serif;font-weight:300;font-size:10px;letter-spacing:0.17em;text-transform:uppercase;color:rgba(253,250,245,0.27);}
+/* FILTER BAR */
+.fb{display:flex;gap:6px;padding:14px 24px;overflow-x:auto;scrollbar-width:none;background:var(--ww);border-bottom:1px solid var(--sb);}
+.fb::-webkit-scrollbar{display:none;}
+.fc{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.17em;text-transform:uppercase;color:var(--taupe);border:1px solid var(--sb);padding:6px 13px;cursor:pointer;white-space:nowrap;transition:all 0.2s;flex-shrink:0;}
+.fc:hover,.fc.on{background:var(--obs);color:var(--ww);border-color:var(--obs);}
+/* IG GRID */
+.igg{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;max-width:900px;margin:0 auto;}
+.igt{aspect-ratio:3/4;position:relative;overflow:hidden;cursor:pointer;background:var(--obs);}
+.igt-bg{position:absolute;inset:0;transition:transform 0.4s ease;}
+.igt:hover .igt-bg{transform:scale(1.04);}
+.igt-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,13,0.88) 0%,rgba(13,13,13,0.2) 55%,transparent 100%);opacity:0;transition:opacity 0.3s;}
+.igt:hover .igt-ov{opacity:1;}
+.igt-inf{position:absolute;bottom:0;left:0;right:0;padding:13px 11px;transform:translateY(7px);opacity:0;transition:all 0.3s;}
+.igt:hover .igt-inf{transform:translateY(0);opacity:1;}
+.igt-v{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.igt-t{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:13px;color:var(--ww);line-height:1.2;}
+.sb-tag{position:absolute;top:9px;left:9px;font-family:'Jost',sans-serif;font-weight:400;font-size:6.5px;letter-spacing:0.14em;text-transform:uppercase;padding:3px 7px;backdrop-filter:blur(8px);}
+.bfall{background:rgba(160,82,45,0.58);color:#FFD9A0;}
+.bhol{background:rgba(20,80,40,0.58);color:#A8D5A2;}
+.bwin{background:rgba(40,60,100,0.52);color:#B8CCE8;}
+.bspr{background:rgba(60,110,60,0.52);color:#C8E6C8;}
+.bnew{background:rgba(201,169,110,0.48);color:var(--ww);}
+.era-tag{position:absolute;top:9px;right:9px;font-family:'Jost',sans-serif;font-weight:300;font-size:6.5px;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);background:rgba(13,13,13,0.68);padding:3px 7px;backdrop-filter:blur(6px);}
+/* SHIFT */
+.sfd{max-width:640px;margin:0 auto;padding:40px 24px;}
+.shc{background:var(--ww);margin-bottom:3px;overflow:hidden;}
+.shh{padding:22px 22px 16px;}
+.shmeta{display:flex;align-items:center;gap:7px;margin-bottom:11px;}
+.sh-era{font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.17em;text-transform:uppercase;color:var(--gold);background:rgba(201,169,110,0.1);border:1px solid rgba(201,169,110,0.2);padding:3px 7px;}
+.sh-sea{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.13em;text-transform:uppercase;color:var(--taupe);border:1px solid var(--sb);padding:3px 7px;}
+.sh-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:var(--obs);line-height:1.15;margin-bottom:6px;}
+.sh-script{font-family:'Dancing Script',cursive;font-size:15px;color:var(--gold);margin-bottom:10px;}
+.sh-body{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--taupe);line-height:1.85;}
+.sh-q{border-left:2px solid var(--gold);padding:13px 17px;margin:16px 22px;background:var(--cream);}
+.sh-q p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--obs);}
+.sh2{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:16px 22px 22px;}
+.shch{font-family:'Jost',sans-serif;font-weight:500;font-size:8px;letter-spacing:0.17em;text-transform:uppercase;color:var(--obs);margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--sb);}
+.shl{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.shl li{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.6;display:flex;gap:6px;align-items:flex-start;}
+.shl li::before{content:'✦';color:var(--gold);font-size:7px;margin-top:4px;flex-shrink:0;}
+.sh-tip{background:var(--gold);padding:12px 22px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--obs);text-align:center;}
+.nts{background:var(--obs);padding:26px 22px;margin:3px 0;}
+.nts-ey{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.36em;text-transform:uppercase;color:rgba(201,169,110,0.46);margin-bottom:7px;}
+.nts-t{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--ww);line-height:1.4;}
+.nts-t span{color:var(--gold);}
+/* LESSONS */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:3px;padding:3px;max-width:900px;margin:0 auto;}
+.lc{background:var(--ww);padding:28px 22px;cursor:pointer;position:relative;transition:background 0.2s;}
+.lc:hover{background:var(--cream);}
+.lc-ep{font-family:'Jost',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.17em;color:var(--gold);margin-bottom:6px;}
+.lc-era{display:inline-block;font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.17em;text-transform:uppercase;color:var(--taupe);border:1px solid var(--sb);padding:3px 7px;margin-bottom:11px;}
+.lc-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:21px;color:var(--obs);line-height:1.15;margin-bottom:8px;}
+.lc-exc{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.75;}
+.lc-arr{position:absolute;bottom:14px;right:14px;font-size:12px;color:var(--gold);opacity:0;transition:opacity 0.2s;}
+.lc:hover .lc-arr{opacity:1;}
+/* SIP */
+.sipg{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:3px;padding:3px;max-width:900px;margin:0 auto;}
+.sipc{background:var(--ww);overflow:hidden;cursor:pointer;transition:transform 0.2s;}
+.sipc:hover{transform:translateY(-2px);}
+.siph{height:142px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.siph-t{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;color:var(--ww);text-align:center;text-shadow:0 2px 20px rgba(0,0,0,0.5);position:relative;z-index:1;line-height:1.3;padding:0 10px;}
+.sipm{padding:16px 16px 20px;}
+.sip-ep{font-family:'Jost',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.17em;color:var(--gold);margin-bottom:4px;}
+.sip-nm{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--obs);margin-bottom:4px;}
+.sip-vb{font-family:'Dancing Script',cursive;font-size:13px;color:var(--taupe);margin-bottom:9px;}
+.sip-bs{display:flex;gap:4px;flex-wrap:wrap;}
+.sip-b{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.12em;text-transform:uppercase;color:var(--taupe);border:1px solid var(--sb);padding:3px 7px;}
+.bglav{background:linear-gradient(135deg,#3d2a5c,#6b4a8a);}
+.bggold{background:linear-gradient(135deg,#3d2a0a,#7a5518);}
+.bgcran{background:linear-gradient(135deg,#2d0a14,#7a1530);}
+.bgsun{background:linear-gradient(135deg,#3d1a0a,#8a4010);}
+.bgspr{background:linear-gradient(135deg,#0a2d18,#1a6b3a);}
+.bggold2{background:linear-gradient(135deg,#2a1a0a,#6a4010);}
+/* RECIPE MODAL */
+.rm{display:none;position:fixed;inset:0;z-index:200;background:var(--cream);overflow-y:auto;padding-top:var(--nh);}
+.rm.open{display:block;}
+.rmh{background:var(--obs);padding:42px 24px 34px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:13px;position:sticky;top:var(--nh);z-index:10;border-bottom:1px solid rgba(201,169,110,0.12);}
+.rm-close{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);background:none;border:1px solid rgba(201,169,110,0.2);padding:8px 15px;cursor:pointer;}
+.rm-tag{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.36em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.rm-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:30px;color:var(--ww);}
+.rcrd{max-width:640px;margin:0 auto;}
+.rbd{padding:26px 24px;}
+.rfl{border-left:2px solid var(--gold);padding:13px 17px;margin-bottom:22px;background:var(--ww);}
+.rfl-l{font-family:'Jost',sans-serif;font-weight:500;font-size:8px;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.rfl-t{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--obs);line-height:1.5;}
+.r2c{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px;}
+.rch{font-family:'Jost',sans-serif;font-weight:500;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--obs);margin-bottom:11px;padding-bottom:6px;border-bottom:1px solid var(--sb);}
+.rl{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.rl li{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.6;display:flex;gap:6px;align-items:flex-start;}
+.rl li::before{content:'✓';color:var(--gold);font-size:8px;margin-top:3px;flex-shrink:0;}
+.rsteps{margin-bottom:22px;}
+.rstep{display:flex;gap:13px;padding:11px 0;border-bottom:1px solid var(--sb);align-items:flex-start;}
+.rsn{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:21px;color:var(--gold);line-height:1;min-width:22px;}
+.rst{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.7;padding-top:3px;}
+.rritual{background:var(--obs);padding:20px 24px;}
+.rrl{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.rrt{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--ww);line-height:1.6;}
+.vbar{background:var(--gold);padding:13px 24px;font-family:'Dancing Script',cursive;font-size:16px;color:var(--obs);text-align:center;}
+/* BOARDS */
+.bg2{display:grid;grid-template-columns:repeat(2,1fr);gap:3px;padding:3px;max-width:840px;margin:0 auto;}
+.bt{aspect-ratio:4/5;position:relative;overflow:hidden;cursor:pointer;}
+.bt-bg{position:absolute;inset:0;transition:transform 0.5s ease;}
+.bt:hover .bt-bg{transform:scale(1.04);}
+.bt-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,13,0.9) 0%,rgba(13,13,13,0.3) 55%,transparent 100%);}
+.bt-pat{position:absolute;inset:0;opacity:0.05;background-image:repeating-linear-gradient(45deg,var(--gold) 0px,var(--gold) 1px,transparent 1px,transparent 20px);}
+.bt-cnt{position:absolute;bottom:0;left:0;right:0;padding:20px 17px;}
+.bt-tag{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.bt-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--ww);line-height:1.15;margin-bottom:4px;}
+.bt-sub{font-family:'Jost',sans-serif;font-weight:300;font-size:8.5px;letter-spacing:0.09em;color:rgba(253,250,245,0.4);}
+.bt-pal{display:flex;gap:4px;margin-top:7px;}
+.sw{width:9px;height:9px;border-radius:50%;border:1px solid rgba(255,255,255,0.14);}
+.bt-lk{position:absolute;top:11px;left:11px;font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);background:rgba(13,13,13,0.62);padding:4px 8px;backdrop-filter:blur(8px);}
+.bt-ar{position:absolute;top:11px;right:11px;width:25px;height:25px;border:1px solid rgba(201,169,110,0.36);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);opacity:0;transform:scale(0.8);transition:all 0.2s;}
+.bt:hover .bt-ar{opacity:1;transform:scale(1);}
+.bsig{background:linear-gradient(160deg,#1a1409 0%,#2a1e10 35%,#1a120a 100%);}
+.bm2m{background:linear-gradient(160deg,#1e1215 0%,#261820 40%,#1a1018 100%);}
+.bath{background:linear-gradient(160deg,#141210 0%,#1e1a16 50%,#111010 100%);}
+.btrv{background:linear-gradient(160deg,#111614 0%,#181f18 50%,#0f1410 100%);}
+.bfw{background:linear-gradient(160deg,#160e0a 0%,#201208 50%,#150e09 100%);}
+.bss{background:linear-gradient(160deg,#141810 0%,#1c2215 50%,#121610 100%);}
+/* BOARD MODAL */
+.bm{display:none;position:fixed;inset:0;z-index:200;background:var(--ww);overflow-y:auto;padding-top:var(--nh);}
+.bm.open{display:block;}
+.bmh{background:var(--obs);padding:46px 24px 38px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:13px;position:sticky;top:var(--nh);z-index:10;border-bottom:1px solid rgba(201,169,110,0.12);}
+.bm-close{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);background:none;border:1px solid rgba(201,169,110,0.2);padding:8px 15px;cursor:pointer;}
+.bm-tag{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.36em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.bm-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:30px;color:var(--ww);line-height:1.1;}
+.bm-sub{font-family:'Jost',sans-serif;font-weight:300;font-size:10px;letter-spacing:0.14em;color:rgba(253,250,245,0.26);margin-top:5px;}
+.bmbody{max-width:820px;margin:0 auto;padding:40px 24px 60px;}
+.pstrip{display:flex;gap:0;margin-bottom:28px;overflow:hidden;height:42px;}
+.pc{flex:1;position:relative;}
+.pclbl{position:absolute;bottom:0;left:0;right:0;font-family:'Jost',sans-serif;font-weight:300;font-size:6px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(253,250,245,0.7);text-align:center;padding:3px 2px;text-shadow:0 1px 3px rgba(0,0,0,0.5);}
+.og{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:32px;}
+.oc{background:var(--cream);padding:15px;border-top:2px solid var(--gold);}
+.oc-nm{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:14px;color:var(--obs);margin-bottom:4px;}
+.oc-f{font-family:'Jost',sans-serif;font-weight:300;font-size:10px;color:var(--taupe);line-height:1.6;}
+.sn{background:var(--obs);padding:26px 22px;}
+.sn-t{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.34em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.sni{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px;}
+.sni::before{content:'✦';color:var(--gold);font-size:7px;margin-top:4px;}
+.sni-t{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:rgba(253,250,245,0.56);line-height:1.7;}
+/* SHOP COLLECTIONS */
+.coll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:3px;padding:3px;max-width:900px;margin:0 auto;}
+.coll-card{background:var(--ww);overflow:hidden;cursor:pointer;transition:transform 0.2s;position:relative;}
+.coll-card:hover{transform:translateY(-2px);}
+.coll-card-hero{height:130px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.coll-card-hero-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;color:var(--ww);text-align:center;text-shadow:0 2px 20px rgba(0,0,0,0.5);position:relative;z-index:1;padding:0 12px;line-height:1.3;}
+.coll-meta{padding:16px 16px 20px;}
+.coll-tag{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.coll-name{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--obs);margin-bottom:5px;}
+.coll-desc{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.65;margin-bottom:10px;}
+.coll-cta{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,0.28);padding:7px 14px;display:inline-block;transition:all 0.2s;}
+.coll-cta:hover{background:var(--gold);color:var(--obs);}
+.cbg1{background:linear-gradient(135deg,#1a1208,#3a2808);}
+.cbg2{background:linear-gradient(135deg,#0d1408,#1a2810);}
+.cbg3{background:linear-gradient(135deg,#160810,#301020);}
+.cbg4{background:linear-gradient(135deg,#0a1018,#142030);}
+.cbg5{background:linear-gradient(135deg,#1a1008,#382010);}
+.cbg6{background:linear-gradient(135deg,#101818,#183028);}
+.cbg7{background:linear-gradient(135deg,#181008,#302018);}
+.cbg8{background:linear-gradient(135deg,#181818,#302828);}
+/* Kit Product Cards */
+.kit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:3px;padding:3px;max-width:900px;margin:0 auto;}
+.kit-card{background:var(--obs);overflow:hidden;position:relative;}
+.kit-card-inner{padding:32px 28px;}
+.kit-badge{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.38em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.kit-price{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:44px;color:var(--gold);line-height:1;margin-bottom:4px;}
+.kit-price sup{font-size:20px;vertical-align:top;margin-top:8px;}
+.kit-name{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;color:var(--ww);line-height:1.2;margin-bottom:6px;}
+.kit-tagline{font-family:'Dancing Script',cursive;font-size:15px;color:rgba(201,169,110,0.6);margin-bottom:20px;}
+.kit-divider{width:40px;height:1px;background:rgba(201,169,110,0.25);margin-bottom:20px;}
+.kit-includes{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.kit-includes li{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:rgba(253,250,245,0.55);line-height:1.6;display:flex;gap:8px;align-items:flex-start;}
+.kit-includes li::before{content:'✦';color:var(--gold);font-size:7px;margin-top:4px;flex-shrink:0;}
+.kit-cta{display:block;text-align:center;font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.24em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:13px 20px;text-decoration:none;transition:background 0.2s;cursor:pointer;border:none;width:100%;}
+.kit-cta:hover{background:var(--gold-l);}
+.kit-card.featured{background:linear-gradient(160deg,#0d0d0d 0%,#1a1408 100%);border:1px solid rgba(201,169,110,0.2);}
+.kit-card.featured .kit-price{font-size:52px;}
+.kit-bestseller{position:absolute;top:20px;right:20px;font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:5px 10px;}
+/* PREMIUM */
+.ph2{min-height:calc(100vh - var(--nh));background:var(--obs);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative;overflow:hidden;}
+.ph2::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 25%,rgba(201,169,110,0.08) 0%,transparent 55%),radial-gradient(ellipse at 70% 75%,rgba(201,169,110,0.05) 0%,transparent 55%);}
+.pi{position:relative;z-index:1;max-width:490px;}
+.p-ey{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.44em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:12px;}
+.p-ey::before,.p-ey::after{content:'';flex:1;max-width:28px;height:1px;background:rgba(201,169,110,0.26);}
+.p-icon{font-size:28px;margin-bottom:16px;background:linear-gradient(145deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.p-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:42px;color:var(--ww);line-height:1.1;margin-bottom:5px;}
+.p-title em{font-style:italic;color:var(--gold-l);}
+.p-sub{font-family:'Jost',sans-serif;font-weight:300;font-size:10px;letter-spacing:0.19em;text-transform:uppercase;color:rgba(253,250,245,0.27);margin-bottom:38px;}
+.p-div{width:1px;height:38px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:0 auto 38px;}
+.p-desc{font-family:'Jost',sans-serif;font-weight:300;font-size:13px;color:rgba(253,250,245,0.46);line-height:1.85;margin-bottom:38px;}
+.p-desc em{color:var(--gold-l);font-style:normal;}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:36px;text-align:left;}
+.pinc{border:1px solid rgba(201,169,110,0.12);padding:14px;background:rgba(201,169,110,0.02);}
+.pinc-n{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:rgba(201,169,110,0.16);line-height:1;margin-bottom:5px;}
+.pinc-t{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:3px;}
+.pinc-d{font-family:'Jost',sans-serif;font-weight:300;font-size:10px;color:rgba(253,250,245,0.36);line-height:1.6;}
+.pform{display:flex;gap:0;max-width:340px;margin:0 auto 14px;}
+.pinp{flex:1;padding:11px 13px;background:rgba(253,250,245,0.05);border:1px solid rgba(201,169,110,0.16);border-right:none;font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--ww);outline:none;}
+.pinp::placeholder{color:rgba(253,250,245,0.19);}
+.pbtn{padding:11px 18px;background:var(--gold);border:none;cursor:pointer;font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);transition:background 0.2s;white-space:nowrap;}
+.pbtn:hover{background:var(--gold-l);}
+.pnote{font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.12em;color:rgba(253,250,245,0.17);text-align:center;}
+.pbadge{display:inline-block;margin-top:28px;border:1px solid rgba(201,169,110,0.15);padding:8px 20px;font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(201,169,110,0.4);}
+/* FOOTER */
+footer{background:var(--obs);padding:38px 24px 24px;border-top:1px solid rgba(201,169,110,0.1);text-align:center;}
+.fsl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;color:var(--gold);margin-bottom:4px;}
+.fbr{font-family:'Jost',sans-serif;font-weight:200;font-size:7px;letter-spacing:0.46em;text-transform:uppercase;color:rgba(201,169,110,0.28);margin-bottom:16px;}
+.flinks{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
+.flnk{font-family:'Jost',sans-serif;font-weight:300;font-size:7.5px;letter-spacing:0.24em;text-transform:uppercase;color:rgba(253,250,245,0.26);text-decoration:none;transition:color 0.2s;}
+.flnk:hover{color:var(--gold);}
+.fcp{font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.12em;color:rgba(253,250,245,0.1);}
+/* ANIM */
+@keyframes fu{from{opacity:0;transform:translateY(13px);}to{opacity:1;transform:translateY(0);}}
+.an{opacity:0;animation:fu 0.6s ease forwards;}
+.d1{animation-delay:0.08s;}.d2{animation-delay:0.17s;}.d3{animation-delay:0.26s;}.d4{animation-delay:0.34s;}
+/* RESPONSIVE */
+@media(max-width:640px){
+  .hsl{font-size:64px;}.htitle{font-size:27px;}
+  .igg{grid-template-columns:repeat(2,1fr);}
+  .bg2{grid-template-columns:1fr;}
+  .sh2,.r2c{grid-template-columns:1fr;}
+  .pgrid{grid-template-columns:1fr;}
+  .og{grid-template-columns:1fr;}
+  .lcats{grid-template-columns:repeat(3,1fr);}
+  .pform{flex-direction:column;}
+  .pinp{border-right:1px solid rgba(201,169,110,0.16);}
+  .ntb{padding:7px 7px;font-size:9px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nl" onclick="show('home')"><span>SL</span></div>
+  <div class="nt">
+    <button class="ntb on" onclick="show('home')">Home</button><div class="nd"></div>
+    <button class="ntb" onclick="show('edit')">The Simpli Edit</button><div class="nd"></div>
+    <button class="ntb" onclick="show('styled')">Simpli Styled</button><div class="nd"></div>
+    <button class="ntb" onclick="show('shift')">Soft Life Shift</button><div class="nd"></div>
+    <button class="ntb" onclick="show('lessons')">Luxe Life Lessons</button><div class="nd"></div>
+    <button class="ntb" onclick="show('sip')">The Simpli Sip</button><div class="nd"></div>
+    <button class="ntb" onclick="show('premium')">Styling Services</button><div class="nd"></div>
+    <button class="ntb" onclick="show('shop')">Shop</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <div class="hero">
+    <div class="hi">
+      <div class="hey an d1">Simpli Luxe</div>
+      <div class="hsl an d1">SL</div>
+      <div class="hbr an d1">Simpli Luxe</div>
+      <div class="hln an d2"></div>
+      <h1 class="htitle an d2">A life that feels as <em>good</em> as it looks.</h1>
+      <p class="hsub an d2">Affordable luxury · Intentional living · The soft life</p>
+      <div class="hqw an d3"><div class="hq" id="rq">"Luxury is choosing the pace that honors you."</div></div>
+      <div class="era-b an d3"><div class="era-dot"></div><div class="era-txt">Now in The Becoming Era · Q2 2026</div></div>
+      <div class="hpills an d3">
+        <span class="hpill" onclick="show('edit')">The Simpli Edit</span>
+        <span class="hpill" onclick="show('shift')">Soft Life Shift</span>
+        <span class="hpill" onclick="show('sip')">The Simpli Sip</span>
+        <span class="hpill" onclick="show('premium')">Styling Services</span>
+      </div>
+      <button class="hcta an d4" onclick="show('edit')">Read the Latest Issue</button>
+    </div>
+  </div>
+  <div class="lll">
+    <div class="li">
+      <div class="sey">Simpli Luxe's Biggest Series</div>
+      <h2 class="stitle">Life's Little <em>Luxuries</em></h2>
+      <div class="sscript">with Staci</div>
+      <p class="sbody">The small moments that make life feel elevated — a perfectly made coffee, morning light through clean windows, the joy of a fresh candle. Life's Little Luxuries captures the beauty of choosing presence over perfection, every single day.</p>
+      <div class="lcats">
+        <div class="lcat"><div class="lcat-i">💕</div><div class="lcat-n">Love &amp; Relationships</div></div>
+        <div class="lcat"><div class="lcat-i">🌙</div><div class="lcat-n">Soft Evenings</div></div>
+        <div class="lcat"><div class="lcat-i">✨</div><div class="lcat-n">Everyday Indulgence</div></div>
+        <div class="lcat"><div class="lcat-i">🌿</div><div class="lcat-n">Out &amp; About</div></div>
+        <div class="lcat"><div class="lcat-i">🌸</div><div class="lcat-n">Personal Joy</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ser-sec"><div class="sey" style="margin-bottom:5px;">The Simpli Luxe Network</div><h2 class="stitle" style="margin-bottom:22px;">Explore the <em>Series</em></h2></div>
+  <div class="sgrid">
+    <div class="sc" onclick="show('edit')"><div class="scn">01</div><div class="sct">Digital Magazine</div><div class="sctitle">The Simpli Edit</div><div class="scdesc">Your curated guide to affordable luxury, soft living, and intentional style. All 6 vols available.</div><span class="scarr">→</span></div>
+    <div class="sc" onclick="show('styled')"><div class="scn">02</div><div class="sct">Fashion · Style</div><div class="sctitle">Simpli Styled</div><div class="scdesc">Capsule wardrobes, outfit formulas, and get-the-look guides — curated the luxe-for-less way.</div><span class="scarr">→</span></div>
+    <div class="sc" onclick="show('shift')"><div class="scn">03</div><div class="sct">Mindset · Intentional Living</div><div class="sctitle">Soft Life Shift</div><div class="scdesc">Weekly intentional living moments — gentle frameworks, journaling prompts, and Notes to Self.</div><span class="scarr">→</span></div>
+    <div class="sc" onclick="show('lessons')"><div class="scn">04</div><div class="sct">Teaching · Wisdom</div><div class="sctitle">Luxe Life Lessons</div><div class="scdesc">The philosophies behind the soft life — on confidence, growth, rest, and the art of becoming.</div><span class="scarr">→</span></div>
+    <div class="sc" onclick="show('sip')"><div class="scn">05</div><div class="sct">Mocktails · Rituals</div><div class="sctitle">The Simpli Sip</div><div class="scdesc">Elevated mocktail recipes with flavor profiles, how-to steps, and vibe notes — ritual in a glass.</div><span class="scarr">→</span></div>
+    <div class="sc" onclick="show('premium')"><div class="scn">06</div><div class="sct">Personal Styling</div><div class="sctitle">Styling Services</div><div class="scdesc">Your personal style brief, capsule boards, and curated shopping collection — built around your life.</div><span class="scarr">→</span></div>
+  </div>
+  <div style="height:40px;"></div>
+  <!-- SHOPMY COLLECTIONS FEATURE -->
+  <div class="lll" style="padding:44px 24px;">
+    <div class="li">
+      <div class="sey">Curated by Staci · ShopMy</div>
+      <h2 class="stitle">Shop the <em>Collections</em></h2>
+      <div class="sscript">luxe for less · intentional finds</div>
+      <p class="sbody">Every collection is built with one intention — pieces that look expensive, feel effortless, and support the life you're already building. No impulse. All intention.</p>
+    </div>
+  </div>
+  <div class="coll-grid" style="max-width:900px;margin:0 auto;">
+    <div class="coll-card" onclick="show('shop')"><div class="coll-card-hero cbg1"><div class="coll-card-hero-title">☀️ Becoming Era<br>Summer Capsule</div></div><div class="coll-meta"><div class="coll-tag">The Becoming Era · Summer 2026</div><div class="coll-name">Becoming Era Summer Capsule</div><div class="coll-desc">Summer dressing should feel like relief. Not more decisions, not more trends — just beautiful pieces that work together effortlessly.</div><span class="coll-cta" onclick="show('shop')">Shop Collection →</span></div></div>
+    <div class="coll-card" onclick="show('shop')"><div class="coll-card-hero cbg5"><div class="coll-card-hero-title">Simpli Luxe<br>Tailored Edit</div></div><div class="coll-meta"><div class="coll-tag">The Becoming Era · Workwear</div><div class="coll-name">Tailored Edit: Becoming Era</div><div class="coll-desc">Tailored pieces that look expensive, feel powerful, and move like intention. Structured blazers, cinched waistcoats, and tailored trousers.</div><span class="coll-cta" onclick="show('shop')">Shop Collection →</span></div></div>
+    <div class="coll-card" onclick="show('shop')"><div class="coll-card-hero cbg7"><div class="coll-card-hero-title">Small Luxuries<br>Under $30</div></div><div class="coll-meta"><div class="coll-tag">Everyday · Budget Luxe</div><div class="coll-name">Simpli Luxe Small Luxuries</div><div class="coll-desc">Small luxuries that elevate your everyday routines without overspending. Softer mornings, calmer spaces, more intentional life.</div><span class="coll-cta" onclick="show('shop')">Shop Collection →</span></div></div>
+  </div>
+  <div style="text-align:center;padding:24px;"><button class="hcta" style="background:transparent;color:var(--gold);border:1px solid rgba(201,169,110,0.28);" onclick="show('shop')">View All Collections →</button></div>
+  <div class="qs"><p>"She is not starting over. She is growing from a place already planted."</p><cite>— The Simpli Edit, Vol 06 · The Rooted &amp; Blooming Edit</cite></div>
+  <footer><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">Instagram</a><a href="#" class="flnk">TikTok</a><a href="#" class="flnk">Pinterest</a><a href="#" class="flnk">LTK</a><a href="#" class="flnk">YouTube</a></div><div class="fcp">© 2026 Simpli Luxe · For the woman curating a life that feels as good as it looks.</div></footer>
+</section>
+
+<!-- THE SIMPLI EDIT -->
+<section id="edit">
+  <div class="ph"><div class="ph-ey">Digital Magazine</div><h2 class="ph-t">The Simpli <em>Edit</em></h2><p class="ph-s">Luxury for Less · Soft Goals · Intentional Living · All 6 Vols</p></div>
+  <div class="fb">
+    <div class="fc on" onclick="filt('all',this)">All Issues</div>
+    <div class="fc" onclick="filt('fall',this)">Fall 2025</div>
+    <div class="fc" onclick="filt('holiday',this)">Holiday 2025</div>
+    <div class="fc" onclick="filt('winter',this)">Winter 2026</div>
+    <div class="fc" onclick="filt('spring',this)">Spring 2026</div>
+    <div class="fc" onclick="filt('reset',this)">The Reset Era</div>
+    <div class="fc" onclick="filt('becoming',this)">The Becoming Era</div>
+  </div>
+  <div class="igg" id="igg">
+    <div class="igt" data-s="fall" data-e="reset" onclick="toast('Vol 01 — Soft Life, Styled · Nov 2025')"><div class="igt-bg" style="background:linear-gradient(155deg,#1a0e08,#3d1e0a 40%,#1a0e08);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--gold);text-align:center;margin-bottom:5px;">THE SIMPLI EDIT</div><div style="font-family:'Jost',sans-serif;font-weight:200;font-size:6px;letter-spacing:0.34em;color:rgba(201,169,110,0.36);margin-bottom:10px;">Vol 01 · Debut</div><div style="width:66px;height:86px;border:1px solid rgba(201,169,110,0.17);display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,0.04);padding:8px;margin-bottom:9px;"><div style="font-family:'Cormorant Garamond',serif;font-size:10px;color:var(--ww);text-align:center;line-height:1.4;">Soft Life,<br><span style="color:var(--gold);font-style:italic;">Styled.</span></div></div><div style="font-family:'Dancing Script',cursive;font-size:10px;color:rgba(253,250,245,0.32);">Weekly Luxe Lifestyle</div></div><div class="igt-ov"></div><div class="sb-tag bfall">Fall 2025</div><div class="era-tag">The Reset</div><div class="igt-inf"><div class="igt-v">Vol 01 · Nov 2025</div><div class="igt-t">Soft Life, Styled.</div></div></div>
+    <div class="igt" data-s="holiday" data-e="reset" onclick="toast('Vol 02 — Your Holiday Luxe Formula · Thanksgiving 2025')"><div class="igt-bg" style="background:linear-gradient(155deg,#12100a,#2a2010 50%,#12100a);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--gold);text-align:center;margin-bottom:5px;">THE SIMPLI EDIT</div><div style="font-family:'Jost',sans-serif;font-weight:200;font-size:6px;letter-spacing:0.34em;color:rgba(201,169,110,0.36);margin-bottom:10px;">Vol 02 · Gratitude</div><div style="width:66px;height:86px;border:1px solid rgba(201,169,110,0.17);display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,0.04);padding:8px;margin-bottom:9px;"><div style="font-family:'Cormorant Garamond',serif;font-size:9px;color:var(--ww);text-align:center;line-height:1.4;">Your Holiday<br><span style="color:var(--gold);">Luxe Formula</span></div></div><div style="font-family:'Dancing Script',cursive;font-size:10px;color:rgba(253,250,245,0.32);">+ Gratitude Issue</div></div><div class="igt-ov"></div><div class="sb-tag bhol">Thanksgiving</div><div class="era-tag">The Reset</div><div class="igt-inf"><div class="igt-v">Vol 02 · Thanksgiving 2025</div><div class="igt-t">Your Holiday Luxe Formula</div></div></div>
+    <div class="igt" data-s="holiday" data-e="reset" onclick="toast('Vol 03 — Holiday Glam, Simplified · December 2025')"><div class="igt-bg" style="background:linear-gradient(155deg,#0d1010,#1a2015 50%,#0d1010);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--gold);text-align:center;margin-bottom:5px;">THE SIMPLI EDIT</div><div style="font-family:'Jost',sans-serif;font-weight:200;font-size:6px;letter-spacing:0.34em;color:rgba(201,169,110,0.36);margin-bottom:10px;">Vol 03 · Holiday</div><div style="width:66px;height:86px;border:1px solid rgba(201,169,110,0.17);display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,0.04);padding:8px;margin-bottom:9px;"><div style="font-family:'Cormorant Garamond',serif;font-size:9px;color:var(--ww);text-align:center;line-height:1.4;">Holiday Glam,<br><span style="color:var(--gold);font-style:italic;">Simplified.</span></div></div><div style="font-family:'Dancing Script',cursive;font-size:10px;color:rgba(253,250,245,0.32);">+ The Holiday Edit</div></div><div class="igt-ov"></div><div class="sb-tag bhol">December 2025</div><div class="era-tag">The Reset</div><div class="igt-inf"><div class="igt-v">Vol 03 · Dec 2025</div><div class="igt-t">Holiday Glam, Simplified.</div></div></div>
+    <div class="igt" data-s="winter" data-e="reset" onclick="toast('Vol 04 — Reset. Refocus. Radiate. · New Year 2026')"><div class="igt-bg" style="background:linear-gradient(155deg,#1a1108,#2C1810 40%,#1a1108);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--gold);text-align:center;margin-bottom:5px;">THE SIMPLI EDIT</div><div style="font-family:'Jost',sans-serif;font-weight:200;font-size:6px;letter-spacing:0.34em;color:rgba(201,169,110,0.36);margin-bottom:10px;">Vol 04 · New Year</div><div style="width:66px;height:86px;border:1px solid rgba(201,169,110,0.17);display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,0.04);padding:8px;margin-bottom:9px;"><div style="font-family:'Cormorant Garamond',serif;font-size:9px;color:var(--ww);text-align:center;line-height:1.5;">Reset.<br>Refocus.<br><span style="color:var(--gold);">Radiate.</span></div></div><div style="font-family:'Dancing Script',cursive;font-size:10px;color:rgba(253,250,245,0.32);">+ The New Year Edit</div></div><div class="igt-ov"></div><div class="sb-tag bwin">Winter 2026</div><div class="era-tag">The Reset</div><div class="igt-inf"><div class="igt-v">Vol 04 · New Year 2026</div><div class="igt-t">Reset. Refocus. Radiate.</div></div></div>
+    <div class="igt" data-s="winter" data-e="reset" onclick="toast('Vol 05 — Quiet Confidence. Cultivated. · Jan 2026')"><div class="igt-bg" style="background:linear-gradient(155deg,#16120c,#22180e 50%,#16120c);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--gold);text-align:center;margin-bottom:5px;">THE SIMPLI EDIT</div><div style="font-family:'Jost',sans-serif;font-weight:200;font-size:6px;letter-spacing:0.34em;color:rgba(201,169,110,0.36);margin-bottom:10px;">Vol 05 · Confidence</div><div style="width:66px;height:86px;border:1px solid rgba(201,169,110,0.17);display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,0.04);padding:8px;margin-bottom:9px;"><div style="font-family:'Cormorant Garamond',serif;font-size:9px;color:var(--ww);text-align:center;line-height:1.4;">Quiet<br>Confidence.<br><span style="color:var(--gold);">Cultivated.</span></div></div><div style="font-family:'Dancing Script',cursive;font-size:10px;color:rgba(253,250,245,0.32);">+ Quiet Confidence Edit</div></div><div class="igt-ov"></div><div class="sb-tag bwin">Jan 2026</div><div class="era-tag">The Reset</div><div class="igt-inf"><div class="igt-v">Vol 05 · Jan 2026</div><div class="igt-t">Quiet Confidence. Cultivated.</div></div></div>
+    <div class="igt" data-s="spring" data-e="becoming" onclick="toast('Vol 06 — Rooted. Blooming. Fully Hers. · Spring 2026')"><div class="igt-bg" style="background:linear-gradient(155deg,#0f1610,#151e12 50%,#0f1610);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:16px;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--gold);text-align:center;margin-bottom:5px;">THE SIMPLI EDIT</div><div style="font-family:'Jost',sans-serif;font-weight:200;font-size:6px;letter-spacing:0.34em;color:rgba(201,169,110,0.36);margin-bottom:10px;">Vol 06 · Spring 2026</div><div style="width:66px;height:86px;border:1px solid rgba(201,169,110,0.17);display:flex;align-items:center;justify-content:center;background:rgba(201,169,110,0.04);padding:8px;margin-bottom:9px;"><div style="font-family:'Cormorant Garamond',serif;font-size:9px;text-align:center;line-height:1.4;"><span style="color:var(--ww);">Rooted.</span><br><span style="color:#7a9e72;">Blooming.</span><br><span style="color:var(--gold);font-style:italic;">Fully Hers.</span></div></div><div style="font-family:'Dancing Script',cursive;font-size:10px;color:rgba(253,250,245,0.32);">+ Rooted &amp; Blooming</div></div><div class="igt-ov"></div><div class="sb-tag bspr">Spring 2026</div><div class="era-tag">The Becoming</div><div class="igt-inf"><div class="igt-v">Vol 06 · Spring 2026</div><div class="igt-t">Rooted. Blooming. Fully Hers.</div></div></div>
+  </div>
+  <footer style="margin-top:3px;"><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">Instagram</a><a href="#" class="flnk">TikTok</a><a href="#" class="flnk">LTK</a></div><div class="fcp">© 2026 Simpli Luxe · The Simpli Edit</div></footer>
+</section>
+
+<!-- SIMPLI STYLED -->
+<section id="styled">
+  <div class="ph"><div class="ph-ey">Fashion · Style · Get the Look</div><h2 class="ph-t">Simpli <em>Styled</em></h2><p class="ph-s">Curated by Staci · Luxe for Less · Every Occasion</p></div>
+  <div class="fb"><div class="fc on">All Looks</div><div class="fc">Workwear</div><div class="fc">Weekend</div><div class="fc">Date Night</div><div class="fc">Travel</div><div class="fc">The Becoming Era</div></div>
+  <div class="bg2">
+    <div class="bt" onclick="ob('sig')"><div class="bt-bg bsig"></div><div class="bt-pat"></div><div class="bt-ov"></div><div class="bt-lk">10 Looks</div><div class="bt-ar">↗</div><div class="bt-cnt"><div class="bt-tag">Year-Round</div><div class="bt-title">Simpli Luxe Signature Capsule</div><div class="bt-sub">Intentional · Feminine · Luxe-for-Less</div><div class="bt-pal"><div class="sw" style="background:#F5F0E8;"></div><div class="sw" style="background:#C9A96E;"></div><div class="sw" style="background:#8C7B6B;"></div><div class="sw" style="background:#2C1810;"></div><div class="sw" style="background:#722F37;"></div></div></div></div>
+    <div class="bt" onclick="ob('ss')"><div class="bt-bg bss"></div><div class="bt-pat"></div><div class="bt-ov"></div><div class="sb-tag bspr" style="top:11px;left:11px;">Spring 2026</div><div class="era-tag">The Becoming</div><div class="bt-lk" style="top:34px;">10 Looks</div><div class="bt-ar">↗</div><div class="bt-cnt"><div class="bt-tag">Spring · Summer</div><div class="bt-title">Spring / Summer Capsule</div><div class="bt-sub">Soft · Elegant · Resort Inspired</div><div class="bt-pal"><div class="sw" style="background:#FDFAF5;"></div><div class="sw" style="background:#F5DEB3;"></div><div class="sw" style="background:#FFB6C1;"></div><div class="sw" style="background:#8FBC8F;"></div></div></div></div>
+    <div class="bt" onclick="ob('fw')"><div class="bt-bg bfw"></div><div class="bt-pat"></div><div class="bt-ov"></div><div class="sb-tag bfall" style="top:11px;left:11px;">Fall/Winter</div><div class="bt-lk" style="top:34px;">10 Looks</div><div class="bt-ar">↗</div><div class="bt-cnt"><div class="bt-tag">Fall · Winter</div><div class="bt-title">Fall / Winter Capsule</div><div class="bt-sub">Refined Romantic Executive</div><div class="bt-pal"><div class="sw" style="background:#C19A6B;"></div><div class="sw" style="background:#3C1F0F;"></div><div class="sw" style="background:#556B2F;"></div><div class="sw" style="background:#722F37;"></div></div></div></div>
+    <div class="bt" onclick="ob('trv')"><div class="bt-bg btrv"></div><div class="bt-pat"></div><div class="bt-ov"></div><div class="bt-lk">10 Looks</div><div class="bt-ar">↗</div><div class="bt-cnt"><div class="bt-tag">Travel · Jet Set</div><div class="bt-title">Simpli Luxe Travel Capsule</div><div class="bt-sub">Pack Less · Look Better · Live Fully</div><div class="bt-pal"><div class="sw" style="background:#FDFAF5;"></div><div class="sw" style="background:#C19A6B;"></div><div class="sw" style="background:#556B2F;"></div><div class="sw" style="background:#4682B4;"></div></div></div></div>
+  </div>
+  <footer style="margin-top:3px;"><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">ShopMy</a><a href="#" class="flnk">LTK</a><a href="#" class="flnk">Instagram</a></div><div class="fcp">© 2026 Simpli Luxe · Simpli Styled</div></footer>
+</section>
+
+<!-- SOFT LIFE SHIFT -->
+<section id="shift">
+  <div class="ph"><div class="ph-ey">Mindset · Intentional Living</div><h2 class="ph-t">Soft Life <em>Shift</em></h2><p class="ph-s">Your weekly intentional loving moment, curated softly.</p></div>
+  <div class="fb"><div class="fc on">All</div><div class="fc">The Reset Era</div><div class="fc">The Becoming Era</div><div class="fc">Note to Self</div><div class="fc">Journaling</div></div>
+  <div class="sfd">
+    <div class="nts"><div class="nts-ey">Note to Self</div><div class="nts-t">"Luxury is not impulse. Luxury is <span>intention.</span> Every choice you make with care is an act of self-respect."</div></div>
+    <div class="shc"><div class="shh"><div class="shmeta"><span class="sh-era">The Becoming Era</span><span class="sh-sea">Spring 2026</span></div><div class="sh-title">You Are Allowed to Grow &amp; Stay Soft</div><div class="sh-script">Moving Through Life Unrushed</div><div class="sh-body">Growth does not require you to become harder. You can grow peacefully. You can expand intentionally. This season's shift is about protecting your softness as you bloom — not shrinking, not stopping, just making sure that as you grow, you bring the whole woman with you.</div></div><div class="sh-q"><p>"You are not behind. You are right on time for the life you are actually building."</p></div><div class="sh2"><div><div class="shch">Let Go Of</div><ul class="shl"><li>Growing at someone else's pace</li><li>Performing progress for approval</li><li>Hustling through seasons meant for rest</li><li>Apologizing for choosing yourself</li></ul></div><div><div class="shch">Invite In</div><ul class="shl"><li>Growth that feels like yourself</li><li>Expansion rooted in intention</li><li>Seasons of both bloom and rest</li><li>Pride in the quiet progress</li></ul></div></div><div class="sh-tip">"The soft life is not a destination. It is the way you travel."</div></div>
+    <div class="nts"><div class="nts-ey">Note to Self</div><div class="nts-t">"You handled this season with <span>more calm</span> than you're giving yourself credit for. That is the work."</div></div>
+    <div class="shc"><div class="shh"><div class="shmeta"><span class="sh-era">The Reset Era</span><span class="sh-sea">January 2026</span></div><div class="sh-title">Gentle Goals Framework</div><div class="sh-script">Where Intention Meets Ease</div><div class="sh-body">January doesn't require a complete overhaul. It asks for clarity. The Soft Life Shift invites you to release pressure-driven goals and replace them with gentle intentions that support how you actually live. This is about creating rhythms you can return to, not routines you abandon by week three.</div></div><div class="sh-q"><p>"A soft life isn't unproductive. It's intentional."</p></div><div class="sh2"><div><div class="shch">Let Go Of</div><ul class="shl"><li>All-or-nothing thinking</li><li>Overpacked schedules</li><li>Comparing your pace to others</li><li>Goals rooted in guilt</li></ul></div><div><div class="shch">Invite In</div><ul class="shl"><li>Clear priorities</li><li>Calm mornings</li><li>Intentional spending</li><li>Daily moments of beauty</li></ul></div></div><div class="sh-tip">"You don't owe urgency to anyone."</div></div>
+    <div class="nts"><div class="nts-ey">Note to Self</div><div class="nts-t">"Pace does not equal purpose. I thrive in alignment, <span>not urgency.</span>"</div></div>
+    <div class="shc"><div class="shh"><div class="shmeta"><span class="sh-era">The Reset Era</span><span class="sh-sea">Thanksgiving 2025</span></div><div class="sh-title">Gratitude Journaling &amp; Slowing Down</div><div class="sh-script">The Quiet Luxury of Gratitude</div><div class="sh-body">Gratitude as a grounding ritual — not just saying thanks, but noticing beauty in what's already here. By dedicating just a few moments each day to reflect on what you're thankful for, you cultivate a more positive mindset and deeper connection.</div></div><div class="sh-q"><p>"Gratitude turns what we have into enough, and enough into abundance."</p></div><div class="sh2"><div><div class="shch">Journaling Prompt</div><div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--taupe);line-height:1.6;">List three moments from this week that felt soft.</div></div><div><div class="shch">Savor the Moment With</div><ul class="shl"><li>Morning gratitude routine with tea</li><li>Handwritten note to someone you love</li><li>Screen-free evening by candlelight</li></ul></div></div><div class="sh-tip">"Gratitude is the language of soft living."</div></div>
+  </div>
+  <footer><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">Instagram</a><a href="#" class="flnk">TikTok</a><a href="#" class="flnk">Pinterest</a></div><div class="fcp">© 2026 Simpli Luxe · Soft Life Shift</div></footer>
+</section>
+
+<!-- LUXE LIFE LESSONS -->
+<section id="lessons">
+  <div class="ph"><div class="ph-ey">Teaching · Wisdom · Philosophy</div><h2 class="ph-t">Luxe Life <em>Lessons</em></h2><p class="ph-s">The philosophies behind the soft life — with Staci</p></div>
+  <div class="fb"><div class="fc on">All Lessons</div><div class="fc">Confidence</div><div class="fc">Gratitude</div><div class="fc">Growth</div><div class="fc">Rest &amp; Reset</div><div class="fc">The Becoming Era</div></div>
+  <div class="lgrid">
+    <div class="lc"><div class="lc-ep">EP. 06 · 2026</div><span class="lc-era">The Becoming Era · Spring 2026</span><div class="lc-title">Growing Without Rushing</div><div class="lc-exc">There is a difference between growing and rushing. Rushing is chasing the next version of yourself before you have fully inhabited this one. The rooted woman grows without rushing. She blooms without performing.</div><span class="lc-arr">→</span></div>
+    <div class="lc"><div class="lc-ep">EP. 05 · 2026</div><span class="lc-era">The Reset Era · Jan 2026</span><div class="lc-title">Confidence Without Performance</div><div class="lc-exc">Confidence doesn't arrive loudly. It doesn't announce itself. It settles. The truest confidence comes when you stop needing validation for choices that already feel aligned.</div><span class="lc-arr">→</span></div>
+    <div class="lc"><div class="lc-ep">EP. 04 · 2026</div><span class="lc-era">The Reset Era · Jan 2026</span><div class="lc-title">Resetting Without Reinventing</div><div class="lc-exc">A new year doesn't require a complete overhaul. This season is an invitation to reset gently, to refocus on what already works, and to radiate from a place of clarity instead of pressure.</div><span class="lc-arr">→</span></div>
+    <div class="lc"><div class="lc-ep">EP. 03 · 2025</div><span class="lc-era">The Reset Era · Dec 2025</span><div class="lc-title">The Magic of Making Moments Luxe</div><div class="lc-exc">Luxury isn't what you buy — it's how you make the ordinary feel extraordinary. Luxury lives in those in-between moments when you choose presence over perfection.</div><span class="lc-arr">→</span></div>
+    <div class="lc"><div class="lc-ep">EP. 02 · 2025</div><span class="lc-era">The Reset Era · Nov 2025</span><div class="lc-title">The Quiet Luxury of Gratitude</div><div class="lc-exc">Gratitude as a grounding ritual — not just saying thanks, but noticing beauty in what's already here. Practicing gratitude daily transforms perspective and fosters deeper connection.</div><span class="lc-arr">→</span></div>
+    <div class="lc"><div class="lc-ep">EP. 01 · 2025</div><span class="lc-era">The Reset Era · Nov 2025</span><div class="lc-title">The Soft Power of Slowing Down</div><div class="lc-exc">Rest doesn't always look like laying down. Sometimes it looks like choosing the gentle option instead of the exhausting one. When life feels loud, returning to your small rituals is the most luxurious thing you can do.</div><span class="lc-arr">→</span></div>
+  </div>
+  <div class="qs" style="margin-top:3px;"><p>"Luxury is choosing the pace that honors you."</p><cite>— Luxe Life Lessons, EP. 01 · Simpli Luxe</cite></div>
+  <footer><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">YouTube</a><a href="#" class="flnk">TikTok</a><a href="#" class="flnk">Instagram</a></div><div class="fcp">© 2026 Simpli Luxe · Luxe Life Lessons</div></footer>
+</section>
+
+<!-- THE SIMPLI SIP -->
+<section id="sip">
+  <div class="ph"><div class="ph-ey">Mocktails · Rituals · Simpli Sips</div><h2 class="ph-t">The Simpli <em>Sip</em></h2><p class="ph-s">Simple ingredients. Quiet luxury. Ritual in a glass.</p></div>
+  <div class="fb"><div class="fc on">All Sips</div><div class="fc">Fall</div><div class="fc">Holiday</div><div class="fc">Winter</div><div class="fc">Spring</div><div class="fc">Warm &amp; Cozy</div><div class="fc">Light &amp; Floral</div><div class="fc">Sparkling</div></div>
+  <div class="sipg">
+    <div class="sipc" onclick="os('lav')"><div class="siph bglav"><div class="siph-t">Lavender Lemonade<br>Refresher</div></div><div class="sipm"><div class="sip-ep">EP. 01 · NOV 2025</div><div class="sip-nm">Lavender Lemonade Refresher</div><div class="sip-vb">Light. Floral. Grounding.</div><div class="sip-bs"><span class="sip-b">Fall 2025</span><span class="sip-b">The Reset</span><span class="sip-b">Light &amp; Floral</span></div></div></div>
+    <div class="sipc" onclick="os('sun')"><div class="siph bgsun"><div class="siph-t">Sunset Muse<br>Fall Edition 🍂</div></div><div class="sipm"><div class="sip-ep">EP. 02 · THANKSGIVING 2025</div><div class="sip-nm">Sunset Muse · Fall Edition</div><div class="sip-vb">Citrus. Spice. Autumn sunset in a glass.</div><div class="sip-bs"><span class="sip-b">Thanksgiving</span><span class="sip-b">The Reset</span><span class="sip-b">Warm &amp; Cozy</span></div></div></div>
+    <div class="sipc" onclick="os('merry')"><div class="siph bgcran"><div class="siph-t">Merry &amp; Bright<br>Spritz 🌲</div></div><div class="sipm"><div class="sip-ep">EP. 03 · DECEMBER 2025</div><div class="sip-nm">Merry &amp; Bright Spritz</div><div class="sip-vb">Cranberry. Vanilla. Festive cheer.</div><div class="sip-bs"><span class="sip-b">Holiday</span><span class="sip-b">The Reset</span><span class="sip-b">Sparkling</span></div></div></div>
+    <div class="sipc" onclick="os('golden')"><div class="siph bggold"><div class="siph-t">The Golden<br>Reset Mocktail</div></div><div class="sipm"><div class="sip-ep">EP. 04 · JAN 2026</div><div class="sip-nm">The Golden Reset Mocktail</div><div class="sip-vb">Warm. Grounding. Golden hour in a mug.</div><div class="sip-bs"><span class="sip-b">Winter 2026</span><span class="sip-b">The Reset</span><span class="sip-b">Warm &amp; Cozy</span></div></div></div>
+    <div class="sipc" onclick="os('steady')"><div class="siph bggold2"><div class="siph-t">The Steady<br>Glow Mocktail</div></div><div class="sipm"><div class="sip-ep">EP. 05 · JAN 2026</div><div class="sip-nm">The Steady Glow Mocktail</div><div class="sip-vb">Citrus. Honey. Settle, not shut down.</div><div class="sip-bs"><span class="sip-b">Winter 2026</span><span class="sip-b">The Reset</span><span class="sip-b">Light &amp; Fresh</span></div></div></div>
+    <div class="sipc" onclick="os('spring')"><div class="siph bgspr"><div class="siph-t">My Spring Reset<br>Mocktail Ritual</div></div><div class="sipm"><div class="sip-ep">EP. 06 · SPRING 2026</div><div class="sip-nm">My Spring Reset Mocktail Ritual</div><div class="sip-vb">Fresh. Floral. Complete reset.</div><div class="sip-bs"><span class="sip-b">Spring 2026</span><span class="sip-b">The Becoming</span><span class="sip-b">Light &amp; Floral</span></div></div></div>
+  </div>
+
+  <!-- RECIPE MODALS -->
+  <div id="rm-lav" class="rm"><div class="rmh"><div><div class="rm-tag">EP. 01 · Nov 2025 · The Reset Era · Fall</div><div class="rm-title">Lavender Lemonade Refresher</div></div><button class="rm-close" onclick="cs('lav')">← Back to Sips</button></div><div class="rcrd"><div class="rbd"><div class="rfl"><div class="rfl-l">Flavor Profile</div><div class="rfl-t">Light, floral, and gently grounding. A soft start or a Sunday reset — this sip signals intention without effort.</div></div><div class="r2c"><div><div class="rch">Ingredients</div><ul class="rl"><li>Fresh lemon juice</li><li>Lavender simple syrup</li><li>Sparkling water</li><li>Crushed ice</li><li>Garnish: lemon slice + lavender sprig</li></ul></div><div><div class="rch">How to Make It</div><div class="rsteps"><div class="rstep"><div class="rsn">1</div><div class="rst">Simmer equal parts sugar and water with dried lavender 10 min, strain, cool to make syrup</div></div><div class="rstep"><div class="rsn">2</div><div class="rst">Fill glass with crushed ice</div></div><div class="rstep"><div class="rsn">3</div><div class="rst">Add lemon juice and lavender syrup, stir gently</div></div><div class="rstep"><div class="rsn">4</div><div class="rst">Top with sparkling water and garnish</div></div></div></div></div><div class="rritual"><div class="rrl">Ritual Moment</div><div class="rrt">Pour this during your Sunday reset — soft music, 15-minute quiet tidy, this sip in hand. Let it signal the transition from the week behind to the week ahead.</div></div><div class="vbar">Slow down. Sip with intention. This moment is yours.</div></div></div></div>
+  <div id="rm-sun" class="rm"><div class="rmh"><div><div class="rm-tag">EP. 02 · Thanksgiving 2025 · The Reset Era</div><div class="rm-title">Sunset Muse · Fall Edition 🍂</div></div><button class="rm-close" onclick="cs('sun')">← Back to Sips</button></div><div class="rcrd"><div class="rbd"><div class="rfl"><div class="rfl-l">Flavor Profile</div><div class="rfl-t">A cozy yet refreshing mix of citrus and spice — the warmth of a Moscow Mule, the brightness of blood orange, and the comfort of classic lemonade. Autumn sunset in a glass.</div></div><div class="r2c"><div><div class="rch">Ingredients</div><ul class="rl"><li>3 oz Summit Moscow Mule Mocktail (zero sugar)</li><li>2 oz Pur Aqua Blood Orange Italian Sparkling Beverage</li><li>2 oz Member's Mark Lemonade</li><li>Fresh strawberry slices</li><li>Optional: red sugar or cinnamon-sugar rim</li></ul></div><div><div class="rch">How to Make It</div><div class="rsteps"><div class="rstep"><div class="rsn">1</div><div class="rst">Rim glass with red or cinnamon sugar</div></div><div class="rstep"><div class="rsn">2</div><div class="rst">Add ice and pour in all three drinks</div></div><div class="rstep"><div class="rsn">3</div><div class="rst">Stir gently to combine</div></div><div class="rstep"><div class="rsn">4</div><div class="rst">Garnish with strawberries or dehydrated orange wheel</div></div></div></div></div><div class="rritual"><div class="rrl">Ritual Moment</div><div class="rrt">Serve in a clear glass or copper mug. Add a cinnamon stick stirrer. Set the scene with candlelight and neutral fall textures.</div></div><div class="vbar">Autumn sunset in a glass. Gratitude in every sip.</div></div></div></div>
+  <div id="rm-merry" class="rm"><div class="rmh"><div><div class="rm-tag">EP. 03 · December 2025 · The Reset Era · Holiday</div><div class="rm-title">Merry &amp; Bright Spritz 🌲</div></div><button class="rm-close" onclick="cs('merry')">← Back to Sips</button></div><div class="rcrd"><div class="rbd"><div class="rfl"><div class="rfl-l">Flavor Profile</div><div class="rfl-t">Bright cranberry meets smooth vanilla and a hint of rosemary — festive, fragrant, and perfect for sipping under twinkle lights.</div></div><div class="r2c"><div><div class="rch">Ingredients</div><ul class="rl"><li>3 oz cranberry juice</li><li>2 oz lemon sparkling water or club soda</li><li>1 oz vanilla syrup</li><li>Fresh rosemary sprig</li><li>Garnish: cranberries + sugared rim</li></ul></div><div><div class="rch">How to Make It</div><div class="rsteps"><div class="rstep"><div class="rsn">1</div><div class="rst">Rim glass with sugar and crushed rosemary</div></div><div class="rstep"><div class="rsn">2</div><div class="rst">Add ice, cranberry juice, and vanilla syrup</div></div><div class="rstep"><div class="rsn">3</div><div class="rst">Top with sparkling water and stir gently</div></div><div class="rstep"><div class="rsn">4</div><div class="rst">Garnish with cranberries and rosemary</div></div></div></div></div><div class="rritual"><div class="rrl">Ritual Moment</div><div class="rrt">Serve in a coupe or stemmed glass for a luxe presentation. Slow morning before the holiday rush — this is your moment.</div></div><div class="vbar">Peace is my luxury. Presence is my gift.</div></div></div></div>
+  <div id="rm-golden" class="rm"><div class="rmh"><div><div class="rm-tag">EP. 04 · Jan 2026 · The Reset Era · Winter</div><div class="rm-title">The Golden Reset Mocktail</div></div><button class="rm-close" onclick="cs('golden')">← Back to Sips</button></div><div class="rcrd"><div class="rbd"><div class="rfl"><div class="rfl-l">Flavor Profile</div><div class="rfl-t">Warm, golden, and deeply calming. Turmeric warmth, honey sweetness, and gentle cinnamon comfort. January in a mug.</div></div><div class="r2c"><div><div class="rch">Ingredients (Serves One)</div><ul class="rl"><li>1 cup warm oat milk or almond milk</li><li>1 tsp raw honey or maple syrup</li><li>¼ tsp ground turmeric</li><li>Pinch of cinnamon</li><li>Pinch of ginger (optional)</li><li>Dash of vanilla extract</li></ul></div><div><div class="rch">How to Make It</div><div class="rsteps"><div class="rstep"><div class="rsn">1</div><div class="rst">Warm the milk gently — do not boil</div></div><div class="rstep"><div class="rsn">2</div><div class="rst">Whisk in honey, turmeric, cinnamon, ginger, vanilla</div></div><div class="rstep"><div class="rsn">3</div><div class="rst">Pour into your favorite mug</div></div><div class="rstep"><div class="rsn">4</div><div class="rst">Sip slowly, intentionally</div></div></div></div></div><div class="rritual"><div class="rrl">Ritual Moment</div><div class="rrt">Light a candle, turn on soft music, drink this without distractions. Let it signal the end of your day or the beginning of a calm morning.</div></div><div class="vbar">Rest can be ritual. Slowing down can be intentional.</div></div></div></div>
+  <div id="rm-steady" class="rm"><div class="rmh"><div><div class="rm-tag">EP. 05 · Jan 2026 · The Reset Era · Winter</div><div class="rm-title">The Steady Glow Mocktail</div></div><button class="rm-close" onclick="cs('steady')">← Back to Sips</button></div><div class="rcrd"><div class="rbd"><div class="rfl"><div class="rfl-l">Flavor Profile</div><div class="rfl-t">A grounding sip for evenings when you want to settle, not shut down. Simple ingredients, quiet luxury.</div></div><div class="r2c"><div><div class="rch">Ingredients</div><ul class="rl"><li>Sparkling water or warm herbal tea</li><li>Fresh citrus (orange or lemon)</li><li>Honey or maple syrup</li><li>Fresh rosemary or ginger</li></ul></div><div><div class="rch">Serving Ritual</div><div class="rsteps"><div class="rstep"><div class="rsn">1</div><div class="rst">Pour slowly</div></div><div class="rstep"><div class="rsn">2</div><div class="rst">Sip without distractions</div></div><div class="rstep"><div class="rsn">3</div><div class="rst">Let this moment signal steadiness</div></div></div></div></div><div class="rritual"><div class="rrl">Ritual Moment</div><div class="rrt">This is the sip you reach for at the end of the day — not to shut down, but to settle in. Pour slowly. Breathe. Let this moment be yours.</div></div><div class="vbar">Confidence doesn't rush.</div></div></div></div>
+  <div id="rm-spring" class="rm"><div class="rmh"><div><div class="rm-tag">EP. 06 · Spring 2026 · The Becoming Era</div><div class="rm-title">My Spring Reset Mocktail Ritual</div></div><button class="rm-close" onclick="cs('spring')">← Back to Sips</button></div><div class="rcrd"><div class="rbd"><div class="rfl"><div class="rfl-l">Flavor Profile</div><div class="rfl-t">Fresh. Floral. Refreshing. Light cucumber meets bright lemon and elderflower — a complete afternoon reset in 5 minutes.</div></div><div class="r2c"><div><div class="rch">Ingredients</div><ul class="rl"><li>1 cup sparkling water</li><li>2 oz elderflower tonic (Fever-Tree)</li><li>3–4 slices cucumber</li><li>Fresh mint leaves</li><li>½ lemon, squeezed</li><li>Ice + optional garnish</li></ul></div><div><div class="rch">How to Make It</div><div class="rsteps"><div class="rstep"><div class="rsn">1</div><div class="rst">Fill glass with ice</div></div><div class="rstep"><div class="rsn">2</div><div class="rst">Add cucumber slices and fresh mint</div></div><div class="rstep"><div class="rsn">3</div><div class="rst">Squeeze in lemon juice</div></div><div class="rstep"><div class="rsn">4</div><div class="rst">Pour in elderflower tonic</div></div><div class="rstep"><div class="rsn">5</div><div class="rst">Top with sparkling water, stir gently, garnish</div></div></div></div></div><div class="rritual"><div class="rrl">Ritual Moment — 5 Minutes Complete Reset</div><div class="rrt">Sip this when you need a soft pause. Step outside. Breathe. Reset your mind, your mood, and your energy. Make it sacred.</div></div><div class="vbar">Luxury doesn't have to be expensive. Sometimes it's five minutes and a beautiful glass.</div></div></div></div>
+
+  <footer style="margin-top:3px;"><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">Instagram</a><a href="#" class="flnk">TikTok</a><a href="#" class="flnk">Pinterest</a></div><div class="fcp">© 2026 Simpli Luxe · The Simpli Sip</div></footer>
+</section>
+
+<!-- STYLING SERVICES -->
+<section id="premium">
+  <!-- Hero intro -->
+  <div class="ph2" style="min-height:auto;padding:64px 24px 52px;">
+    <div class="pi">
+      <div class="p-ey">Simpli Luxe · Personal Styling</div>
+      <div class="p-icon">✦</div>
+      <h2 class="p-title">Your Style, <em>Personalized.</em></h2>
+      <p class="p-sub">Curated by Staci · Limited Availability</p>
+      <div class="p-div"></div>
+      <p class="p-desc">A fully personalized style experience built around <em>your</em> life, your coloring, and your aesthetic. Choose the level that fits where you are — from your personal style brief to the complete collection.</p>
+    </div>
+  </div>
+
+  <!-- Kit Products -->
+  <div style="padding:0 3px 3px;">
+    <div class="kit-grid">
+      <!-- Style Brief $67 -->
+      <div class="kit-card featured">
+        <div class="kit-card-inner">
+          <div class="kit-badge">1:1 Personal Service</div>
+          <div class="kit-price"><sup>$</sup>67</div>
+          <div class="kit-name">The Simpli Luxe<br>Style Brief</div>
+          <div class="kit-tagline">Your complete signature style identity</div>
+          <div class="kit-divider"></div>
+          <ul class="kit-includes">
+            <li>Color analysis &amp; personal color story</li>
+            <li>Style identity — your signature aesthetic defined</li>
+            <li>Capsule formulas built for your actual lifestyle</li>
+            <li>Silhouette guide — what works for your body</li>
+            <li>Board collection — visual styling reference</li>
+          </ul>
+          <button class="kit-cta" onclick="toast('Opening The Simpli Luxe Style Brief on Kit')">Get Your Style Brief — $67</button>
+        </div>
+      </div>
+      <!-- Style Blueprint $127 -->
+      <div class="kit-card">
+        <div class="kit-card-inner">
+          <div class="kit-badge">1:1 Personal Service · Most Popular</div>
+          <div class="kit-price"><sup>$</sup>127</div>
+          <div class="kit-name">The Simpli Luxe<br>Style Blueprint</div>
+          <div class="kit-tagline">Your style brief + full capsule boards</div>
+          <div class="kit-divider"></div>
+          <ul class="kit-includes">
+            <li>Everything in The Style Brief</li>
+            <li>Full illustrated capsule board collection</li>
+            <li>Style Brief PDF document delivered to you</li>
+            <li>Personalized ShopMy shopping collection</li>
+            <li>Your complete visual wardrobe system</li>
+          </ul>
+          <div class="kit-bestseller">Most Popular</div>
+          <button class="kit-cta" onclick="toast('Opening The Simpli Luxe Style Blueprint on Kit')">Get Your Blueprint — $127</button>
+        </div>
+      </div>
+      <!-- Full Collection $197 -->
+      <div class="kit-card featured">
+        <div class="kit-card-inner">
+          <div class="kit-badge">The Complete Experience</div>
+          <div class="kit-price"><sup>$</sup>197</div>
+          <div class="kit-name">The Simpli Luxe<br>Full Collection</div>
+          <div class="kit-tagline">Your complete style identity, all in one</div>
+          <div class="kit-divider"></div>
+          <ul class="kit-includes">
+            <li>Everything in The Style Blueprint</li>
+            <li>The Simpli Luxe Life Deck included</li>
+            <li>Full capsule board collection — all seasons</li>
+            <li>Shoppable wardrobe on ShopMy</li>
+            <li>The complete Simpli Luxe style experience</li>
+          </ul>
+          <button class="kit-cta" onclick="toast('Opening The Simpli Luxe Full Collection on Kit')">Get the Full Collection — $197</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What's Included Breakdown -->
+  <div style="background:var(--ww);padding:52px 24px;">
+    <div style="max-width:820px;margin:0 auto;">
+      <div class="sey" style="margin-bottom:6px;">How It Works</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:34px;color:var(--obs);margin-bottom:20px;">The Simpli Luxe <em style="font-style:italic;color:var(--taupe);">Process</em></h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--sb);">
+        <div style="background:var(--ww);padding:24px 20px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:rgba(201,169,110,0.15);line-height:1;margin-bottom:10px;">01</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);margin-bottom:8px;">Purchase</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.7;">Choose your package and complete your purchase through Kit. You'll receive a confirmation immediately.</div>
+        </div>
+        <div style="background:var(--ww);padding:24px 20px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:rgba(201,169,110,0.15);line-height:1;margin-bottom:10px;">02</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);margin-bottom:8px;">Questionnaire</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.7;">Staci personally sends you the style questionnaire — covering your lifestyle, occasions, coloring, and aesthetic inspiration.</div>
+        </div>
+        <div style="background:var(--ww);padding:24px 20px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:rgba(201,169,110,0.15);line-height:1;margin-bottom:10px;">03</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);margin-bottom:8px;">Delivery</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.7;">Your complete style brief, capsule boards, and shoppable collection are built and delivered directly to you.</div>
+        </div>
+        <div style="background:var(--ww);padding:24px 20px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:36px;color:rgba(201,169,110,0.15);line-height:1;margin-bottom:10px;">04</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);margin-bottom:8px;">Style with Confidence</div>
+          <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.7;">Your style brief becomes your daily reference — dressing with intention, ease, and confidence every single day.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qs"><p>"A woman who commands a room without raising her voice — that is your aesthetic. That is the Simpli Luxe way."</p><cite>— Staci · Founder, Simpli Luxe</cite></div>
+  <footer><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">Instagram</a><a href="#" class="flnk">TikTok</a><a href="#" class="flnk">YouTube</a></div><div class="fcp">© 2026 Simpli Luxe · Personal Styling Services</div></footer>
+</section>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="ph"><div class="ph-ey">ShopMy · LTK · Kit · Curated by Staci</div><h2 class="ph-t">Shop Simpli <em>Luxe</em></h2><p class="ph-s">Collections · Digital Products · Styling Services</p></div>
+  <div class="fb"><div class="fc on">All</div><div class="fc">Digital Products</div><div class="fc">Style Collections</div><div class="fc">Lifestyle</div><div class="fc">Budget Luxe</div><div class="fc">Investment</div></div>
+
+  <!-- Digital Products -->
+  <div style="padding:40px 24px 20px;max-width:900px;margin:0 auto;">
+    <div class="sey" style="margin-bottom:5px;">Digital Products · Kit</div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:30px;color:var(--obs);margin-bottom:4px;">Simpli Luxe <em style="font-style:italic;color:var(--taupe);">Products</em></h3>
+    <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--taupe);line-height:1.8;">Digital downloads and 1:1 services — your style and soft life, elevated.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:3px;padding:3px;max-width:900px;margin:0 auto;">
+    <div style="background:linear-gradient(160deg,#0d0d0d,#1a1408);border:1px solid rgba(201,169,110,0.18);padding:24px 20px;display:flex;flex-direction:column;gap:10px;position:relative;">
+      <div style="position:absolute;top:14px;right:14px;font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:4px 8px;">Entry</div>
+      <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);">1:1 Personal Service</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;color:var(--gold);line-height:1;">$67</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--ww);">The Style Brief</div>
+      <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:rgba(253,250,245,0.5);line-height:1.65;flex:1;">Color analysis, style identity, capsule formulas, silhouette guide &amp; board collection.</div>
+      <button class="kit-cta" onclick="show('premium')">Get Your Style Brief</button>
+    </div>
+    <div style="background:var(--obs);padding:24px 20px;display:flex;flex-direction:column;gap:10px;position:relative;">
+      <div style="position:absolute;top:14px;right:14px;font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:4px 8px;">Popular</div>
+      <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);">1:1 Personal Service</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;color:var(--gold);line-height:1;">$127</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--ww);">The Style Blueprint</div>
+      <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:rgba(253,250,245,0.5);line-height:1.65;flex:1;">Style Brief + full capsule boards + personalized ShopMy shopping collection.</div>
+      <button class="kit-cta" onclick="show('premium')">Get Your Blueprint</button>
+    </div>
+    <div style="background:linear-gradient(160deg,#0d0d0d,#1a1408);border:1px solid rgba(201,169,110,0.18);padding:24px 20px;display:flex;flex-direction:column;gap:10px;position:relative;">
+      <div style="position:absolute;top:14px;right:14px;font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:4px 8px;">Complete</div>
+      <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:7px;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);">Full Experience</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;color:var(--gold);line-height:1;">$197</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--ww);">The Full Collection</div>
+      <div style="font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:rgba(253,250,245,0.5);line-height:1.65;flex:1;">Everything — Blueprint + Life Deck + all capsule boards + shoppable wardrobe. Your complete style identity.</div>
+      <button class="kit-cta" onclick="show('premium')">Get the Full Collection</button>
+    </div>
+  </div>
+
+  <!-- ShopMy Collections -->
+  <div style="padding:48px 24px 20px;max-width:900px;margin:0 auto;">
+    <div class="sey" style="margin-bottom:5px;">Shop on ShopMy · Curated by Staci</div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:30px;color:var(--obs);margin-bottom:4px;">Style <em style="font-style:italic;color:var(--taupe);">Collections</em></h3>
+    <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--taupe);line-height:1.8;">Every collection is shoppable on ShopMy — curated with intention, updated regularly.</p>
+  </div>
+  <div class="coll-grid">
+    <div class="coll-card"><div class="coll-card-hero cbg1"><div class="coll-card-hero-title">☀️ Becoming Era<br>Summer Capsule</div></div><div class="coll-meta"><div class="coll-tag">The Becoming Era · Summer 2026</div><div class="coll-name">Becoming Era Summer Capsule</div><div class="coll-desc">Summer dressing should feel like relief — a handful of beautiful pieces that do everything.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg6"><div class="coll-card-hero-title">Soft Life<br>Maintenance Kit</div></div><div class="coll-meta"><div class="coll-tag">Lifestyle · Ritual</div><div class="coll-name">Soft Life Maintenance Kit</div><div class="coll-desc">The soft life isn't built in one perfect weekend reset. It's maintained in the small rituals that bring you back to yourself.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg5"><div class="coll-card-hero-title">5 Pieces,<br>Endless Outfits</div></div><div class="coll-meta"><div class="coll-tag">Capsule · Wardrobe Essentials</div><div class="coll-name">5 Pieces, Endless Outfits</div><div class="coll-desc">5 staples that maintain your style without stress — pieces that mix effortlessly and always look intentional.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg1"><div class="coll-card-hero-title">Tailored Edit:<br>Becoming Era</div></div><div class="coll-meta"><div class="coll-tag">Workwear · The Becoming Era</div><div class="coll-name">Simpli Luxe Tailored Edit</div><div class="coll-desc">Structured blazers, cinched waistcoats, and tailored trousers that look expensive and feel powerful.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg3"><div class="coll-card-hero-title">Mocktail<br>Essentials</div></div><div class="coll-meta"><div class="coll-tag">Lifestyle · The Simpli Sip</div><div class="coll-name">Simpli Luxe Mocktail Essentials</div><div class="coll-desc">Everything you need to create elevated, alcohol-free drinks at home — glassware, premium mixers, and finishing touches.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg8"><div class="coll-card-hero-title">Intentional<br>Splurges</div></div><div class="coll-meta"><div class="coll-tag">Investment Pieces · 49 Products</div><div class="coll-name">Simpli Luxe Intentional Splurges</div><div class="coll-desc">Investment pieces that elevate your wardrobe and lifestyle long-term — the items you buy once and style for years.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg7"><div class="coll-card-hero-title">Small Luxuries<br>Under $30</div></div><div class="coll-meta"><div class="coll-tag">Budget Luxe · Everyday</div><div class="coll-name">Small Luxuries (Under $30)</div><div class="coll-desc">Small upgrades that quietly change your day — softer mornings, calmer spaces, a more intentional life.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+    <div class="coll-card"><div class="coll-card-hero cbg2"><div class="coll-card-hero-title">Spring Wardrobe<br>Under $75</div></div><div class="coll-meta"><div class="coll-tag">Spring 2026 · 37 Products</div><div class="coll-name">Simpli Luxe Spring Wardrobe</div><div class="coll-desc">A curated spring wardrobe built on elevated basics that look expensive, feel effortless, and work together seamlessly.</div><a href="#" class="coll-cta">Shop on ShopMy →</a></div></div>
+  </div>
+
+  <div class="qs" style="margin-top:3px;"><p>"Luxury doesn't have to be expensive. It just has to be intentional."</p><cite>— Staci · Founder, Simpli Luxe</cite></div>
+  <footer><div class="fsl">SL</div><div class="fbr">Simpli Luxe</div><div class="flinks"><a href="#" class="flnk">ShopMy</a><a href="#" class="flnk">LTK</a><a href="#" class="flnk">Kit</a><a href="#" class="flnk">Instagram</a></div><div class="fcp">© 2026 Simpli Luxe · Shop</div></footer>
+</section>
+
+<script>
+const NAV_MAP={home:0,edit:1,styled:2,shift:3,lessons:4,sip:5,premium:6,shop:7};
+function show(id){
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.ntb').forEach(t=>t.classList.remove('on'));
+  const s=document.getElementById(id);if(s)s.classList.add('active');
+  const tabs=document.querySelectorAll('.ntb');
+  if(NAV_MAP[id]!==undefined&&tabs[NAV_MAP[id]])tabs[NAV_MAP[id]].classList.add('on');
+  window.scrollTo(0,0);closeAll();
+}
+// Rotating quotes
+const QS=['"Luxury is choosing the pace that honors you."','"A soft life isn\'t unproductive. It\'s intentional."','"Confidence is being rooted enough to remain calm."','"You\'re not too much. You\'re exactly enough."','"Peace feels different now. Quieter. Softer. Real."','"Luxury is intention in motion — every single day."','"She was always going to bloom."','"The rooted woman grows without rushing."'];
+let qi=0;
+function rotQ(){const el=document.getElementById('rq');if(!el)return;el.classList.add('fade');setTimeout(()=>{qi=(qi+1)%QS.length;el.textContent=QS[qi];el.classList.remove('fade');},550);}
+setInterval(rotQ,4200);
+// Filter
+function filt(f,chip){
+  document.querySelectorAll('.fb .fc').forEach(c=>c.classList.remove('on'));chip.classList.add('on');
+  document.querySelectorAll('.igt').forEach(t=>{
+    const s=t.dataset.s||'',e=t.dataset.e||'';
+    const show=f==='all'||s===f||e===f||(f==='reset'&&e==='reset')||(f==='becoming'&&e==='becoming');
+    t.style.display=show?'':'none';
+  });
+}
+// Toast
+function toast(msg){
+  let t=document.getElementById('sl-t');
+  if(!t){t=document.createElement('div');t.id='sl-t';t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--obs);color:var(--gold);font-family:Jost,sans-serif;font-size:11px;letter-spacing:0.17em;padding:13px 26px;border:1px solid rgba(201,169,110,0.22);z-index:500;transition:opacity 0.4s;pointer-events:none;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.opacity='0';},2800);
+}
+// Sip modals
+function os(id){const m=document.getElementById('rm-'+id);if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
+function cs(id){const m=document.getElementById('rm-'+id);if(m){m.classList.remove('open');document.body.style.overflow='';}}
+// Board modals
+function ob(id){const m=document.getElementById('bm-'+id);if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
+function cb(id){const m=document.getElementById('bm-'+id);if(m){m.classList.remove('open');document.body.style.overflow='';}}
+function closeAll(){document.querySelectorAll('.rm.open,.bm.open').forEach(m=>{m.classList.remove('open');});document.body.style.overflow='';}
+// Waitlist
+function wl(){const i=document.querySelector('.pinp');if(i&&i.value&&i.value.includes('@')){i.value='';const b=document.querySelector('.pbtn');b.textContent='✦ You\'re on the list';b.style.background='rgba(201,169,110,0.3)';b.style.color='var(--ww)';setTimeout(()=>{b.textContent='Notify Me';b.style.background='var(--gold)';b.style.color='var(--obs)';},3200);}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll();});
+</script>
+</body>
+</html>
