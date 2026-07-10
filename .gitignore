@@ -1,0 +1,18 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# env files (real secrets live here, never committed)
+.env
+.env.local
+.env*.local
+
+# misc
+.DS_Store
+npm-debug.log*
