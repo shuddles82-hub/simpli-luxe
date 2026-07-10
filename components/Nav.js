@@ -25,7 +25,7 @@ export default function Nav() {
   return (
     <nav>
       <Link href="/" className="nl">
-        <span>SL</span>
+        <img src="/logo.png" alt="Simpli Luxe" className="nl-logo" />
       </Link>
       <div className="nt">
         {TABS.map((tab, i) => (

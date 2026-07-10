@@ -10,8 +10,8 @@ a{color:inherit;text-decoration:none;}
 main{display:block;min-height:100vh;padding-top:var(--nh);}
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nh);background:rgba(253,250,245,0.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--sb);display:flex;align-items:center;justify-content:space-between;padding:0 18px;}
-.nl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;color:var(--obs);cursor:pointer;}
-.nl span{color:var(--gold);}
+.nl{display:flex;align-items:center;cursor:pointer;}
+.nl-logo{height:38px;width:auto;display:block;}
 .nt{display:flex;gap:2px;align-items:center;overflow-x:auto;scrollbar-width:none;}
 .nt::-webkit-scrollbar{display:none;}
 .ntb{font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--taupe);padding:7px 10px;border:none;background:none;cursor:pointer;border-radius:2px;transition:all 0.2s;white-space:nowrap;display:inline-block;}
@@ -276,7 +276,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nh);background:
 .pbadge{display:inline-block;margin-top:28px;border:1px solid rgba(201,169,110,0.15);padding:8px 20px;font-family:'Jost',sans-serif;font-weight:300;font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(201,169,110,0.4);}
 /* FOOTER */
 footer{background:var(--obs);padding:38px 24px 24px;border-top:1px solid rgba(201,169,110,0.1);text-align:center;}
-.fsl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;color:var(--gold);margin-bottom:4px;}
+.fsl-logo{height:42px;width:auto;margin:0 auto 4px;display:block;}
 .fbr{font-family:'Jost',sans-serif;font-weight:200;font-size:7px;letter-spacing:0.46em;text-transform:uppercase;color:rgba(201,169,110,0.28);margin-bottom:16px;}
 .flinks{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;}
 .flnk{font-family:'Jost',sans-serif;font-weight:300;font-size:7.5px;letter-spacing:0.24em;text-transform:uppercase;color:rgba(253,250,245,0.26);text-decoration:none;transition:color 0.2s;}

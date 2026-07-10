@@ -3,7 +3,7 @@ const DEFAULT_LINKS = ['Instagram', 'TikTok', 'Pinterest'];
 export default function Footer({ links = DEFAULT_LINKS, series = '' }) {
   return (
     <footer>
-      <div className="fsl">SL</div>
+      <img src="/logo.png" alt="Simpli Luxe" className="fsl-logo" />
       <div className="fbr">Simpli Luxe</div>
       <div className="flinks">
         {links.map((l) => (
