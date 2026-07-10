@@ -57,6 +57,7 @@ export default async function LessonDetailPage({ params }) {
       </div>
       <div className="sfd">
         <article className="shc">
+          {item.image && <img className="card-hero" src={item.image} alt={item.title} />}
           <div className="shh">
             {item.subtitle && <div className="sh-script">{item.subtitle}</div>}
             <div className="sh-body">

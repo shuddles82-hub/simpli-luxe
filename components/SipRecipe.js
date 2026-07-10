@@ -3,6 +3,11 @@
 export default function SipRecipe({ sip }) {
   return (
     <div className="rbd">
+      {sip.image && (
+        // Hero photo at natural portrait ratio, uncropped; the recipe
+        // fields render as real text below it.
+        <img className="recipe-hero" src={sip.image} alt={sip.title} />
+      )}
       {sip.flavorProfile && (
         <div className="rfl">
           <div className="rfl-l">Flavor Profile</div>

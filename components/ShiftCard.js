@@ -13,6 +13,7 @@ export default function ShiftCard({ item }) {
   const hasColumns = item.letGoOf?.length > 0 || item.inviteIn?.length > 0;
   return (
     <article className="shc">
+      {item.image && <img className="card-hero" src={item.image} alt={item.title} />}
       <div className="shh">
         <div className="shmeta">
           {item.era && <span className="sh-era">{item.era}</span>}

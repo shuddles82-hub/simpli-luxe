@@ -15,16 +15,21 @@ export default function CollectionCard({ collection, cta, ctaHref }) {
 
   const inner = (
     <>
-      <div className={`coll-card-hero ${c.image ? '' : c.heroClass || 'cbg1'}`}>
-        {c.image && <img className="coll-card-hero-img" src={c.image} alt={c.name} />}
-        <div className="coll-card-hero-title">
-          {lines.map((l, i) => (
-            <span key={i}>
-              {l}
-              {i < lines.length - 1 && <br />}
-            </span>
-          ))}
-        </div>
+      <div className={`coll-card-hero ${c.image ? 'has-img' : c.heroClass || 'cbg1'}`}>
+        {c.image ? (
+          // Square 1:1 collection tile; the name sits below in the meta
+          // block, so no overlay text on top of the photo.
+          <img className="coll-card-hero-img" src={c.image} alt={c.name} />
+        ) : (
+          <div className="coll-card-hero-title">
+            {lines.map((l, i) => (
+              <span key={i}>
+                {l}
+                {i < lines.length - 1 && <br />}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       <div className="coll-meta">
         <div className="coll-tag">{tag}</div>

@@ -16,12 +16,12 @@ export default function SipCard({ sip }) {
   const badges = [sip.season, sip.eraShort || sip.era, ...(sip.flavorTags || [])].filter(Boolean);
   return (
     <Link href={`/sip/${sip.id}`} className="sipc" style={{ display: 'block' }}>
-      <div className={`siph ${sip.image ? '' : sip.heroClass || 'bgnew'}`}>
-        {sip.image ? (
-          // The uploaded recipe card is a designed image with its own
-          // title; overlaying text on it reads doubled.
-          <img className="siph-img" src={sip.image} alt={sip.title} />
-        ) : (
+      {sip.image ? (
+        // Designed recipe card image (portrait 2:3): show it whole at
+        // its natural ratio, never cropped to a strip.
+        <img className="sip-hero" src={sip.image} alt={sip.title} />
+      ) : (
+        <div className={`siph ${sip.heroClass || 'bgnew'}`}>
           <div className="siph-t">
             {lines.map((l, i) => (
               <span key={i}>
@@ -30,8 +30,8 @@ export default function SipCard({ sip }) {
               </span>
             ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
       <div className="sipm">
         <div className="sip-ep">
           {sip.isNew ? '✦ NEW · ' : ''}
