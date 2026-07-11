@@ -1,5 +1,6 @@
 import './globals.css';
 import Nav from '@/components/Nav';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 
 export const metadata = {
   title: 'Simpli Luxe',
@@ -15,6 +16,15 @@ export const metadata = {
   twitter: {
     card: 'summary',
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Simpli Luxe',
+  },
+};
+
+export const viewport = {
+  themeColor: '#0D0D0D',
 };
 
 export default function RootLayout({ children }) {
@@ -27,6 +37,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <ServiceWorkerRegister />
         <Nav />
         <main>{children}</main>
       </body>
