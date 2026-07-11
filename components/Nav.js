@@ -14,6 +14,7 @@ const TABS = [
   { href: '/shop', label: 'Shop' },
   { href: '/planner', label: 'Planner' },
   { href: '/simplibot', label: 'SimpliBot' },
+  { href: '/library', label: 'Library' },
   { href: '/account', label: '✦ Members' },
 ];
 

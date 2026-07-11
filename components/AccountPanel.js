@@ -230,6 +230,9 @@ export default function AccountPanel() {
           <Link href="/simplibot" className="acc-btn ghost" style={{ display: 'inline-block' }}>
             ✦ Talk to SimpliBot
           </Link>
+          <Link href="/library" className="acc-btn ghost" style={{ display: 'inline-block' }}>
+            ✦ Open the Luxe Library
+          </Link>
           {isInsider && (
             <button
               className="acc-btn ghost"

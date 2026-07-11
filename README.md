@@ -128,6 +128,29 @@ SimpliBot limit for them. It has a few one-time pieces.
 When you are ready to accept real payments, switch Stripe out of Test
 mode and replace the test keys with the live ones.
 
+## Turn on the Luxe Library
+
+The Library is a members-only shelf of downloads (guides, PDFs, anything
+you want to share). Some items can be free for every member; others can
+be reserved for Luxe Insiders. One setup step, then adding files is a
+two-part manual step each time (no separate admin screen yet, by design,
+to keep this simple).
+
+1. In Supabase, open the SQL Editor and run `supabase/library.sql`. It
+   creates the private storage area and the list of items, and locks
+   both down so only your website's server can read them, never a
+   member directly.
+2. To add a file:
+   - In Supabase, go to **Storage** > the **library** bucket > **Upload
+     file**. Upload it into any subfolder you like, for example
+     `guides/soft-life-starter-kit.pdf`. Copy that exact path.
+   - Go to **Table Editor** > **library_items** > **Insert row**. Fill
+     in `title`, optionally `description` and `category`, set `tier` to
+     `free` or `insider`, and paste the path you copied into
+     `storage_path`. Save.
+   - It appears on the live Library page within a minute or two for any
+     signed-in member (or Luxe Insiders only, if you set that tier).
+
 ## Deploy to Vercel
 
 1. Push this folder to a GitHub repository.
