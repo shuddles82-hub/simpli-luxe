@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import FilterBar from './FilterBar';
 import EditCover from './EditCover';
 
@@ -23,7 +24,9 @@ export default function EditExplorer({ issues }) {
       <FilterBar allLabel="All Issues" chips={chips} active={active} onChange={setActive} />
       <div className="igg">
         {visible.map((issue) => (
-          <EditCover key={issue.id} issue={issue} />
+          <Link key={issue.id} href={`/edit/${issue.id}`} style={{ display: 'block' }}>
+            <EditCover issue={issue} />
+          </Link>
         ))}
       </div>
       {visible.length === 0 && (
