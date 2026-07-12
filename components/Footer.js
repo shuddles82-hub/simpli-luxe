@@ -8,7 +8,8 @@ export default function Footer({ links = DEFAULT_LINKS, series = '' }) {
       <img src="/logo.png" alt="Simpli Luxe" className="fsl-logo" />
       <div className="fbr">Simpli Luxe</div>
       <div className="flinks">
-        {links.map((l) => {
+        {/* Email is always last so help is one tap away on every page. */}
+        {[...links.filter((l) => l !== 'Email'), 'Email'].map((l) => {
           const href = SOCIAL_LINKS[l] || '#';
           const external = href.startsWith('http');
           return (

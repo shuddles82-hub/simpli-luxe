@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getSupabase } from '@/lib/supabase';
+import { SOCIAL_LINKS } from '@/lib/social';
 
 // The Members page: magic-link sign-in, profile, and saved content.
 // Shows a gentle "coming soon" note until Supabase is configured.
@@ -188,6 +189,13 @@ export default function AccountPanel() {
               </button>
             </>
           )}
+          <p className="acc-note" style={{ marginTop: 14, marginBottom: 0 }}>
+            Link never arrived, or something feels off? Email{' '}
+            <a className="body-link" href={SOCIAL_LINKS.Email}>
+              staci.d.huddleston@gmail.com
+            </a>{' '}
+            and a real person (Staci) will help.
+          </p>
         </div>
       </div>
     );
@@ -248,6 +256,13 @@ export default function AccountPanel() {
             {insiderMsg}
           </p>
         )}
+        <p className="acc-note" style={{ marginTop: 14, marginBottom: 0 }}>
+          Questions about your account or membership? Email{' '}
+          <a className="body-link" href={SOCIAL_LINKS.Email}>
+            staci.d.huddleston@gmail.com
+          </a>{' '}
+          any time.
+        </p>
       </div>
 
       {!isInsider && priceInfo && (
