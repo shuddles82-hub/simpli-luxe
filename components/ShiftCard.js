@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import SaveButton from './SaveButton';
+import { linkify } from './RichText';
 
 function BodyParagraphs({ text }) {
   const paras = String(text || '')
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
-  return paras.map((p, i) => <p key={i}>{p}</p>);
+  return paras.map((p, i) => <p key={i}>{linkify(p)}</p>);
 }
 
 export default function ShiftCard({ item }) {
@@ -54,7 +55,7 @@ export default function ShiftCard({ item }) {
               <div className="shch">Let Go Of</div>
               <ul className="shl">
                 {item.letGoOf.map((x, i) => (
-                  <li key={i}>{x}</li>
+                  <li key={i}>{linkify(x)}</li>
                 ))}
               </ul>
             </div>
@@ -64,7 +65,7 @@ export default function ShiftCard({ item }) {
               <div className="shch">{item.inviteHeading || 'Invite In'}</div>
               <ul className="shl">
                 {item.inviteIn.map((x, i) => (
-                  <li key={i}>{x}</li>
+                  <li key={i}>{linkify(x)}</li>
                 ))}
               </ul>
             </div>

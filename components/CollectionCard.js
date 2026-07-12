@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { linkify } from './RichText';
 
 function heroLines(c) {
   return String(c.heroTitle || c.name).split('\n');
@@ -11,7 +12,9 @@ export default function CollectionCard({ collection, cta, ctaHref }) {
   const lines = heroLines(c);
   const tag = c.tag || [c.era, c.season].filter(Boolean).join(' · ') || c.category;
   const outLink = c.shopMyLink || c.ltkLink || c.kitLink || '';
-  const label = cta || 'Shop on ShopMy →';
+  // Name the button after whichever storefront the link actually opens.
+  const storeName = c.shopMyLink ? 'ShopMy' : c.ltkLink ? 'LTK' : c.kitLink ? 'Kit' : 'ShopMy';
+  const label = cta || `Shop on ${storeName} →`;
 
   const inner = (
     <>
@@ -34,7 +37,7 @@ export default function CollectionCard({ collection, cta, ctaHref }) {
       <div className="coll-meta">
         <div className="coll-tag">{tag}</div>
         <div className="coll-name">{c.name}</div>
-        <div className="coll-desc">{c.description}</div>
+        <div className="coll-desc">{linkify(c.description)}</div>
         {ctaHref ? (
           <Link href={ctaHref} className="coll-cta">
             {label}

@@ -347,6 +347,14 @@ textarea.acc-input{min-height:96px;resize:vertical;font-family:'Jost',sans-serif
 .lib-item .insider-badge{margin-bottom:0;}
 .lib-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--obs);line-height:1.3;}
 .lib-desc{font-family:'Jost',sans-serif;font-weight:300;font-size:11px;color:var(--taupe);line-height:1.6;margin-top:3px;}
+/* INLINE CONTENT LINKS (ShopMy, LTK, etc. pasted in Airtable text) */
+.body-link{color:var(--gold);border-bottom:1px solid rgba(201,169,110,0.4);transition:border-color 0.2s;}
+.body-link:hover{border-bottom-color:var(--gold);}
+.rrt .body-link,.vbar .body-link{color:inherit;border-bottom-color:currentColor;}
+/* Shop links on Simpli Styled boards */
+.bt-shop{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;}
+.bt-shop-lnk{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,0.35);padding:6px 12px;backdrop-filter:blur(6px);transition:all 0.2s;}
+.bt-shop-lnk:hover{background:var(--gold);color:var(--obs);}
 .insider-upsell{background:linear-gradient(160deg,#0d0d0d 0%,#1a1408 100%);border:1px solid rgba(201,169,110,0.2);}
 .insider-upsell .shch{color:var(--gold);border-bottom-color:rgba(201,169,110,0.2);}
 .insider-upsell .acc-note{color:rgba(253,250,245,0.5);}

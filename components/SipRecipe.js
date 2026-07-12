@@ -1,3 +1,5 @@
+import { linkify } from './RichText';
+
 // The recipe card body (flavor profile, ingredients, steps, ritual,
 // vibe bar). Used by the /sip/[id] detail page and the SipModal.
 export default function SipRecipe({ sip }) {
@@ -11,7 +13,7 @@ export default function SipRecipe({ sip }) {
       {sip.flavorProfile && (
         <div className="rfl">
           <div className="rfl-l">Flavor Profile</div>
-          <div className="rfl-t">{sip.flavorProfile}</div>
+          <div className="rfl-t">{linkify(sip.flavorProfile)}</div>
         </div>
       )}
       {(sip.ingredients?.length > 0 || sip.howToMake?.length > 0) && (
@@ -21,7 +23,7 @@ export default function SipRecipe({ sip }) {
               <div className="rch">Ingredients</div>
               <ul className="rl">
                 {sip.ingredients.map((x, i) => (
-                  <li key={i}>{x}</li>
+                  <li key={i}>{linkify(x)}</li>
                 ))}
               </ul>
             </div>
@@ -44,7 +46,7 @@ export default function SipRecipe({ sip }) {
       {sip.ritualMoment && (
         <div className="rritual">
           <div className="rrl">{sip.ritualHeading || 'Ritual Moment'}</div>
-          <div className="rrt">{sip.ritualMoment}</div>
+          <div className="rrt">{linkify(sip.ritualMoment)}</div>
         </div>
       )}
       {sip.vibeNotes && <div className="vbar">{sip.vibeNotes}</div>}

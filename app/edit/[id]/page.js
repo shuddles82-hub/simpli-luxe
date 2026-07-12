@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
 import SaveButton from '@/components/SaveButton';
+import { linkify } from '@/components/RichText';
 import { getEditIssueById } from '@/lib/content';
 
 export const revalidate = 600;
@@ -29,7 +30,17 @@ function Paragraphs({ text }) {
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
-  return paras.map((p, i) => <p key={i}>{p}</p>);
+  return paras.map((p, i) => <p key={i}>{linkify(p)}</p>);
+}
+
+function LinkifiedList({ items, className }) {
+  return (
+    <ul className={className}>
+      {items.map((x, i) => (
+        <li key={i}>{linkify(x)}</li>
+      ))}
+    </ul>
+  );
 }
 
 export default async function EditIssueDetailPage({ params }) {
@@ -111,21 +122,13 @@ export default async function EditIssueDetailPage({ params }) {
                 {issue.letGoOf?.length > 0 && (
                   <div>
                     <div className="shch">Let Go Of</div>
-                    <ul className="shl">
-                      {issue.letGoOf.map((x, i) => (
-                        <li key={i}>{x}</li>
-                      ))}
-                    </ul>
+                    <LinkifiedList className="shl" items={issue.letGoOf} />
                   </div>
                 )}
                 {issue.inviteIn?.length > 0 && (
                   <div>
                     <div className="shch">Invite In</div>
-                    <ul className="shl">
-                      {issue.inviteIn.map((x, i) => (
-                        <li key={i}>{x}</li>
-                      ))}
-                    </ul>
+                    <LinkifiedList className="shl" items={issue.inviteIn} />
                   </div>
                 )}
               </div>
@@ -144,21 +147,13 @@ export default async function EditIssueDetailPage({ params }) {
                 {issue.capsuleStaples?.length > 0 && (
                   <div>
                     <div className="rch">Capsule Staples</div>
-                    <ul className="rl">
-                      {issue.capsuleStaples.map((x, i) => (
-                        <li key={i}>{x}</li>
-                      ))}
-                    </ul>
+                    <LinkifiedList className="rl" items={issue.capsuleStaples} />
                   </div>
                 )}
                 {issue.capsuleFormulas?.length > 0 && (
                   <div>
                     <div className="rch">Outfit Formulas</div>
-                    <ul className="rl">
-                      {issue.capsuleFormulas.map((x, i) => (
-                        <li key={i}>{x}</li>
-                      ))}
-                    </ul>
+                    <LinkifiedList className="rl" items={issue.capsuleFormulas} />
                   </div>
                 )}
               </div>
@@ -204,31 +199,19 @@ export default async function EditIssueDetailPage({ params }) {
               {issue.shopUnder30?.length > 0 && (
                 <div>
                   <div className="rch">Under $30</div>
-                  <ul className="rl">
-                    {issue.shopUnder30.map((x, i) => (
-                      <li key={i}>{x}</li>
-                    ))}
-                  </ul>
+                  <LinkifiedList className="rl" items={issue.shopUnder30} />
                 </div>
               )}
               {issue.shopUnder75?.length > 0 && (
                 <div>
                   <div className="rch">Under $75</div>
-                  <ul className="rl">
-                    {issue.shopUnder75.map((x, i) => (
-                      <li key={i}>{x}</li>
-                    ))}
-                  </ul>
+                  <LinkifiedList className="rl" items={issue.shopUnder75} />
                 </div>
               )}
               {issue.shopSplurges?.length > 0 && (
                 <div>
                   <div className="rch">Splurges</div>
-                  <ul className="rl">
-                    {issue.shopSplurges.map((x, i) => (
-                      <li key={i}>{x}</li>
-                    ))}
-                  </ul>
+                  <LinkifiedList className="rl" items={issue.shopSplurges} />
                 </div>
               )}
             </div>

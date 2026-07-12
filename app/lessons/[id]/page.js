@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
 import SaveButton from '@/components/SaveButton';
+import { linkify } from '@/components/RichText';
 import { getLessonById } from '@/lib/content';
 
 export const revalidate = 600;
@@ -29,7 +30,7 @@ function BodyParagraphs({ text }) {
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
-  return paras.map((p, i) => <p key={i}>{p}</p>);
+  return paras.map((p, i) => <p key={i}>{linkify(p)}</p>);
 }
 
 export default async function LessonDetailPage({ params }) {

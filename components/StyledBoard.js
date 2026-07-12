@@ -36,6 +36,20 @@ export default function StyledBoard({ board }) {
             ))}
           </div>
         )}
+        {(board.shopMyLink || board.ltkLink) && (
+          <div className="bt-shop">
+            {board.shopMyLink && (
+              <a href={board.shopMyLink} target="_blank" rel="noreferrer" className="bt-shop-lnk">
+                Shop on ShopMy →
+              </a>
+            )}
+            {board.ltkLink && (
+              <a href={board.ltkLink} target="_blank" rel="noreferrer" className="bt-shop-lnk">
+                Shop on LTK →
+              </a>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
