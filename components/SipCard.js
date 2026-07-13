@@ -34,7 +34,7 @@ export default function SipCard({ sip }) {
       )}
       <div className="sipm">
         <div className="sip-ep">
-          {sip.isNew ? '✦ NEW · ' : ''}
+          {sip.premium ? '✦ INSIDER · ' : sip.isNew ? '✦ NEW · ' : ''}
           {epLabel(sip)}
         </div>
         <div className="sip-nm">{sip.title}</div>

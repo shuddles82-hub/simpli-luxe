@@ -117,6 +117,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nh);background:
 .sh-body p{margin-bottom:10px;}
 .sh-body p:last-child{margin-bottom:0;}
 .sh-q{border-left:2px solid var(--gold);padding:13px 17px;margin:16px 22px;background:var(--cream);}
+.shh .sh-q{margin:16px 0 0;}
 .sh-q p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--obs);}
 .sh2{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:16px 22px 22px;}
 .shch{font-family:'Jost',sans-serif;font-weight:500;font-size:8px;letter-spacing:0.17em;text-transform:uppercase;color:var(--obs);margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--sb);}

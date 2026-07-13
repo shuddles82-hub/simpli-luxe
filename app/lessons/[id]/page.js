@@ -2,8 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
-import SaveButton from '@/components/SaveButton';
-import { linkify } from '@/components/RichText';
+import LessonDetailGate from '@/components/LessonDetailGate';
 import { getLessonById } from '@/lib/content';
 
 export const revalidate = 600;
@@ -23,14 +22,6 @@ export async function generateMetadata({ params }) {
       ...(item.image ? { images: [item.image] } : {}),
     },
   };
-}
-
-function BodyParagraphs({ text }) {
-  const paras = String(text || '')
-    .split(/\n{2,}/)
-    .map((p) => p.trim())
-    .filter(Boolean);
-  return paras.map((p, i) => <p key={i}>{linkify(p)}</p>);
 }
 
 export default async function LessonDetailPage({ params }) {
@@ -61,23 +52,8 @@ export default async function LessonDetailPage({ params }) {
           {item.image && <img className="card-hero" src={item.image} alt={item.title} />}
           <div className="shh">
             {item.subtitle && <div className="sh-script">{item.subtitle}</div>}
-            <div className="sh-body">
-              <BodyParagraphs text={item.body} />
-            </div>
-            <div style={{ marginTop: 12 }}>
-              <SaveButton
-                contentKey={item.id}
-                series="Luxe Life Lessons"
-                title={item.title}
-                href={`/lessons/${item.id}`}
-              />
-            </div>
+            <LessonDetailGate item={item} />
           </div>
-          {item.quote && (
-            <div className="sh-q">
-              <p>&ldquo;{item.quote}&rdquo;</p>
-            </div>
-          )}
         </article>
         <div style={{ padding: '18px 0', textAlign: 'center' }}>
           <Link className="fc" href="/lessons" style={{ display: 'inline-block' }}>

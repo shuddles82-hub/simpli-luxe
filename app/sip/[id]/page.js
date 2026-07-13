@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import SaveButton from '@/components/SaveButton';
-import SipRecipe, { sipTagLine } from '@/components/SipRecipe';
+import { sipTagLine } from '@/components/SipRecipe';
+import SipDetailGate from '@/components/SipDetailGate';
 import { getSipById } from '@/lib/content';
 
 export const revalidate = 600;
@@ -61,7 +62,7 @@ export default async function SipDetailPage({ params }) {
         </div>
       </div>
       <div className="rcrd">
-        <SipRecipe sip={sip} />
+        <SipDetailGate sip={sip} />
       </div>
       <Footer series="The Simpli Sip" />
     </>
