@@ -126,6 +126,9 @@ export default async function HomePage() {
               <div className="lcat-n">Personal Joy</div>
             </div>
           </div>
+          <Link href="/luxuries" className="hcta" style={{ marginTop: 24, display: 'inline-block' }}>
+            Explore Life&apos;s Little Luxuries →
+          </Link>
         </div>
       </div>
 

@@ -337,6 +337,46 @@ textarea.acc-input{min-height:96px;resize:vertical;font-family:'Jost',sans-serif
 .bot-who{font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
 .bot-text{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--obs);line-height:1.8;white-space:pre-line;}
 .bot-text.thinking{font-family:'Dancing Script',cursive;font-size:14px;color:var(--taupe);}
+.bot-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:2px;}
+.bot-ask{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px;}
+.bot-ask:hover{color:var(--gold-l);}
+.bot-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.bot-chip{font-family:'Jost',sans-serif;font-weight:300;font-size:10.5px;color:var(--obs);background:var(--cream);border:1px solid var(--sb);padding:7px 12px;cursor:pointer;transition:all 0.2s;line-height:1.4;text-align:left;}
+.bot-chip:hover{border-color:var(--gold);background:rgba(201,169,110,0.08);}
+.bot-chip:disabled{opacity:0.5;cursor:default;}
+.bot-upsell{margin-top:8px;}
+.bot-upsell a{font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);text-decoration:underline;text-underline-offset:3px;}
+.bot-modal-ovl{position:fixed;inset:0;z-index:300;background:rgba(13,13,13,0.6);display:flex;align-items:center;justify-content:center;padding:20px;}
+.bot-modal{background:var(--ww);max-width:520px;width:100%;max-height:84vh;overflow-y:auto;padding:30px 26px;position:relative;}
+.bot-modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-family:'Jost',sans-serif;font-size:18px;color:var(--taupe);cursor:pointer;line-height:1;padding:4px;}
+.bot-modal-close:hover{color:var(--obs);}
+.bot-modal-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;color:var(--obs);margin-bottom:6px;}
+.bot-modal-intro{font-family:'Jost',sans-serif;font-weight:300;font-size:12px;color:var(--taupe);line-height:1.85;margin-bottom:18px;}
+.bot-modal-list{list-style:none;margin-bottom:18px;}
+.bot-modal-list li{padding:10px 0;border-bottom:1px solid var(--sb);font-family:'Jost',sans-serif;font-weight:300;font-size:12.5px;color:var(--obs);line-height:1.7;}
+.bot-modal-list li b{font-weight:500;color:var(--obs);}
+.bot-modal-rule{font-family:'Jost',sans-serif;font-weight:300;font-style:italic;font-size:11.5px;color:var(--gold);line-height:1.8;}
+/* LIFE'S LITTLE LUXURIES */
+.lux-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:3px;padding:3px;max-width:900px;margin:0 auto;}
+.lux-c{background:var(--ww);position:relative;transition:background 0.2s;}
+.lux-cover{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--cream);}
+.lux-cover-media{width:100%;height:100%;object-fit:cover;display:block;}
+.lux-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:rgba(13,13,13,0.55);color:var(--ww);display:flex;align-items:center;justify-content:center;font-size:13px;pointer-events:none;}
+.lux-stack{position:absolute;top:10px;right:10px;font-family:'Jost',sans-serif;font-weight:400;font-size:9px;letter-spacing:0.08em;color:var(--ww);background:rgba(13,13,13,0.55);backdrop-filter:blur(6px);padding:5px 9px;display:flex;align-items:center;gap:4px;}
+.lux-stack-icon{font-size:11px;}
+.lux-body{padding:20px 20px 24px;}
+.lux-new{display:inline-block;font-family:'Jost',sans-serif;font-weight:400;font-size:7px;letter-spacing:0.17em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:3px 7px;margin-bottom:8px;}
+.lux-cat{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.17em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.lux-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--obs);line-height:1.2;margin-bottom:8px;}
+.lux-text{font-family:'Jost',sans-serif;font-weight:300;font-size:11.5px;color:var(--taupe);line-height:1.75;}
+.lux-carousel{position:relative;max-width:520px;width:100%;max-height:88vh;background:var(--obs);display:flex;align-items:center;justify-content:center;}
+.lux-carousel-media{max-width:100%;max-height:88vh;display:block;object-fit:contain;}
+.lux-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(13,13,13,0.5);color:var(--ww);border:none;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.lux-nav-prev{left:8px;}
+.lux-nav-next{right:8px;}
+.lux-dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px;}
+.lux-dot{width:6px;height:6px;border-radius:50%;background:rgba(253,250,245,0.35);cursor:pointer;}
+.lux-dot.on{background:var(--gold);}
 .insider-badge{display:inline-block;font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--obs);background:var(--gold);padding:5px 10px;margin-bottom:10px;}
 /* LUXE LIBRARY */
 .lib-item{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--sb);}

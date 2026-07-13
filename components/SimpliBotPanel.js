@@ -3,6 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { getSupabase } from '@/lib/supabase';
+import {
+  GUIDE_INTRO,
+  GUIDE_ITEMS,
+  GUIDE_RULE,
+  pickSuggestionChips,
+} from '@/lib/simplibot-guide';
 
 // SimpliBot chat: members-only, moods first (Soft Life Coach), then a
 // quiet conversation. The Anthropic call happens server-side at
@@ -27,7 +33,13 @@ export default function SimpliBotPanel() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [thinking, setThinking] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
+  const [chips, setChips] = useState([]);
   const endRef = useRef(null);
+
+  useEffect(() => {
+    setChips(pickSuggestionChips());
+  }, []);
 
   useEffect(() => {
     if (!supabase) return;
@@ -105,6 +117,7 @@ export default function SimpliBotPanel() {
           role: 'assistant',
           content:
             data?.reply || 'I lost my train of thought for a moment. Try me again in a minute.',
+          limitReached: Boolean(data?.limitReached),
         },
       ]);
     } catch {
@@ -133,6 +146,14 @@ export default function SimpliBotPanel() {
       </div>
 
       <div className="acc-card">
+        <div className="bot-head">
+          <div className="shch" style={{ marginBottom: 0 }}>
+            A Quiet Conversation
+          </div>
+          <button className="bot-ask" onClick={() => setShowGuide(true)}>
+            What can I ask SimpliBot?
+          </button>
+        </div>
         <div className="bot-chat">
           <div className="bot-msg">
             <div className="bot-who">✦ SimpliBot</div>
@@ -147,6 +168,11 @@ export default function SimpliBotPanel() {
               <div key={i} className="bot-msg">
                 <div className="bot-who">✦ SimpliBot</div>
                 <div className="bot-text">{m.content}</div>
+                {m.limitReached && (
+                  <div className="bot-upsell">
+                    <Link href="/account">✦ Become a Luxe Insider for more time together</Link>
+                  </div>
+                )}
               </div>
             )
           )}
@@ -158,7 +184,21 @@ export default function SimpliBotPanel() {
           )}
           <div ref={endRef} />
         </div>
-        <div className="pl-row" style={{ marginTop: 14 }}>
+        {chips.length > 0 && (
+          <div className="bot-chips" style={{ marginTop: 14 }}>
+            {chips.map((c) => (
+              <button
+                key={c.label}
+                className="bot-chip"
+                disabled={thinking}
+                onClick={() => send(c.message)}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="pl-row">
           <input
             className="acc-input"
             type="text"
@@ -176,6 +216,26 @@ export default function SimpliBotPanel() {
           share up to 10 moments a day; Luxe Insiders receive more.
         </p>
       </div>
+
+      {showGuide && (
+        <div className="bot-modal-ovl" onClick={() => setShowGuide(false)}>
+          <div className="bot-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="bot-modal-close" onClick={() => setShowGuide(false)} aria-label="Close">
+              ×
+            </button>
+            <div className="bot-modal-title">What can I ask SimpliBot?</div>
+            <p className="bot-modal-intro">{GUIDE_INTRO}</p>
+            <ul className="bot-modal-list">
+              {GUIDE_ITEMS.map((item) => (
+                <li key={item.label}>
+                  <b>{item.label}</b> — {item.body}
+                </li>
+              ))}
+            </ul>
+            <p className="bot-modal-rule">{GUIDE_RULE}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
