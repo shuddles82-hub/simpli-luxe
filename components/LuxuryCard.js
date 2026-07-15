@@ -8,10 +8,15 @@ import { useRef, useState } from 'react';
 export default function LuxuryCard({ item }) {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
+  const [videoError, setVideoError] = useState({});
   const media = item.media || [];
   const cover = media[0];
   const hasMore = media.length > 1;
   const touchX = useRef(null);
+
+  function markVideoError(i) {
+    setVideoError((prev) => ({ ...prev, [i]: true }));
+  }
 
   function openAt(i) {
     setIndex(i);
@@ -36,8 +41,17 @@ export default function LuxuryCard({ item }) {
             onClick={() => openAt(0)}
             style={{ cursor: media.length ? 'pointer' : 'default' }}
           >
-            {cover.isVideo ? (
-              <video className="lux-cover-media" src={cover.url} muted playsInline preload="metadata" />
+            {cover.isVideo && videoError[0] ? (
+              <div className="lux-cover-media lux-cover-fallback">🎬</div>
+            ) : cover.isVideo ? (
+              <video
+                className="lux-cover-media"
+                src={cover.url}
+                muted
+                playsInline
+                preload="metadata"
+                onError={() => markVideoError(0)}
+              />
             ) : (
               <img className="lux-cover-media" src={cover.url} alt={item.title} />
             )}
@@ -76,8 +90,19 @@ export default function LuxuryCard({ item }) {
             <button className="bot-modal-close" onClick={() => setOpen(false)} aria-label="Close">
               ×
             </button>
-            {media[index].isVideo ? (
+            {media[index].isVideo && videoError[index] ? (
+              <div className="lux-video-fallback">
+                <p>
+                  This video format isn&apos;t supported on this device. You can still view it
+                  directly.
+                </p>
+                <a href={media[index].url} target="_blank" rel="noreferrer" className="acc-btn ghost">
+                  Open Video ↗
+                </a>
+              </div>
+            ) : media[index].isVideo ? (
               <video
+                key={media[index].url}
                 className="lux-carousel-media"
                 src={media[index].url}
                 controls
@@ -85,6 +110,7 @@ export default function LuxuryCard({ item }) {
                 muted
                 loop
                 playsInline
+                onError={() => markVideoError(index)}
               />
             ) : (
               <img className="lux-carousel-media" src={media[index].url} alt={item.title} />
