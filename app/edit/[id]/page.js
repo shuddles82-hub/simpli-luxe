@@ -86,6 +86,11 @@ export default async function EditIssueDetailPage({ params }) {
             title={issue.title}
             href={`/edit/${issue.id}`}
           />
+          {issue.pdfUrl && (
+            <a href={issue.pdfUrl} target="_blank" rel="noreferrer" className="savebtn">
+              ⇩ Download PDF
+            </a>
+          )}
           <Link className="rm-close" href="/edit">
             ← All Issues
           </Link>
