@@ -241,6 +241,9 @@ export default function AccountPanel() {
           <Link href="/library" className="acc-btn ghost" style={{ display: 'inline-block' }}>
             ✦ Open the Luxe Library
           </Link>
+          <Link href="/insider" className="acc-btn ghost" style={{ display: 'inline-block' }}>
+            ✦ The Insider Hub
+          </Link>
           {isInsider && (
             <button
               className="acc-btn ghost"
