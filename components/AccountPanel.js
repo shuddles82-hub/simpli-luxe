@@ -14,7 +14,7 @@ export default function AccountPanel() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [authMode, setAuthMode] = useState('signin'); // signin | signup | forgot
+  const [authMode, setAuthMode] = useState('signin'); // signin | signup | forgot | magiclink
   const [authBusy, setAuthBusy] = useState(false);
   const [checkEmailMsg, setCheckEmailMsg] = useState('');
   const [error, setError] = useState('');
@@ -150,6 +150,7 @@ export default function AccountPanel() {
       signin: 'Sign In',
       signup: 'Create Your Account',
       forgot: 'Reset Your Password',
+      magiclink: 'Email Me a Sign-In Link',
     };
 
     async function handleSubmit() {
@@ -161,7 +162,17 @@ export default function AccountPanel() {
       }
       setAuthBusy(true);
       try {
-        if (authMode === 'signin') {
+        if (authMode === 'magiclink') {
+          const { error: err } = await supabase.auth.signInWithOtp({
+            email,
+            options: { emailRedirectTo: `${window.location.origin}/account` },
+          });
+          if (err) setError('We could not send the link just now. Please try again in a moment.');
+          else
+            setCheckEmailMsg(
+              'Check your inbox. Your sign-in link is on its way. Open it in the same browser or app you want to stay signed in on.'
+            );
+        } else if (authMode === 'signin') {
           if (!password) {
             setError('Please enter your password.');
             return;
@@ -226,8 +237,9 @@ export default function AccountPanel() {
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
-          {authMode !== 'forgot' && (
+          {authMode !== 'forgot' && authMode !== 'magiclink' && (
             <input
               className="acc-input"
               type="password"
@@ -259,6 +271,8 @@ export default function AccountPanel() {
               ? 'Sign In'
               : authMode === 'signup'
               ? 'Create Account'
+              : authMode === 'magiclink'
+              ? 'Email Me a Link'
               : 'Send Reset Link'}
           </button>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 12 }}>
@@ -298,10 +312,22 @@ export default function AccountPanel() {
                 Forgot password?
               </span>
             )}
+            {authMode !== 'magiclink' && (
+              <span
+                className="fc"
+                style={{ display: 'inline-block' }}
+                onClick={() => {
+                  setAuthMode('magiclink');
+                  setError('');
+                }}
+              >
+                Prefer a sign-in link instead?
+              </span>
+            )}
           </div>
           <p className="acc-note" style={{ marginTop: 14, marginBottom: 0 }}>
             Signed in before with just an email link? Use &ldquo;Forgot password?&rdquo; once to set
-            a password for your account.
+            a password for your account, or keep using the sign-in link above.
           </p>
           <p className="acc-note" style={{ marginTop: 6, marginBottom: 0 }}>
             Trouble signing in? Email{' '}
