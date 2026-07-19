@@ -289,6 +289,7 @@ footer{background:var(--obs);padding:38px 24px 24px;border-top:1px solid rgba(20
 .savebtn{font-family:'Jost',sans-serif;font-weight:400;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,169,110,0.28);background:none;padding:6px 12px;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;}
 .savebtn:hover{background:rgba(201,169,110,0.08);}
 .savebtn.saved{background:var(--gold);color:var(--obs);border-color:var(--gold);}
+.share-row{display:flex;gap:8px;flex-wrap:wrap;}
 /* ACCOUNT */
 .acc{max-width:640px;margin:0 auto;padding:40px 24px;}
 .acc-card{background:var(--ww);padding:26px 22px;margin-bottom:3px;}

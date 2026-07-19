@@ -1,4 +1,5 @@
 import SaveButton from './SaveButton';
+import ShareRow from './ShareRow';
 
 // Dark quote card shown inline in the Soft Life Shift feed.
 // The note text lives in `body` (or `quote` for promoted records).
@@ -22,13 +23,14 @@ export default function NoteToSelf({ item }) {
     <div className="nts">
       <div className="nts-ey">Note to Self{item.isNew ? ' · New' : ''}</div>
       <div className="nts-t">&ldquo;{content}&rdquo;</div>
-      <div style={{ marginTop: 12 }}>
+      <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <SaveButton
           contentKey={item.id}
           series="Note to Self"
           title={shortTitle}
           href={`/shift/${item.id}`}
         />
+        <ShareRow path={`/shift/${item.id}`} title={shortTitle} />
       </div>
     </div>
   );

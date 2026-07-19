@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
 import SaveButton from '@/components/SaveButton';
+import ShareRow from '@/components/ShareRow';
 import { linkify } from '@/components/RichText';
 import { getEditIssueById } from '@/lib/content';
 
@@ -79,13 +80,14 @@ export default async function EditIssueDetailPage({ params }) {
             </div>
           )}
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <SaveButton
             contentKey={issue.id}
             series="The Simpli Edit"
             title={issue.title}
             href={`/edit/${issue.id}`}
           />
+          <ShareRow path={`/edit/${issue.id}`} title={issue.title} text={issue.tagline} image={issue.cover} />
           {issue.pdfUrl && (
             <a href={issue.pdfUrl} target="_blank" rel="noreferrer" className="savebtn">
               ⇩ Download PDF

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getSupabase } from '@/lib/supabase';
 import { linkify } from './RichText';
 import SaveButton from './SaveButton';
+import ShareRow from './ShareRow';
 
 function BodyParagraphs({ text }) {
   const paras = String(text || '')
@@ -56,6 +57,9 @@ export default function LessonDetailGate({ item }) {
         <Link href="/account" className="acc-btn" style={{ display: 'inline-block' }}>
           ✦ Become a Luxe Insider
         </Link>
+        <div style={{ marginTop: 12 }}>
+          <ShareRow path={`/lessons/${item.id}`} title={item.title} />
+        </div>
       </div>
     );
   }
@@ -66,8 +70,9 @@ export default function LessonDetailGate({ item }) {
       <div className="sh-body">
         <BodyParagraphs text={data.body} />
       </div>
-      <div style={{ marginTop: 12 }}>
+      <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <SaveButton contentKey={data.id} series="Luxe Life Lessons" title={data.title} href={`/lessons/${data.id}`} />
+        <ShareRow path={`/lessons/${data.id}`} title={data.title} image={data.image} />
       </div>
       {data.quote && (
         <div className="sh-q">

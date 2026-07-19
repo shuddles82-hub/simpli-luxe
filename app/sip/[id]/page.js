@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import SaveButton from '@/components/SaveButton';
+import ShareRow from '@/components/ShareRow';
 import { sipTagLine } from '@/components/SipRecipe';
 import SipDetailGate from '@/components/SipDetailGate';
 import { getSipById } from '@/lib/content';
@@ -49,13 +50,14 @@ export default async function SipDetailPage({ params }) {
             </div>
           )}
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <SaveButton
             contentKey={sip.id}
             series="The Simpli Sip"
             title={sip.title}
             href={`/sip/${sip.id}`}
           />
+          <ShareRow path={`/sip/${sip.id}`} title={sip.title} text={sip.vibe} image={sip.image} />
           <Link className="rm-close" href="/sip">
             ← Back to Sips
           </Link>

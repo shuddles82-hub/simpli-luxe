@@ -12,7 +12,11 @@ export default function AccountPanel() {
   const [session, setSession] = useState(null);
   const [ready, setReady] = useState(false);
   const [email, setEmail] = useState('');
-  const [linkSent, setLinkSent] = useState(false);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [authMode, setAuthMode] = useState('signin'); // signin | signup | forgot
+  const [authBusy, setAuthBusy] = useState(false);
+  const [checkEmailMsg, setCheckEmailMsg] = useState('');
   const [error, setError] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [nameSaved, setNameSaved] = useState(false);
@@ -142,55 +146,165 @@ export default function AccountPanel() {
   }
 
   if (!session) {
+    const titles = {
+      signin: 'Sign In',
+      signup: 'Create Your Account',
+      forgot: 'Reset Your Password',
+    };
+
+    async function handleSubmit() {
+      setError('');
+      setCheckEmailMsg('');
+      if (!email.includes('@')) {
+        setError('That email does not look quite right. One more try?');
+        return;
+      }
+      setAuthBusy(true);
+      try {
+        if (authMode === 'signin') {
+          if (!password) {
+            setError('Please enter your password.');
+            return;
+          }
+          const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+          if (err) {
+            setError('That email and password do not match. Try again, or reset your password below.');
+          }
+        } else if (authMode === 'signup') {
+          if (password.length < 6) {
+            setError('Please choose a password with at least 6 characters.');
+            return;
+          }
+          if (password !== confirmPassword) {
+            setError('Those passwords do not match. One more try?');
+            return;
+          }
+          const { data, error: err } = await supabase.auth.signUp({
+            email,
+            password,
+            options: { emailRedirectTo: `${window.location.origin}/account` },
+          });
+          if (err) {
+            setError(
+              err.message?.toLowerCase().includes('already registered')
+                ? 'An account already exists for that email. Try signing in instead.'
+                : 'We could not create your account just now. Please try again in a moment.'
+            );
+          } else if (!data.session) {
+            setCheckEmailMsg(
+              'Almost there. Check your inbox for a confirmation link, then come back and sign in.'
+            );
+            setAuthMode('signin');
+          }
+        } else if (authMode === 'forgot') {
+          const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: `${window.location.origin}/account/reset`,
+          });
+          if (err) setError('We could not send that email just now. Please try again in a moment.');
+          else {
+            setCheckEmailMsg('Check your inbox for a link to set a new password.');
+            setAuthMode('signin');
+          }
+        }
+      } finally {
+        setAuthBusy(false);
+      }
+    }
+
     return (
       <div className="acc">
         <div className="acc-card">
-          <div className="shch">Sign In · No Password Needed</div>
-          {linkSent ? (
-            <p className="acc-note">
-              Check your inbox. Your sign-in link is on its way. You can close this page; the link
-              will bring you right back.
+          <div className="shch">{titles[authMode]}</div>
+          {checkEmailMsg && (
+            <p className="acc-note" style={{ color: 'var(--gold)' }}>
+              {checkEmailMsg}
             </p>
-          ) : (
-            <>
-              <p className="acc-note">
-                Enter your email and we will send you a private sign-in link. No password to
-                remember, ever.
-              </p>
-              <input
-                className="acc-input"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {error && (
-                <p className="acc-note" style={{ color: 'var(--gold)' }}>
-                  {error}
-                </p>
-              )}
-              <button
-                className="acc-btn"
-                onClick={async () => {
+          )}
+          <input
+            className="acc-input"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {authMode !== 'forgot' && (
+            <input
+              className="acc-input"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+            />
+          )}
+          {authMode === 'signup' && (
+            <input
+              className="acc-input"
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+            />
+          )}
+          {error && (
+            <p className="acc-note" style={{ color: 'var(--gold)' }}>
+              {error}
+            </p>
+          )}
+          <button className="acc-btn" disabled={authBusy} onClick={handleSubmit}>
+            {authBusy
+              ? 'One moment...'
+              : authMode === 'signin'
+              ? 'Sign In'
+              : authMode === 'signup'
+              ? 'Create Account'
+              : 'Send Reset Link'}
+          </button>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 12 }}>
+            {authMode !== 'signin' && (
+              <span
+                className="fc"
+                style={{ display: 'inline-block' }}
+                onClick={() => {
+                  setAuthMode('signin');
                   setError('');
-                  if (!email.includes('@')) {
-                    setError('That email does not look quite right. One more try?');
-                    return;
-                  }
-                  const { error: err } = await supabase.auth.signInWithOtp({
-                    email,
-                    options: { emailRedirectTo: `${window.location.origin}/account` },
-                  });
-                  if (err) setError('We could not send the link just now. Please try again in a moment.');
-                  else setLinkSent(true);
                 }}
               >
-                Email Me a Sign-In Link
-              </button>
-            </>
-          )}
+                Sign In
+              </span>
+            )}
+            {authMode !== 'signup' && (
+              <span
+                className="fc"
+                style={{ display: 'inline-block' }}
+                onClick={() => {
+                  setAuthMode('signup');
+                  setError('');
+                }}
+              >
+                New here? Create an account
+              </span>
+            )}
+            {authMode !== 'forgot' && (
+              <span
+                className="fc"
+                style={{ display: 'inline-block' }}
+                onClick={() => {
+                  setAuthMode('forgot');
+                  setError('');
+                }}
+              >
+                Forgot password?
+              </span>
+            )}
+          </div>
           <p className="acc-note" style={{ marginTop: 14, marginBottom: 0 }}>
-            Link never arrived, or something feels off? Email{' '}
+            Signed in before with just an email link? Use &ldquo;Forgot password?&rdquo; once to set
+            a password for your account.
+          </p>
+          <p className="acc-note" style={{ marginTop: 6, marginBottom: 0 }}>
+            Trouble signing in? Email{' '}
             <a className="body-link" href={SOCIAL_LINKS.Email}>
               staci.d.huddleston@gmail.com
             </a>{' '}

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import SaveButton from './SaveButton';
+import ShareRow from './ShareRow';
 import { linkify } from './RichText';
 
 function BodyParagraphs({ text }) {
@@ -28,13 +29,14 @@ export default function ShiftCard({ item }) {
         <div className="sh-body">
           <BodyParagraphs text={item.body} />
         </div>
-        <div style={{ marginTop: 12 }}>
+        <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <SaveButton
             contentKey={item.id}
             series="Soft Life Shift"
             title={item.title}
             href={`/shift/${item.id}`}
           />
+          <ShareRow path={`/shift/${item.id}`} title={item.title} text={item.quote} image={item.image} />
         </div>
       </div>
       {item.quote && (

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import ShareRow from './ShareRow';
 
 // One moment in Life's Little Luxuries. The cover is always the first
 // attachment (photo or video); if there is more than one, a stacked
@@ -68,6 +69,9 @@ export default function LuxuryCard({ item }) {
           {item.category && <div className="lux-cat">{item.category}</div>}
           <h3 className="lux-title">{item.title}</h3>
           {item.body && <p className="lux-text">{item.body}</p>}
+          <div style={{ marginTop: 10 }}>
+            <ShareRow path="/luxuries" title={item.title} text={item.body} image={cover?.url} />
+          </div>
         </div>
       </div>
 
