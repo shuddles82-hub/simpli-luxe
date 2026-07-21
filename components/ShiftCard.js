@@ -36,7 +36,7 @@ export default function ShiftCard({ item }) {
             title={item.title}
             href={`/shift/${item.id}`}
           />
-          <ShareRow path={`/shift/${item.id}`} title={item.title} text={item.quote} image={item.image} />
+          <ShareRow path={`/shift/${item.id}`} title={item.title} text={item.body || item.quote} image={item.image} />
         </div>
       </div>
       {item.quote && (

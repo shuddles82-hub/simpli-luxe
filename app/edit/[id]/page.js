@@ -87,7 +87,12 @@ export default async function EditIssueDetailPage({ params }) {
             title={issue.title}
             href={`/edit/${issue.id}`}
           />
-          <ShareRow path={`/edit/${issue.id}`} title={issue.title} text={issue.tagline} image={issue.cover} />
+          <ShareRow
+            path={`/edit/${issue.id}`}
+            title={issue.title}
+            text={issue.pullQuote || issue.tagline}
+            image={issue.cover}
+          />
           {issue.pdfUrl && (
             <a href={issue.pdfUrl} target="_blank" rel="noreferrer" className="savebtn">
               ⇩ Download PDF

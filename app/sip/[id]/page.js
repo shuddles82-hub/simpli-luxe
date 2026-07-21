@@ -57,7 +57,13 @@ export default async function SipDetailPage({ params }) {
             title={sip.title}
             href={`/sip/${sip.id}`}
           />
-          <ShareRow path={`/sip/${sip.id}`} title={sip.title} text={sip.vibe} image={sip.image} />
+          <ShareRow
+            path={`/sip/${sip.id}`}
+            title={sip.title}
+            text={sip.premium ? sip.vibe : sip.flavorProfile || sip.vibe}
+            image={sip.image}
+            premium={sip.premium}
+          />
           <Link className="rm-close" href="/sip">
             ← Back to Sips
           </Link>

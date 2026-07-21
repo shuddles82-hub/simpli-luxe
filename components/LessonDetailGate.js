@@ -58,7 +58,7 @@ export default function LessonDetailGate({ item }) {
           ✦ Become a Luxe Insider
         </Link>
         <div style={{ marginTop: 12 }}>
-          <ShareRow path={`/lessons/${item.id}`} title={item.title} />
+          <ShareRow path={`/lessons/${item.id}`} title={item.title} text={item.subtitle} premium />
         </div>
       </div>
     );
@@ -72,7 +72,13 @@ export default function LessonDetailGate({ item }) {
       </div>
       <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <SaveButton contentKey={data.id} series="Luxe Life Lessons" title={data.title} href={`/lessons/${data.id}`} />
-        <ShareRow path={`/lessons/${data.id}`} title={data.title} image={data.image} />
+        <ShareRow
+          path={`/lessons/${data.id}`}
+          title={data.title}
+          image={data.image}
+          premium={data.premium}
+          text={data.premium ? data.subtitle : data.body}
+        />
       </div>
       {data.quote && (
         <div className="sh-q">

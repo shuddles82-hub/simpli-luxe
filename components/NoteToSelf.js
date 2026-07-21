@@ -30,7 +30,7 @@ export default function NoteToSelf({ item }) {
           title={shortTitle}
           href={`/shift/${item.id}`}
         />
-        <ShareRow path={`/shift/${item.id}`} title={shortTitle} />
+        <ShareRow path={`/shift/${item.id}`} title={shortTitle} text={text} />
       </div>
     </div>
   );

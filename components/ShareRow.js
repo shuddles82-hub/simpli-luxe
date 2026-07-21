@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from 'react';
 
-// A small share row for content detail pages: Facebook, Pinterest,
-// text message, and copy-link always available, plus a native "Share"
-// button (Messages, WhatsApp, Mail, Instagram, etc.) on devices that
-// support it.
-export default function ShareRow({ path, title, text, image }) {
+// A small share row for content detail pages: a native Share button
+// (Messages, Mail, WhatsApp, Instagram, Facebook, etc., whatever the
+// device offers) where supported, a dedicated Pinterest pin (so the
+// pinned image/description stay controlled rather than whatever the
+// OS share sheet does with a link), and Copy Link everywhere.
+//
+// `premium` marks this post as Insider-gated. When true, `text` must
+// only ever be the free-preview portion (a quote, subtitle, excerpt)
+// never the full gated body, and the shared message always adds a
+// "Read the rest with Luxe Insider" line so nobody can share their way
+// around the paywall.
+export default function ShareRow({ path, title, text, image, premium }) {
   const [origin, setOrigin] = useState('');
   const [canNativeShare, setCanNativeShare] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -17,7 +24,9 @@ export default function ShareRow({ path, title, text, image }) {
   }, []);
 
   const url = `${origin}${path}`;
-  const shareText = text || title || '';
+  const shareText = premium
+    ? [text, 'Read the rest with Luxe Insider.'].filter(Boolean).join('\n\n')
+    : text || title || '';
 
   async function nativeShare() {
     try {
@@ -37,11 +46,9 @@ export default function ShareRow({ path, title, text, image }) {
     }
   }
 
-  const fbHref = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
   const pinHref = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}${
     image ? `&media=${encodeURIComponent(image)}` : ''
-  }&description=${encodeURIComponent(title || '')}`;
-  const smsHref = `sms:?&body=${encodeURIComponent(`${title ? `${title} ` : ''}${url}`)}`;
+  }&description=${encodeURIComponent(shareText || title || '')}`;
 
   return (
     <div className="share-row">
@@ -50,14 +57,8 @@ export default function ShareRow({ path, title, text, image }) {
           ↗ Share
         </button>
       )}
-      <a className="savebtn" href={fbHref} target="_blank" rel="noreferrer">
-        Facebook
-      </a>
       <a className="savebtn" href={pinHref} target="_blank" rel="noreferrer">
         Pinterest
-      </a>
-      <a className="savebtn" href={smsHref}>
-        Text
       </a>
       <button className="savebtn" onClick={copyLink}>
         {copied ? '✦ Copied' : 'Copy Link'}

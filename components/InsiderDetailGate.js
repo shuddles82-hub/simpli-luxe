@@ -58,7 +58,7 @@ export default function InsiderDetailGate({ item }) {
           ✦ Become a Luxe Insider
         </Link>
         <div style={{ marginTop: 12 }}>
-          <ShareRow path={`/insider/${item.id}`} title={item.title} />
+          <ShareRow path={`/insider/${item.id}`} title={item.title} text={item.quote} premium />
         </div>
       </div>
     );
@@ -82,7 +82,12 @@ export default function InsiderDetailGate({ item }) {
           title={data.title}
           href={`/insider/${data.id}`}
         />
-        <ShareRow path={`/insider/${data.id}`} title={data.title} text={data.quote} />
+        <ShareRow
+          path={`/insider/${data.id}`}
+          title={data.title}
+          premium={data.premium}
+          text={data.premium ? data.quote : data.body}
+        />
       </div>
     </>
   );
