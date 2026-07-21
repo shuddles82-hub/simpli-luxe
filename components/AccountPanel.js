@@ -201,11 +201,19 @@ export default function AccountPanel() {
                 ? 'An account already exists for that email. Try signing in instead.'
                 : 'We could not create your account just now. Please try again in a moment.'
             );
-          } else if (!data.session) {
-            setCheckEmailMsg(
-              'Almost there. Check your inbox for a confirmation link, then come back and sign in.'
-            );
-            setAuthMode('signin');
+          } else {
+            // Fire-and-forget: a Kit hiccup should never block account creation.
+            fetch('/api/kit/subscribe', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email }),
+            }).catch(() => {});
+            if (!data.session) {
+              setCheckEmailMsg(
+                'Almost there. Check your inbox for a confirmation link, then come back and sign in.'
+              );
+              setAuthMode('signin');
+            }
           }
         } else if (authMode === 'forgot') {
           const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
