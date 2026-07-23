@@ -140,7 +140,10 @@ export async function POST(request) {
       .join('\n')
       .trim();
     return Response.json({ reply: softenPunctuation(reply) || GENTLE.trouble });
-  } catch {
-    return Response.json({ reply: GENTLE.trouble });
+  } catch (e) {
+    return Response.json({
+      reply: GENTLE.trouble,
+      _debug: { message: e?.message, status: e?.status, name: e?.name },
+    });
   }
 }
