@@ -12,35 +12,20 @@ export const metadata = {
   description: 'Collections, digital products, and styling services, curated by Staci.',
 };
 
-const DIGITAL_PRODUCTS = [
+// Standalone digital products, sold through Kit, that are not part of
+// the Luxe Library (which holds free/Insider file downloads). Personal
+// styling services (Style Brief/Blueprint/Full Collection) live only on
+// /premium now, not duplicated here.
+const KIT_PRODUCTS = [
   {
-    id: 'brief',
-    badge: 'Entry',
-    service: '1:1 Personal Service',
-    price: '$67',
-    name: 'The Style Brief',
-    desc: 'Color analysis, style identity, capsule formulas, silhouette guide & board collection.',
-    cta: 'Get Your Style Brief',
-    boxed: true,
-  },
-  {
-    id: 'blueprint',
-    badge: 'Popular',
-    service: '1:1 Personal Service',
-    price: '$127',
-    name: 'The Style Blueprint',
-    desc: 'Style Brief + full capsule boards + personalized ShopMy shopping collection.',
-    cta: 'Get Your Blueprint',
-    boxed: false,
-  },
-  {
-    id: 'collection',
-    badge: 'Complete',
-    service: 'Full Experience',
-    price: '$197',
-    name: 'The Full Collection',
-    desc: 'Everything. Blueprint + Life Deck + all capsule boards + shoppable wardrobe. Your complete style identity.',
-    cta: 'Get the Full Collection',
+    id: 'life-deck',
+    badge: 'Digital Download',
+    service: 'Affirmation Deck',
+    price: '',
+    name: 'The Simpli Luxe Life Deck',
+    desc: 'A deck of affirmation and reflection cards for your soft life rituals. Pull one each morning, or whenever you need to come back to yourself.',
+    cta: 'Get the Life Deck',
+    href: 'https://simpliluxe.kit.com/products/the-simpli-luxe-life-deck',
     boxed: true,
   },
 ];
@@ -80,7 +65,10 @@ export default async function ShopPage() {
             lineHeight: 1.8,
           }}
         >
-          Digital downloads and 1:1 services. Your style and soft life, elevated.
+          Standalone digital downloads. Looking for a 1:1 styling service instead?{' '}
+          <Link href="/premium" className="body-link">
+            See Styling Services →
+          </Link>
         </p>
       </div>
       <div
@@ -93,7 +81,7 @@ export default async function ShopPage() {
           margin: '0 auto',
         }}
       >
-        {DIGITAL_PRODUCTS.map((p) => (
+        {KIT_PRODUCTS.map((p) => (
           <div
             key={p.id}
             style={{
@@ -135,17 +123,19 @@ export default async function ShopPage() {
             >
               {p.service}
             </div>
-            <div
-              style={{
-                fontFamily: "'Cormorant Garamond',serif",
-                fontWeight: 600,
-                fontSize: 28,
-                color: 'var(--gold)',
-                lineHeight: 1,
-              }}
-            >
-              {p.price}
-            </div>
+            {p.price && (
+              <div
+                style={{
+                  fontFamily: "'Cormorant Garamond',serif",
+                  fontWeight: 600,
+                  fontSize: 28,
+                  color: 'var(--gold)',
+                  lineHeight: 1,
+                }}
+              >
+                {p.price}
+              </div>
+            )}
             <div
               style={{
                 fontFamily: "'Cormorant Garamond',serif",
@@ -168,9 +158,9 @@ export default async function ShopPage() {
             >
               {p.desc}
             </div>
-            <Link href="/premium" className="kit-cta">
+            <a href={p.href} target="_blank" rel="noreferrer" className="kit-cta">
               {p.cta}
-            </Link>
+            </a>
           </div>
         ))}
       </div>
