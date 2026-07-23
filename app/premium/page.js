@@ -21,6 +21,7 @@ const KITS = [
       'Board collection. Visual styling reference',
     ],
     cta: 'Get Your Style Brief · $67',
+    href: 'https://simpliluxe.kit.com/products/the-simpli-luxe-style-brief',
     featured: true,
   },
   {
@@ -37,6 +38,7 @@ const KITS = [
       'Your complete visual wardrobe system',
     ],
     cta: 'Get Your Blueprint · $127',
+    href: 'https://simpliluxe.kit.com/products/the-simpli-luxe-style-blueprint',
     featured: false,
     bestseller: true,
   },
@@ -54,6 +56,7 @@ const KITS = [
       'The complete Simpli Luxe style experience',
     ],
     cta: 'Get the Full Collection · $197',
+    href: 'https://simpliluxe.kit.com/products/the-simpli-luxe-full-collection',
     featured: true,
   },
 ];
@@ -124,7 +127,9 @@ export default function PremiumPage() {
                   ))}
                 </ul>
                 {kit.bestseller && <div className="kit-bestseller">Most Popular</div>}
-                <button className="kit-cta">{kit.cta}</button>
+                <a href={kit.href} target="_blank" rel="noreferrer" className="kit-cta">
+                  {kit.cta}
+                </a>
               </div>
             </div>
           ))}

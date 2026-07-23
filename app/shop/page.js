@@ -21,7 +21,7 @@ const KIT_PRODUCTS = [
     id: 'life-deck',
     badge: 'Digital Download',
     service: 'Affirmation Deck',
-    price: '',
+    price: '$22',
     name: 'The Simpli Luxe Life Deck',
     desc: 'A deck of affirmation and reflection cards for your soft life rituals. Pull one each morning, or whenever you need to come back to yourself.',
     cta: 'Get the Life Deck',
