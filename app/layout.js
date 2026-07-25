@@ -1,6 +1,7 @@
 import './globals.css';
 import Nav from '@/components/Nav';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = {
   title: 'Simpli Luxe',
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
         <ServiceWorkerRegister />
         <Nav />
         <main>{children}</main>
+        <Analytics />
       </body>
     </html>
   );
