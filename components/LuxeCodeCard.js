@@ -20,7 +20,10 @@ export default function LuxeCodeCard({ item }) {
       )}
       <div className="lux-body">
         {item.isNew && <div className="lux-new">✦ New This Week</div>}
-        <div className="lux-cat">{epLabel(item)}</div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          <div className="lux-cat">{epLabel(item)}</div>
+          {item.category && <span className="sip-b">{item.category}</span>}
+        </div>
         <h3 className="lux-title">{item.title}</h3>
         {item.hook && <div className="sip-vb">{item.hook}</div>}
         {excerpt && <p className="lux-text">{excerpt}</p>}

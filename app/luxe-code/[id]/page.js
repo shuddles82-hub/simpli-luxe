@@ -30,15 +30,15 @@ export default async function LuxeCodeDetailPage({ params }) {
   const item = await getLuxeCodeById(id);
   if (!item) notFound();
 
-  const outLink = item.shopMyLink || item.ltkLink || '';
-  const storeName = item.shopMyLink ? 'ShopMy' : item.ltkLink ? 'LTK' : 'ShopMy';
-
   return (
     <>
       <div className="rmh" style={{ position: 'static' }}>
         <div>
-          <div className="rm-tag">
-            {item.episode ? `EP. ${String(item.episode).padStart(2, '0')}` : 'The Luxe Code'}
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div className="rm-tag">
+              {item.episode ? `EP. ${String(item.episode).padStart(2, '0')}` : 'The Luxe Code'}
+            </div>
+            {item.category && <span className="sip-b">{item.category}</span>}
           </div>
           <div className="rm-title">{item.title}</div>
           {item.hook && (
@@ -71,18 +71,50 @@ export default async function LuxeCodeDetailPage({ params }) {
         {item.image && (
           <img className="recipe-hero" src={item.image} alt={item.title} style={{ marginBottom: 20 }} />
         )}
-        {item.formula && (
+        {item.quote && (
+          <div className="sh-q" style={{ margin: '0 0 20px' }}>
+            <p>{item.quote}</p>
+          </div>
+        )}
+        {item.formulaSteps?.length > 0 && (
           <div className="rbd">
             <div className="rfl">
               <div className="rfl-l">The Formula</div>
-              <div className="rfl-t">{linkify(item.formula)}</div>
+              <ul className="rl">
+                {item.formulaSteps.map((step, i) => (
+                  <li key={i}>{linkify(step)}</li>
+                ))}
+              </ul>
             </div>
           </div>
         )}
-        {outLink && (
+        {item.formulaCardImage && (
+          <figure style={{ marginTop: 24 }}>
+            <img
+              src={item.formulaCardImage}
+              alt={`${item.title} formula card`}
+              style={{ width: '100%', display: 'block' }}
+            />
+            <figcaption
+              style={{
+                fontFamily: "'Jost',sans-serif",
+                fontWeight: 400,
+                fontSize: 8,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: 'var(--gold)',
+                textAlign: 'center',
+                marginTop: 8,
+              }}
+            >
+              The Formula
+            </figcaption>
+          </figure>
+        )}
+        {item.shopLink && (
           <div style={{ marginTop: 24 }}>
-            <a href={outLink} target="_blank" rel="noreferrer" className="acc-btn">
-              Shop on {storeName} →
+            <a href={item.shopLink} target="_blank" rel="noreferrer" className="acc-btn">
+              Shop This Look →
             </a>
           </div>
         )}
