@@ -3,9 +3,63 @@ import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
 import HeroQuotes from '@/components/HeroQuotes';
 import CollectionCard from '@/components/CollectionCard';
+import InsiderDropsWidget from '@/components/InsiderDropsWidget';
 import { getFeaturedCollections } from '@/lib/content';
 
 export const revalidate = 600;
+
+const FREE_SCHEDULE = [
+  { day: 'Monday', href: '/lessons', title: 'Luxe Life Lessons' },
+  { day: 'Wednesday', href: '/shift', title: 'Soft Life Shift' },
+];
+
+const ALWAYS_HERE = [
+  {
+    href: '/simplibot',
+    n: '01',
+    tag: 'Your Soft Life Coach',
+    title: 'SimpliBot',
+    desc: '10 moments a day free · 100 a day for Luxe Insiders.',
+  },
+  {
+    href: '/planner',
+    n: '02',
+    tag: 'Daily Ritual',
+    title: 'The Planner',
+    desc: 'Habit tracking, journaling, and your weekly reset.',
+  },
+];
+
+const EXPLORE_ANYTIME = [
+  {
+    href: '/luxe-code',
+    n: '01',
+    tag: 'Flagship Weekly Series',
+    title: 'The Luxe Code',
+    desc: 'New episodes weekly, no fixed day.',
+  },
+  {
+    href: '/styled',
+    n: '02',
+    tag: 'Fashion · Style',
+    title: 'Simpli Styled',
+    desc: 'Capsule wardrobes, outfit formulas, and get-the-look guides.',
+  },
+  {
+    href: '/sip',
+    n: '03',
+    tag: 'Mocktails · Rituals',
+    title: 'The Simpli Sip',
+    desc: 'Elevated mocktail recipes. Ritual in a glass.',
+  },
+  {
+    href: '/shift/notes',
+    n: '04',
+    tag: 'From Soft Life Shift',
+    title: 'Notes to Self',
+    desc: 'Quiet reminders, all in one place.',
+  },
+];
 
 const SERIES = [
   {
@@ -91,6 +145,84 @@ export default async function HomePage() {
           </Link>
         </div>
       </div>
+
+      <div className="ser-sec">
+        <div className="sey" style={{ marginBottom: 5 }}>
+          What&apos;s New
+        </div>
+        <h2 className="stitle" style={{ marginBottom: 22 }}>
+          This <em>Week</em>
+        </h2>
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))',
+          gap: 3,
+          padding: 3,
+          maxWidth: 900,
+          margin: '0 auto',
+        }}
+      >
+        <div className="acc-card">
+          <div className="shch">Free Schedule</div>
+          <p className="acc-note">The series everyone gets, every week.</p>
+          <ul className="shl" style={{ marginBottom: 0 }}>
+            {FREE_SCHEDULE.map((s) => (
+              <li key={s.day}>
+                <Link href={s.href} className="body-link">
+                  {s.day}: {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <InsiderDropsWidget />
+      </div>
+
+      <div style={{ height: 20 }} />
+
+      <div className="ser-sec">
+        <div className="sey" style={{ marginBottom: 5 }}>
+          Always Available
+        </div>
+        <h2 className="stitle" style={{ marginBottom: 22 }}>
+          Every <em>Day</em>
+        </h2>
+      </div>
+      <div className="sey" style={{ textAlign: 'center', marginBottom: 10 }}>
+        Always Here For You
+      </div>
+      <div className="sgrid" style={{ maxWidth: 620, margin: '0 auto' }}>
+        {ALWAYS_HERE.map((s) => (
+          <Link key={s.href} href={s.href} className="sc">
+            <div className="scn">{s.n}</div>
+            <div className="sct">{s.tag}</div>
+            <div className="sctitle">{s.title}</div>
+            <div className="scdesc">{s.desc}</div>
+            <span className="scarr">→</span>
+          </Link>
+        ))}
+      </div>
+
+      <div style={{ height: 24 }} />
+
+      <div className="sey" style={{ textAlign: 'center', marginBottom: 10 }}>
+        Explore Anytime
+      </div>
+      <div className="sgrid">
+        {EXPLORE_ANYTIME.map((s) => (
+          <Link key={s.href} href={s.href} className="sc">
+            <div className="scn">{s.n}</div>
+            <div className="sct">{s.tag}</div>
+            <div className="sctitle">{s.title}</div>
+            <div className="scdesc">{s.desc}</div>
+            <span className="scarr">→</span>
+          </Link>
+        ))}
+      </div>
+
+      <div style={{ height: 40 }} />
 
       <div className="lll">
         <div className="li">
