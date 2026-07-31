@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import SaveButton from '@/components/SaveButton';
 import ShareRow from '@/components/ShareRow';
+import FormulaCardMedia from '@/components/FormulaCardMedia';
 import { linkify } from '@/components/RichText';
 import { getLuxeCodeById } from '@/lib/content';
 
@@ -88,29 +89,7 @@ export default async function LuxeCodeDetailPage({ params }) {
             </div>
           </div>
         )}
-        {item.formulaCardImage && (
-          <figure style={{ marginTop: 24 }}>
-            <img
-              src={item.formulaCardImage}
-              alt={`${item.title} formula card`}
-              style={{ width: '100%', display: 'block' }}
-            />
-            <figcaption
-              style={{
-                fontFamily: "'Jost',sans-serif",
-                fontWeight: 400,
-                fontSize: 8,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: 'var(--gold)',
-                textAlign: 'center',
-                marginTop: 8,
-              }}
-            >
-              The Formula
-            </figcaption>
-          </figure>
-        )}
+        <FormulaCardMedia media={item.formulaCardMedia} title={item.title} />
         {item.shopLink && (
           <div style={{ marginTop: 24 }}>
             <a href={item.shopLink} target="_blank" rel="noreferrer" className="acc-btn">
