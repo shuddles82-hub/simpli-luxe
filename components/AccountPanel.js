@@ -25,6 +25,9 @@ export default function AccountPanel() {
   const [priceInfo, setPriceInfo] = useState(null);
   const [insiderMsg, setInsiderMsg] = useState('');
   const [insiderBusy, setInsiderBusy] = useState(false);
+  const [notifyNewContent, setNotifyNewContent] = useState(false);
+  const [notifyDailyReminder, setNotifyDailyReminder] = useState(false);
+  const [notifyBusy, setNotifyBusy] = useState('');
 
   useEffect(() => {
     if (!supabase) return;
@@ -50,6 +53,8 @@ export default function AccountPanel() {
       if (cancelled) return;
       if (profile?.display_name) setDisplayName(profile.display_name);
       setIsInsider(Boolean(profile?.is_insider));
+      setNotifyNewContent(Boolean(profile?.notify_new_content));
+      setNotifyDailyReminder(Boolean(profile?.notify_daily_reminder));
       setSaves(rows || []);
     }
     load();
@@ -122,6 +127,26 @@ export default function AccountPanel() {
       setInsiderMsg('Something went wrong. Please try again in a moment.');
     }
     setInsiderBusy(false);
+  }
+
+  async function toggleNotify(type, current, setter) {
+    if (notifyBusy) return;
+    const next = !current;
+    setNotifyBusy(type);
+    setter(next);
+    try {
+      await fetch('/api/kit/preferences', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ type, enabled: next }),
+      });
+    } catch {
+      setter(current); // revert on failure
+    }
+    setNotifyBusy('');
   }
 
   if (!supabase) {
@@ -407,6 +432,41 @@ export default function AccountPanel() {
             {insiderMsg}
           </p>
         )}
+        <div style={{ marginTop: 18, paddingTop: 14, borderTop: '1px solid var(--sb)' }}>
+          <div className="shch" style={{ marginBottom: 8 }}>
+            Email Notifications
+          </div>
+          <label
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              marginBottom: 10,
+              cursor: 'pointer',
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={notifyNewContent}
+              disabled={notifyBusy === 'content'}
+              onChange={() => toggleNotify('content', notifyNewContent, setNotifyNewContent)}
+            />
+            <span className="acc-note" style={{ marginBottom: 0 }}>
+              Notify me by email when new content goes live
+            </span>
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={notifyDailyReminder}
+              disabled={notifyBusy === 'reminder'}
+              onChange={() => toggleNotify('reminder', notifyDailyReminder, setNotifyDailyReminder)}
+            />
+            <span className="acc-note" style={{ marginBottom: 0 }}>
+              Daily Soft Life reminder (journal, habits, vision board)
+            </span>
+          </label>
+        </div>
         <p className="acc-note" style={{ marginTop: 14, marginBottom: 0 }}>
           Questions about your account or membership? Email{' '}
           <a className="body-link" href={SOCIAL_LINKS.Email}>
