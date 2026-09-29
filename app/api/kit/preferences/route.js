@@ -33,7 +33,13 @@ export async function POST(request) {
   const enabled = Boolean(body?.enabled);
   if (!pref) return Response.json({ ok: false, error: 'Unknown preference' });
 
-  await admin.from('profiles').update({ [pref.column]: enabled }).eq('id', member.id);
+  const update = { [pref.column]: enabled };
+  // Starts (or restarts) the 5-week re-trigger clock from the moment she
+  // actually opts in, so the weekly cron doesn't loop her back through
+  // the sequence again right away.
+  if (body.type === 'reminder' && enabled) update.reminder_last_sent_at = new Date().toISOString();
+
+  await admin.from('profiles').update(update).eq('id', member.id);
   await setKitTag({ email: member.email, tagName: pref.tag, enabled });
 
   return Response.json({ ok: true });
