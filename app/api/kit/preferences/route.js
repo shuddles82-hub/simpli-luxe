@@ -3,15 +3,16 @@ import { getMemberFromRequest } from '@/lib/auth-server';
 import { setKitTag } from '@/lib/kit';
 
 // Toggles a member's email notification preference: new-content alerts
-// or the daily soft-life reminder. The Kit tag is what actually drives
-// her Kit Automations; the profiles column is just so the app can show
-// the current on/off state without an extra Kit API call per render.
+// or Soft Life Reminders. The Kit tag is what actually drives her Kit
+// Automations/Sequences; the profiles column is just so the app can
+// show the current on/off state without an extra Kit API call per
+// render.
 
 export const runtime = 'nodejs';
 
 const PREFS = {
   content: { column: 'notify_new_content', tag: 'Notify: New Content' },
-  reminder: { column: 'notify_daily_reminder', tag: 'Daily Reminder Opt-In' },
+  reminder: { column: 'notify_daily_reminder', tag: 'Soft Life Reminders - Opt In' },
 };
 
 export async function POST(request) {

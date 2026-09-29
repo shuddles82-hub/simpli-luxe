@@ -463,7 +463,8 @@ export default function AccountPanel() {
               onChange={() => toggleNotify('reminder', notifyDailyReminder, setNotifyDailyReminder)}
             />
             <span className="acc-note" style={{ marginBottom: 0 }}>
-              Daily Soft Life reminder (journal, habits, vision board)
+              ✦ Soft Life Reminders — a few intentional nudges each week (journal, habits, vision
+              board)
             </span>
           </label>
         </div>
