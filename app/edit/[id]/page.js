@@ -93,6 +93,11 @@ export default async function EditIssueDetailPage({ params }) {
             text={issue.pullQuote || issue.tagline}
             image={issue.cover}
           />
+          {issue.htmlUrl && (
+            <a href={issue.htmlUrl} target="_blank" rel="noopener" className="savebtn">
+              Read the Full Issue
+            </a>
+          )}
           {issue.pdfUrl && (
             <a href={issue.pdfUrl} target="_blank" rel="noreferrer" className="savebtn">
               ⇩ Download PDF

@@ -23,7 +23,7 @@ export default async function EditPage() {
         eyebrow="Digital Magazine"
         title="The Simpli"
         emphasis="Edit"
-        sub="Luxury for Less · Soft Goals · Intentional Living · All 7 Vols"
+        sub={`Luxury for Less · Soft Goals · Intentional Living · All ${issues.length} Vols`}
       />
       <EditExplorer issues={issues} />
       <Footer series="The Simpli Edit" links={['Instagram', 'TikTok', 'LTK']} />
