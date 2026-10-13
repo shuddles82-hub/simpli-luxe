@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import SaveButton from './SaveButton';
 import ShareRow from './ShareRow';
+import EditMagazineFrame from './EditMagazineFrame';
 
 // A Simpli Edit issue's full HTML magazine, shown inside the app under
 // the site nav with a way back to the other issues. The magazine files
@@ -32,7 +33,7 @@ export default function EditMagazine({ issue }) {
           />
         </div>
       </div>
-      <iframe className="emv-frame" src={issue.htmlUrl} title={label} />
+      <EditMagazineFrame src={issue.htmlUrl} title={label} />
     </div>
   );
 }
