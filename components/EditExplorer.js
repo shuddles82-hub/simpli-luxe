@@ -23,11 +23,23 @@ export default function EditExplorer({ issues }) {
     <>
       <FilterBar allLabel="All Issues" chips={chips} active={active} onChange={setActive} />
       <div className="igg">
-        {visible.map((issue) => (
-          <Link key={issue.id} href={`/edit/${issue.id}`} style={{ display: 'block' }}>
-            <EditCover issue={issue} />
-          </Link>
-        ))}
+        {visible.map((issue) =>
+          issue.htmlUrl ? (
+            <a
+              key={issue.id}
+              href={issue.htmlUrl}
+              target="_blank"
+              rel="noopener"
+              style={{ display: 'block' }}
+            >
+              <EditCover issue={issue} />
+            </a>
+          ) : (
+            <Link key={issue.id} href={`/edit/${issue.id}`} style={{ display: 'block' }}>
+              <EditCover issue={issue} />
+            </Link>
+          )
+        )}
       </div>
       {visible.length === 0 && (
         <div className="empty">Nothing here yet. Something lovely is on the way.</div>
