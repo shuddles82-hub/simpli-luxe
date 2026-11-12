@@ -23,6 +23,11 @@ plan.json
       {"file": "IMG_0002.MOV", "start": 0.5, "end": 4.0}
     ]
   }
+  Optional keys: "hook_y" (pixels from top, default 250), "loudnorm": true
+  to even out quiet voice audio, "cover_from_clip": {"clip": 0, "at": 2.0}
+  for a clean cover frame with no text, and per clip "overlays":
+  [{"text": "...", "from": 4, "to": 10, "pos": "top|middle|bottom"}]
+  with times in seconds after that clip's trim start.
   start/end are seconds within each clip and are optional. "text" is an
   optional lower-third line for that clip. cover_at is a time in the
   finished Reel to save as a cover frame (out name with .jpg).
@@ -94,26 +99,32 @@ def sheet(src, out):
     print(out)
 
 
-def normalize(clip, idx, tmp, series, hook):
+def normalize(clip, idx, tmp, series, hook, hook_y=250, loud=False):
     src = clip["file"]
     out = os.path.join(tmp, "seg%02d.mp4" % idx)
     vf = ["scale=%d:%d:force_original_aspect_ratio=increase" % (W, H),
           "crop=%d:%d" % (W, H), "fps=%d" % FPS, "setsar=1"]
     if idx == 0 and hook:
         eyebrow = textfile(tmp, "eyebrow.txt", "  ".join(" ".join(w) for w in series.upper().split()))
-        hk = textfile(tmp, "hook.txt", wrap(hook, 20))
+        hk = textfile(tmp, "hook.txt", wrap(hook, 26))
         fade = "if(lt(t,%.2f),1,max(0,1-(t-%.2f)/0.4))" % (HOOK_SECONDS, HOOK_SECONDS)
-        vf.append("drawbox=x=0:y=0:w=iw:h=620:color=black@0.28:t=fill:enable='lt(t,%.2f)'" % (HOOK_SECONDS + 0.4))
-        vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=34:fontcolor=%s:x=(w-tw)/2:y=250:"
-                  "alpha='%s'" % (esc(F_SANS_MED), esc(eyebrow), GOLD, fade))
-        vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=96:line_spacing=6:fontcolor=%s:"
-                  "x=(w-tw)/2:y=310:shadowcolor=black@0.45:shadowx=0:shadowy=3:alpha='%s'"
-                  % (esc(F_SERIF), esc(hk), CREAM, fade))
+        vf.append("drawbox=x=0:y=0:w=iw:h=%d:color=black@0.28:t=fill:enable='lt(t,%.2f)'" % (hook_y + 300, HOOK_SECONDS + 0.4))
+        vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=34:fontcolor=%s:x=(w-tw)/2:y=%d:"
+                  "alpha='%s'" % (esc(F_SANS_MED), esc(eyebrow), GOLD, hook_y, fade))
+        vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=88:line_spacing=6:fontcolor=%s:"
+                  "x=(w-tw)/2:y=%d:shadowcolor=black@0.45:shadowx=0:shadowy=3:alpha='%s'"
+                  % (esc(F_SERIF), esc(hk), CREAM, hook_y + 60, fade))
     if clip.get("text"):
         lt = textfile(tmp, "lt%02d.txt" % idx, wrap(clip["text"], 30))
         vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=50:line_spacing=10:fontcolor=%s:"
                   "x=(w-tw)/2:y=h-430:box=1:boxcolor=0x0D0D0D@0.62:boxborderw=26"
                   % (esc(F_SANS), esc(lt), CREAM))
+    for j, ov in enumerate(clip.get("overlays", [])):
+        tf = textfile(tmp, "ov%02d_%02d.txt" % (idx, j), wrap(ov["text"], 30))
+        y = {"top": "170", "middle": "(h-th)/2", "bottom": "h-430"}[ov.get("pos", "top")]
+        vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=48:line_spacing=10:fontcolor=%s:"
+                  "x=(w-tw)/2:y=%s:box=1:boxcolor=0x0D0D0D@0.62:boxborderw=26:"
+                  "enable='between(t,%.2f,%.2f)'" % (esc(F_SANS), esc(tf), CREAM, y, ov["from"], ov["to"]))
     cmd = ["ffmpeg", "-y", "-v", "error"]
     if clip.get("start") is not None:
         cmd += ["-ss", str(clip["start"])]
@@ -125,6 +136,8 @@ def normalize(clip, idx, tmp, series, hook):
     else:
         cmd += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo"]
         amap = ["-map", "0:v:0", "-map", "1:a:0", "-shortest"]
+    if loud:
+        cmd += ["-af", "loudnorm=I=-16:TP=-1.5:LRA=11"]
     cmd += ["-vf", ",".join(vf)] + amap + [
         "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-ar", "48000", "-ac", "2", "-b:a", "192k", out]
@@ -161,7 +174,8 @@ def build(plan_path):
         for i, c in enumerate(plan["clips"]):
             c = dict(c)
             c["file"] = os.path.join(base, c["file"])
-            segs.append(normalize(c, i, tmp, plan.get("series", "Simpli Luxe"), plan.get("hook")))
+            segs.append(normalize(c, i, tmp, plan.get("series", "Simpli Luxe"), plan.get("hook"),
+                                  plan.get("hook_y", 250), plan.get("loudnorm", False)))
         if plan.get("end_card", True):
             segs.append(end_card(tmp))
         lst = os.path.join(tmp, "list.txt")
@@ -171,7 +185,15 @@ def build(plan_path):
              "-c:v", "libx264", "-preset", "slow", "-crf", "20", "-pix_fmt", "yuv420p",
              "-r", str(FPS), "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out])
     print(out, "%.1fs" % duration(out))
-    if plan.get("cover_at") is not None:
+    if plan.get("cover_from_clip") is not None:
+        cf = plan["cover_from_clip"]
+        cover = os.path.splitext(out)[0] + "-cover.jpg"
+        run(["ffmpeg", "-y", "-v", "error", "-ss", str(cf["at"]), "-i",
+             os.path.join(base, plan["clips"][cf.get("clip", 0)]["file"]), "-frames:v", "1",
+             "-vf", "scale=%d:%d:force_original_aspect_ratio=increase,crop=%d:%d" % (W, H, W, H),
+             "-q:v", "2", cover])
+        print(cover)
+    elif plan.get("cover_at") is not None:
         cover = os.path.splitext(out)[0] + "-cover.jpg"
         run(["ffmpeg", "-y", "-v", "error", "-ss", str(plan["cover_at"]), "-i", out,
              "-frames:v", "1", "-q:v", "2", cover])
