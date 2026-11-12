@@ -1,0 +1,229 @@
+<title>Simpli Luxe Concierge</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: a morning letter. Masthead, then Overview, Studio, Pitch Room as stacked editorial sections on one column. */
+:root{
+  --bg:#F5F0E8; --paper:#FBF8F2; --ink:#0D0D0D; --ink-soft:#57514A; --rule:#E2D8C6;
+  --gold:#C9A96E; --gold-text:#8C6A2F; --done:#A39C92;
+  --display:"Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --body:"Jost", -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D0D0D; --paper:#161512; --ink:#F5F0E8; --ink-soft:#B9B0A2; --rule:#2E2A24;
+  --gold:#C9A96E; --gold-text:#D6BA85; --done:#6E675D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D0D0D; --paper:#161512; --ink:#F5F0E8; --ink-soft:#B9B0A2; --rule:#2E2A24;
+  --gold:#C9A96E; --gold-text:#D6BA85; --done:#6E675D; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-weight:300;font-size:16px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-block:48px 72px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+a:hover{color:var(--gold-text)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* masthead */
+.mast{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding-bottom:28px;border-bottom:1px solid var(--rule)}
+.mono{width:46px;height:46px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;
+  font-family:var(--display);font-size:19px;letter-spacing:.06em;color:var(--gold-text)}
+.eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-text);font-weight:400}
+h1{font-family:var(--display);font-weight:500;font-size:clamp(34px,6vw,50px);line-height:1.08;margin:6px 0 0;text-wrap:balance}
+.lede{max-width:56ch;color:var(--ink-soft);margin:8px 0 0;text-wrap:pretty}
+
+/* sections */
+section{padding-block:40px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.sec-head .no{font-family:var(--display);font-style:italic;font-size:22px;color:var(--gold-text)}
+h2{font-family:var(--display);font-weight:600;font-size:32px;margin:0;line-height:1.1}
+.sec-head .sub{margin-left:auto;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+h3{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--ink-soft);margin:30px 0 12px}
+
+/* figures */
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--gold);border-bottom:1px solid var(--rule)}
+.fig{padding:16px 14px 14px;border-left:1px solid var(--rule);min-width:0}
+.fig:first-child{border-left:0;padding-left:0}
+.fig .v{font-family:var(--display);font-size:34px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums}
+.fig .v.ask{font-size:22px;font-style:italic;color:var(--gold-text)}
+.fig .l{font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.4}
+
+/* lists */
+ul.plain,ol.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:92px minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px dashed var(--rule)}
+.row:last-child{border-bottom:0}
+.row .when{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-text);font-weight:400;padding-top:2px}
+.row p{margin:0}
+.row .t{font-weight:500}
+.row .d{color:var(--ink-soft);font-size:15px}
+
+.actions li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px 0;border-bottom:1px dashed var(--rule)}
+.actions li:last-child{border-bottom:0}
+.actions input{appearance:none;width:22px;height:22px;border:1px solid var(--gold);border-radius:50%;margin:3px 0 0;cursor:pointer;display:grid;place-items:center;background:transparent}
+.actions input:checked{background:var(--gold)}
+.actions input:checked::after{content:"";width:6px;height:10px;border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.actions label{cursor:pointer}
+.actions .t{font-weight:500;display:block}
+.actions .d{color:var(--ink-soft);font-size:15px;display:block}
+.actions li.done .t,.actions li.done .d{color:var(--done);text-decoration:line-through;text-decoration-color:var(--done)}
+.step{font-family:var(--display);font-style:italic;color:var(--gold-text);font-size:15px;margin-right:6px}
+
+/* studio */
+.idea{background:var(--paper);border:1px solid var(--rule);padding:26px 24px}
+.idea .series{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-text);font-weight:400}
+.idea h4{font-family:var(--display);font-size:28px;font-weight:500;margin:6px 0 10px;line-height:1.15;text-wrap:balance}
+.idea .why{color:var(--ink-soft);font-size:15px;margin:0 0 18px}
+.caption{font-family:var(--display);font-size:20px;line-height:1.5;border-left:2px solid var(--gold);padding:2px 0 2px 18px;margin:0;white-space:pre-line}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:18px;font-size:13.5px;color:var(--ink-soft);align-items:center}
+.meta b{font-weight:500;color:var(--ink)}
+button.copy{font-family:var(--body);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  background:var(--ink);color:var(--bg);border:0;padding:10px 16px;cursor:pointer;margin-left:auto}
+button.copy:hover{background:var(--gold);color:#0D0D0D}
+
+/* pitch */
+.pitch li{padding:18px 0;border-bottom:1px dashed var(--rule);display:flex;flex-direction:column;gap:4px}
+.pitch li:last-child{border-bottom:0}
+.pitch .kind{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text);font-weight:400}
+.pitch .t{font-weight:500;font-size:17px}
+.pitch .d{color:var(--ink-soft);font-size:15px;margin:0}
+.pitch .next{font-size:15px;margin:4px 0 0}
+.pitch .next b{font-weight:500}
+.quiet{color:var(--ink-soft);font-size:15px;font-style:italic;margin:16px 0 0}
+
+.close{text-align:center;padding-top:36px}
+.close .sig{font-family:var(--display);font-style:italic;font-size:26px;color:var(--gold-text)}
+.close .src{font-size:12px;color:var(--ink-soft);max-width:60ch;margin:10px auto 0}
+
+@media (max-width:640px){
+  .wrap{padding-block:32px 56px}
+  .figs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fig:nth-child(3){border-left:0;padding-left:0}
+  .fig:nth-child(n+3){border-top:1px solid var(--rule)}
+  .row{grid-template-columns:minmax(0,1fr);gap:2px}
+  .sec-head .sub{display:none}
+  .idea{padding:20px 16px}
+  .caption{font-size:18px}
+  button.copy{margin-left:0}
+}
+@media (prefers-reduced-motion:no-preference){a,button{transition:color .15s,background .15s}}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="mono" aria-hidden="true">SL</div>
+    <div class="eyebrow">The Simpli Luxe Concierge</div>
+    <h1>Good morning, Staci.</h1>
+    <p class="lede">Thursday, November 12. A light day on the calendar with one savings transfer at 1, and tomorrow is your day off. The real work this morning is in your Content Queue and your inbox list.</p>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section aria-labelledby="ov">
+    <div class="sec-head"><span class="no">i.</span><h2 id="ov">Overview</h2><span class="sub">Where things stand</span></div>
+
+    <div class="figs">
+      <div class="fig"><div class="v ask">Add yours</div><div class="l">Income so far in November. Not tracked in any connected tool yet.</div></div>
+      <div class="fig"><div class="v">228</div><div class="l">The Simpli Society subscribers, 0 new since Nov 1</div></div>
+      <div class="fig"><div class="v">30</div><div class="l">Days since your last email, Vol. 08 on Oct 13</div></div>
+      <div class="fig"><div class="v">10</div><div class="l">Drafts in the Content Queue waiting on your review</div></div>
+    </div>
+
+    <h3>What's due</h3>
+    <ul class="plain">
+      <li class="row"><span class="when">Today 1 PM</span><p><span class="t"><a href="https://www.google.com/calendar/event?eid=ODdsaWNncDZxMG80MWRtMDZranVxcWJibmNfMjAyNjExMTJUMTgwMDAwWiBzaHVkZGxlczgyQG0&amp;ctz=America/New_York" target="_blank" rel="noopener">Transfer savings</a></span><br><span class="d">Your recurring reminder on the calendar.</span></p></li>
+      <li class="row"><span class="when">Waiting</span><p><span class="t"><a href="https://airtable.com/appuxahQgxYBZEqNn/tblYa48jkwzID8JBE" target="_blank" rel="noopener">10 drafts pending review</a></span><br><span class="d">Nine daily affirmations from Nov 2 to Nov 11, plus the Luxe Life Lesson "You Do Not Have to Explain Your Peace." The Nov 7 affirmation is titled "October Already," so give that one a second look before it goes live.</span></p></li>
+      <li class="row"><span class="when">Fri Nov 13</span><p><span class="t">RDO</span><br><span class="d">Your day off, on the calendar from 5:30 AM.</span></p></li>
+      <li class="row"><span class="when">Sun Nov 15</span><p><span class="t">Sunday Reset goes to the Insider Hub</span><br><span class="d">"You Showed Up All Week. Now Come Back to Yourself." is approved and scheduled. Tithes at 11 AM and the FlyFin expense review at 1 PM are on the calendar the same day.</span></p></li>
+    </ul>
+
+    <h3>Next three, in order</h3>
+    <ol class="plain actions" id="actions">
+      <li><input type="checkbox" id="a1"><label for="a1"><span class="t"><span class="step">One.</span>Clear the Content Queue</span><span class="d">Approve, edit or toss the 10 waiting drafts so the Insider Hub stops running behind. About 20 minutes.</span></label></li>
+      <li><input type="checkbox" id="a2"><label for="a2"><span class="t"><span class="step">Two.</span>Put a real number on November</span><span class="d">LTK just launched a new Earnings page (their email on Nov 5). Check it and ShopMy, then tell me your month-to-date total and your monthly goal so this page can track them.</span></label></li>
+      <li><input type="checkbox" id="a3"><label for="a3"><span class="t"><span class="step">Three.</span>Write to The Simpli Society</span><span class="d">It's been a month since Vol. 08 and Black Friday emails are already filling your own inbox. A short holiday note pointing to simpliluxe.com, with the $22 Life Deck as an easy gift, keeps you in front of them.</span></label></li>
+    </ol>
+  </section>
+
+  <!-- STUDIO -->
+  <section aria-labelledby="st">
+    <div class="sec-head"><span class="no">ii.</span><h2 id="st">Studio</h2><span class="sub">Today's one idea</span></div>
+
+    <article class="idea">
+      <div class="series">Luxe Code · Episode 5</div>
+      <h4>Finish The Dupe Code before Black Friday</h4>
+      <p class="why">Episode 5 is sitting in Airtable with a hook and no status, while episodes 6 through 8 are already published. Dupe season starts in two weeks, so this is the one episode that gets more useful the sooner it's out.</p>
+      <p class="caption" id="cap">Okay, Luxe Lifers. Black Friday is about to throw a hundred "dupes" at you, and most of them stop looking like the real thing after two washes.
+
+The label never made the look. The structure did. Shoulder line, fabric weight, where the hem hits. That's what I check before I buy anything that's supposed to look like more than it cost.
+
+Episode 5 of Luxe Code walks through it, and the full formula card is in the Simpli Luxe App.
+
+What's the one designer piece you've been wanting the look of?
+
+Stay simpli luxe.</p>
+      <div class="meta">
+        <span><b>Link:</b> simpliluxe.com/luxe-code</span>
+        <span><b>ShopMy:</b> only if you tag real pieces, with #ad</span>
+        <button class="copy" type="button" id="copyBtn">Copy caption</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- PITCH ROOM -->
+  <section aria-labelledby="pr">
+    <div class="sec-head"><span class="no">iii.</span><h2 id="pr">Pitch Room</h2><span class="sub">Worth acting on</span></div>
+
+    <ol class="plain pitch">
+      <li>
+        <span class="kind">Product placement</span>
+        <span class="t"><a href="https://mail.google.com/mail/u/0/#all/thread-f:1881591785316395637" target="_blank" rel="noopener">Eventnoire's Holiday Gift Guide is taking submissions</a></span>
+        <p class="d">Their newsletter yesterday invited small brands to submit products for a gift guide "from our community, for our community." No deadline listed, but gift guides fill up fast in November.</p>
+        <p class="next"><b>Next step:</b> submit <a href="https://simpliluxe.kit.com/products/the-simpli-luxe-life-deck" target="_blank" rel="noopener">The Simpli Luxe Life Deck</a> ($22). It's the most giftable price in your shop.</p>
+      </li>
+      <li>
+        <span class="kind">Creator network</span>
+        <span class="t">Eventnoire is opening an influencer community</span>
+        <p class="d">Same email: early access sign-up for a network that matches brands with creators. Their audience lines up with yours.</p>
+        <p class="next"><b>Next step:</b> sign up for early access from the bottom of that email. Five minutes.</p>
+      </li>
+      <li>
+        <span class="kind">Event · tomorrow</span>
+        <span class="t">McDonald's Inspiration Celebration in Detroit</span>
+        <p class="d">Fred Hammond, Koryn Hawthorne and Jonathan McReynolds at Greater Grace Temple on Friday, Nov 13, with free tickets through Eventnoire. It lands on your day off.</p>
+        <p class="next"><b>Next step:</b> RSVP from the same email if you want the evening. Go for you first; content is optional.</p>
+      </li>
+    </ol>
+    <p class="quiet">No brand or collab emails waiting on a reply from the last two weeks.</p>
+  </section>
+
+  <footer class="close">
+    <div class="sig">Stay simpli luxe.</div>
+    <p class="src">Pulled from your Google Calendar, Gmail, Kit and the Simpli Luxe Airtable base on Nov 12. Nothing was posted or sent. Income stays blank until you give me a number.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var KEY="slc-2026-11-12";
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+  document.querySelectorAll("#actions input").forEach(function(box){
+    var li=box.closest("li");
+    if(saved[box.id]){box.checked=true;li.classList.add("done")}
+    box.addEventListener("change",function(){
+      li.classList.toggle("done",box.checked);
+      saved[box.id]=box.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+    });
+  });
+  var btn=document.getElementById("copyBtn"),cap=document.getElementById("cap");
+  btn.addEventListener("click",function(){
+    var text=cap.innerText.trim();
+    function done(){btn.textContent="Copied";setTimeout(function(){btn.textContent="Copy caption"},1800)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(cap);var s=window.getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Selected, press copy"}
+    try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+</script>
