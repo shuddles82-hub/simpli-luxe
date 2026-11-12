@@ -26,8 +26,9 @@ plan.json
   Optional keys: "hook_y" (pixels from top, default 250), "loudnorm": true
   to even out quiet voice audio, "cover_from_clip": {"clip": 0, "at": 2.0}
   for a clean cover frame with no text, and per clip "overlays":
-  [{"text": "...", "from": 4, "to": 10, "pos": "top|middle|bottom"}]
+  [{"text": "...", "from": 4, "to": 10, "pos": "top|middle|bottom" or pixels}]
   with times in seconds after that clip's trim start.
+  A clip can also be a photo (.jpg/.png) held for "duration" seconds.
   start/end are seconds within each clip and are optional. "text" is an
   optional lower-third line for that clip. cover_at is a time in the
   finished Reel to save as a cover frame (out name with .jpg).
@@ -121,17 +122,24 @@ def normalize(clip, idx, tmp, series, hook, hook_y=250, loud=False):
                   % (esc(F_SANS), esc(lt), CREAM))
     for j, ov in enumerate(clip.get("overlays", [])):
         tf = textfile(tmp, "ov%02d_%02d.txt" % (idx, j), wrap(ov["text"], 30))
-        y = {"top": "170", "middle": "(h-th)/2", "bottom": "h-430"}[ov.get("pos", "top")]
+        pos = ov.get("pos", "top")
+        y = {"top": "170", "middle": "(h-th)/2", "bottom": "h-430"}.get(pos, str(pos))
         vf.append("drawtext=fontfile='%s':textfile='%s':fontsize=48:line_spacing=10:fontcolor=%s:"
                   "x=(w-tw)/2:y=%s:box=1:boxcolor=0x0D0D0D@0.62:boxborderw=26:"
                   "enable='between(t,%.2f,%.2f)'" % (esc(F_SANS), esc(tf), CREAM, y, ov["from"], ov["to"]))
     cmd = ["ffmpeg", "-y", "-v", "error"]
-    if clip.get("start") is not None:
-        cmd += ["-ss", str(clip["start"])]
-    if clip.get("end") is not None:
-        cmd += ["-to", str(clip["end"])]
-    cmd += ["-i", src]
-    if has_audio(src):
+    still = src.lower().endswith((".jpg", ".jpeg", ".png"))
+    if still:
+        # a photo held on screen, e.g. an outfit reveal
+        cmd += ["-loop", "1", "-t", str(clip.get("duration", 2.5)), "-i", src]
+        vf.append("fade=t=in:st=0:d=0.25")
+    else:
+        if clip.get("start") is not None:
+            cmd += ["-ss", str(clip["start"])]
+        if clip.get("end") is not None:
+            cmd += ["-to", str(clip["end"])]
+        cmd += ["-i", src]
+    if not still and has_audio(src):
         amap = ["-map", "0:v:0", "-map", "0:a:0"]
     else:
         cmd += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo"]
