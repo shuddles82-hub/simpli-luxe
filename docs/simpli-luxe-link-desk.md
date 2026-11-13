@@ -28,11 +28,11 @@ Amazon and LTK were added because you already earn from both. Remove either one 
 
 - Instagram: @simpli_staci
 - Simpli Luxe App: simpliluxe.com
-- ShopMy: [paste your ShopMy shop link]
+- ShopMy: https://shopmy.us/shop?Curator_id=179755&tab=collections&Section_id=2004956
 - Walmart Creator storefront: https://walmrt.us/3WmMxZ8
 - Sam's Club Creator storefront: https://samsclub.co/4k8Ruyr
 
-Both storefronts are also rows in the Link Library, for posts that point to the whole shop.
+All three shops are also rows in the Link Library, for posts that point to the whole shop.
 
 ## Rules Claude follows on the Link Desk
 
