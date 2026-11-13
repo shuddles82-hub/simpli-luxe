@@ -16,6 +16,7 @@ Page source is kept out of this repo on purpose: it holds income figures and con
 | Overview | Gmail | Amazon Associates monthly reports, brand contract receipts and payment terms |
 | Overview | Staci | Monthly income goal |
 | Studio | Airtable | Unfinished episodes (Luxe Code, Simpli Styled, Simpli Sips, Life's Little Luxuries), Simpli Edit issues, seasonal timing |
+| Link Desk | Airtable, Link Library table | Active links, pieces marked Needs link, see `docs/simpli-luxe-link-desk.md` |
 | Pitch Room | Gmail | Brand, collab, PR, gifting, ShopMy, LTK and Amazon Associates emails from the last 14 days; gift guide calls; creator networks; events near metro Detroit |
 
 ## Rules for every run
