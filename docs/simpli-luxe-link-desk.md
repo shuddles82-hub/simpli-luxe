@@ -31,8 +31,9 @@ Amazon and LTK were added because you already earn from both. Remove either one 
 - ShopMy: https://shopmy.us/shop?Curator_id=179755&tab=collections&Section_id=2004956
 - Walmart Creator storefront: https://walmrt.us/3WmMxZ8
 - Sam's Club Creator storefront: https://samsclub.co/4k8Ruyr
+- LTK: https://www.shopltk.com/explore/Simpli_Staci
 
-All three shops are also rows in the Link Library, for posts that point to the whole shop.
+All four shops are also rows in the Link Library, for posts that point to the whole shop.
 
 ## Rules Claude follows on the Link Desk
 
