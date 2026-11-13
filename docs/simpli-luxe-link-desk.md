@@ -2,97 +2,107 @@
 
 Claude handles the linking logistics. Staci keeps the voice.
 
-Inspired by Kristen Mills (@krisbmills), Instagram carousel, Nov 11, 2026: https://www.instagram.com/p/DfnSJ3lAVl-/
-Her ground rule: don't use AI for creativity or your personal voice, use it for the boring logistics like linking. Her exact prompts are only in her free guide (comment CLAUDE on the post). The prompts below are Simpli Luxe adaptations built from her six prompt titles, not her wording.
+Based on "The Claude Link Guide" by Kris Mills (@krisbmills), from her Nov 11, 2026 post: https://www.instagram.com/p/DfnSJ3lAVl-/
+The prompts below are Simpli Luxe adaptations of her six prompts, rewritten for your brand, your shops and your rules. Credit for the method is hers.
 
-## How it works
+## Two places Claude works
 
-Claude cannot log in to ShopMy, LTK, Amazon, Walmart Creator or Sam's Club Creator, so it can't create affiliate links. Those come from each platform's app or browser extension. What Claude does instead:
+| Where | What it can do |
+| --- | --- |
+| **Claude in Chrome**, the side panel on your laptop | Works inside the ShopMy and LTK tabs where you're already logged in. Finds products, creates your affiliate links, builds and publishes collections after you say go. |
+| **The Concierge** (this chat and your morning page) | Keeps every link in the **Link Library** table in Airtable, matches products to links, flags what's missing, writes captions in your voice. It can't log in to your shops. |
 
-1. **Keeps your links in one place.** Every link you make goes into the **Link Library** table in the Simpli Luxe Airtable base. Paste links into the Concierge chat and Claude files them there, with product, brand, color, platform, retailer and price.
-2. **Matches products to links.** When you ask for links, Claude checks the Link Library in your platform order and returns clean, copyable lists.
-3. **Flags what's missing.** Anything without a link is marked **Needs link** with the exact product to look up, never a guessed substitute.
-4. **Writes the line around the links** in your voice, with the right disclosure.
+The flow: make links in Chrome, then paste Chrome's list into the Concierge with **Add Links** so they're saved for every future post.
 
-## Platform order
+## One-time setup for Claude in Chrome (about 10 minutes)
 
-1. ShopMy
-2. Walmart Creator storefront
-3. Sam's Club Creator storefront
-4. Amazon Associates
-5. LTK
+1. Use a paid Claude plan (Pro or higher). The Chrome tool isn't on the free plan.
+2. On a laptop or desktop, open the Chrome Web Store, search "Claude", pick the one made by Anthropic, and click Add to Chrome. It doesn't work on your phone yet.
+3. Sign in with your Claude account, then pin it from the puzzle piece in the toolbar.
+4. In the same Chrome window, open ShopMy and your LTK creator account in separate tabs and log in to both yourself. Never type a password into the Claude chat.
+5. Click the Claude icon and ask "can you see my ShopMy tab?" Approve the permission when it asks.
 
-Amazon and LTK were added because you already earn from both. Remove either one here if you don't want it in the mix.
+Walmart Creator and Sam's Club Creator aren't in Kris's guide. Claude in Chrome may be able to work in those dashboards the same way. Try a Quick Link there before relying on it.
 
-## Your links
+## Your shops
 
-- Instagram: @simpli_staci
-- Simpli Luxe App: simpliluxe.com
 - ShopMy: https://shopmy.us/shop?Curator_id=179755&tab=collections&Section_id=2004956
+- LTK: https://www.shopltk.com/explore/Simpli_Staci
 - Walmart Creator storefront: https://walmrt.us/3WmMxZ8
 - Sam's Club Creator storefront: https://samsclub.co/4k8Ruyr
-- LTK: https://www.shopltk.com/explore/Simpli_Staci
+- Amazon Associates
+- Simpli Luxe App: simpliluxe.com
+- Instagram: @simpli_staci
 
-All four shops are also rows in the Link Library, for posts that point to the whole shop.
+All four shop links are also rows in the Link Library, for posts that point to a whole shop.
 
-## Rules Claude follows on the Link Desk
+## Rules for every prompt
 
-- Use only links in the Link Library or links Staci pastes. Never invent a link, product name, price or store.
-- If there's no exact match, mark the item **Needs link**. Never swap in a close match.
-- Prices only when Staci confirms them or the Link Library has one with a Price Checked date in the last 7 days.
-- Links stay separate from the caption, one per line, so they copy cleanly.
-- Add #ad or #affiliate wherever a link earns commission. ShopMy only where the product is actually in the content.
-- Brand voice: warm, practical, affordable luxury. "Okay, Luxe Lifers." when it fits, "Stay simpli luxe." to close, no em dashes, no hustle language, no financial lectures. Calls to action point to simpliluxe.com.
-- Nothing is posted or sent without Staci's approval.
+- Never post or publish without Staci saying go. Show the list first.
+- Never swap in a lookalike on its own. If there's no exact match, show up to 2 closest options and let Staci pick.
+- Captions and story text in Staci's voice: warm, practical, affordable luxury, a little sassy when it fits. "Okay, Luxe Lifers." to open when it fits, "Stay simpli luxe." to close, no em dashes, no hustle language. Calls to action point to simpliluxe.com.
+- Disclose with #ad or #affiliate on anything with a commission link.
+- Every Chrome prompt ends with a list Staci can paste into the Link Library.
 
 ## The prompts
 
-Paste one into the Concierge chat and fill in the brackets.
+Swap in the parts in [brackets].
 
-### 0. Add Links
+### 1. The Quick Link (Chrome)
 
-For: filing new links so every other prompt can use them.
+For one find you want to share right now.
 
-> Add these to my Link Library: [paste each link with the product name, brand, color or size, platform and price if you know it]. Mark them Active, tag the series they belong to, and tell me anything you couldn't fill in.
+> I'm logged into ShopMy and LTK in my other tabs. Here's a product I want to share: [paste the product link or name]. Find it on ShopMy and create my affiliate link, then do the same on LTK. Give me both links back, labeled, with the price and the store. If it's not on one of them, tell me and show me up to 2 closest options to pick from. Don't swap one in yourself and don't publish anything. End with a list for my Link Library: product, brand, color, platform, store, price, link.
 
-### 1. The Quick Link
+### 2. The Link List (Chrome)
 
-For: one product, fast.
+For a Reel or Story with several pieces in it.
 
-> Quick link: [product name, brand, color, size if it matters]. Check my Link Library in my platform order and give me the exact link plus one short line in my voice to paste with it. If it's not there, mark it Needs link and tell me exactly what to search for. Don't suggest a substitute.
+> Here are the items in today's content: [list each product, one per line]. For each one, create my [ShopMy / LTK] affiliate link. Give me a simple list: product name, store, price, link. If you can't find something, flag it. Don't guess. Don't post or publish anything, just make the links. End with a list for my Link Library.
 
-### 2. The Link List
+### 3. The Collection Roundup (Chrome)
 
-For: every product in a Reel.
+For a whole edit, linked and story-ready.
 
-> Link list for this Reel: [list each product, or paste the script and shot list]. Return a numbered list in the order they appear, one product and one link per line, from my Link Library in my platform order. Add anything without a link to the library as Needs link and list those separately. End with #ad.
+> Go to the [new arrivals] section at [Target] and round up [15] pieces: [3 bottoms, 5 tops, 3 accessories, 2 shoes and 2 bags]. Only pick pieces in [camel, cream, navy or black], [under $50 each]. Skip anything sold out or low on sizes, and make the pieces work together as outfits. Then build a new collection in my [ShopMy / LTK] called "[Simpli Styled: The Fall Neutrals Edit]" with my affiliate link for every piece, grouped in that order. If a piece won't link, show me another that fits the rules and let me approve it.
+>
+> Before you publish, show me a list: piece, category, color, price, link. Once I say go, publish it, give me the collection link, and write 3 short Instagram Story text overlays in my voice: warm, practical, affordable luxury, no em dashes, with simpliluxe.com on the last one. End with a list for my Link Library.
 
-### 3. The Collection Roundup
+### 4. The Gift Guide (Chrome)
 
-For: a seasonal or series edit.
+For gift season, when your Luxe Lifers want you to tell them what to buy.
 
-> Build a collection roundup for [series, plus the theme, for example Simpli Styled fall layers under $50]. Use only products in my Link Library that fit the theme, up to [number]. Return product, price if it was checked this week, and link. Tell me how many more I'd need to link to reach [number]. Give me one intro line in my voice with a call to action to simpliluxe.com.
+> Build a holiday gift guide for [women who love little luxuries]. Pick [12] best sellers, [4 each from Target, Walmart and Amazon]. Mix it up: [cozy at home, beauty, something for the table, and one wow gift]. Only pick items that are in stock, well reviewed and [under $50]. Then build a new collection in my [ShopMy / LTK] called "[Little Luxuries Under $50]" with my affiliate link for every item. If one won't link, show me another best seller that fits and let me approve it.
+>
+> Before you publish, show me a list: item, store, price, who it's for, link. Once I say go, publish it and give me the collection link plus a short caption in my voice for the gift guide post, with #ad. End with a list for my Link Library.
 
-### 4. The Gift Guide
+Swap the brackets for any guide: "the homebody", "stocking stuffers under $25", "hostess gifts", "only Black-owned brands", "10 picks", "1 wow gift". Add the $22 Simpli Luxe Life Deck from simpliluxe.com when the budget fits.
 
-For: gift season.
+### 5. The Top Ten (Chrome)
 
-> Build a gift guide for [who it's for, for example women who love little luxuries] under [budget]. Use only products in my Link Library, up to [number]. Return product, price if it was checked this week, who it's best for, and the link. Include my own products from simpliluxe.com where they fit the budget, like the $22 Simpli Luxe Life Deck. Give me one intro in my voice and add #ad.
+For a monthly favorites post with built-in demand.
 
-### 5. The Top Ten
+> Go to my [ShopMy / LTK] dashboard and look at all my sales from [last month]. Find my top 10 best-selling products by number of orders. Then build a new collection called "[Luxe Lifers' October Favorites]" with those 10 in order, #1 to #10, using my affiliate links. If one is sold out, swap in my #11 and tell me.
+>
+> Before you publish, show me a list: rank, item, store, number of orders, link. Once I say go, publish it and give me the collection link plus a short caption in my voice about what you all loved most this month. End with a list for my Link Library.
 
-For: your monthly best sellers, from your own sales.
+### 6. The Outfit of the Day (Chrome, or just say it)
 
-> Here are last month's sales: [paste or screenshot your ShopMy, LTK, Amazon or storefront earnings]. Pull my top 10 sellers from this data only, ranked by earnings. Match each to its link in my Link Library and mark any that are missing as Needs link. Note anything that's sold out.
+For when you just got dressed and want it linked before you post.
 
-Claude can't pull sales from these platforms on its own, so paste the list or send screenshots.
+> Build a new collection in my [ShopMy / LTK] called "[Simpli Styled 11.13]" for what I'm wearing today: [brand + piece + color + material for each, for example "navy belted jacket, navy turtleneck, plaid wide-leg overalls"]. Find each exact piece, make my affiliate link and add them in that order. If you can't find an exact match, show me the 2 closest options and let me pick. Before you publish, show me a list: piece, color, price, link. Once I say go, publish it and give me the collection link. End with a list for my Link Library.
 
-### 6. The Outfit of the Day
+You can talk instead of type: on a Mac press the fn (globe) key twice, on Windows press Windows key + H. "My Quince Bella jeans in dark wash" works better than "my jeans."
 
-For: what you're wearing.
+### 7. Add Links (Concierge)
 
-> Outfit of the day: [each piece with brand and color, for example top, bottom, shoes, bag, jewelry]. Find each piece in my Link Library in my platform order, one piece and one link per line. Add missing pieces as Needs link. Write one short caption in my voice with a call to action to simpliluxe.com, and add #ad.
+For saving what Chrome made, so every future post can use it.
 
-## What this adds to the Concierge
+> Add these to my Link Library: [paste the list from Claude in Chrome]. Mark them Active, tag the series they belong to, and tell me anything you couldn't fill in.
 
-Overview, Studio and Pitch Room stay the same. The morning page gains a Link Desk section that shows how many links are in the library, what's waiting on a link, and the prompts above with copy buttons.
+## Before you post: the 30-second check
+
+- **Click every link.** It opens the right product, in the right color and size.
+- **Make sure it's your link.** Open your ShopMy or LTK dashboard and confirm it's there.
+- **Disclose it.** #ad or #affiliate. Trust is the whole game.
+- **Stay in the driver's seat.** If Claude asks to publish, post or change something, read it before you say yes.
