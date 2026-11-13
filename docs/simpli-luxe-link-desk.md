@@ -29,10 +29,10 @@ Amazon and LTK were added because you already earn from both. Remove either one 
 - Instagram: @simpli_staci
 - Simpli Luxe App: simpliluxe.com
 - ShopMy: [paste your ShopMy shop link]
-- Walmart Creator storefront: [open the Nov 9 "Your storefront is published!" email from Walmart Creator, tap View your storefront, copy the address from the browser]
-- Sam's Club Creator storefront: [same steps, from the Sam's Club Creator email]
+- Walmart Creator storefront: https://walmrt.us/3WmMxZ8
+- Sam's Club Creator storefront: https://samsclub.co/4k8Ruyr
 
-The storefront buttons in those emails go through Walmart's click-tracking redirect, so the real address only appears after you tap it. Paste the real address here, never the tracking link.
+Both storefronts are also rows in the Link Library, for posts that point to the whole shop.
 
 ## Rules Claude follows on the Link Desk
 
