@@ -90,6 +90,16 @@ Branch: `model-audit-2026-11-16-d`.
 - **Checked:** build passes. The alert route was tested with Kit replaced by a stand-in, so no email could be sent: no secret, wrong header and wrong query all return 401; right header and right query both return 200.
 - **Not checked:** the alert route end to end with the real secret, since that would email every opted-in member.
 
+### Fifth batch, 2026-11-17 (item 4 closed)
+
+Branch: `model-audit-2026-11-17-e`.
+
+- **Item 4, Staci's half, done.** New secret saved in Vercel as `CONTENT_ALERT_WEBHOOK_SECRET` and redeployed. All 9 "Promote Approved ..." Airtable automations now send it in the `x-webhook-secret` header, with no secret in the web address. Staci published them and tested one successfully.
+- **Item 4, closed.** Removed the `?secret=` fallback from `/api/kit/notify-content`. Only the header is accepted now.
+- **Found, left open:** the Airtable scripts send `title: inputConfig.title` and `destinationTable: inputConfig.destinationTable`, but the only script input is named `Title` (and holds the destination series name). Both values arrive empty. The route ignores the body today, so nothing is broken; fix only if the alert should ever use them.
+- **Checked:** build passes. The route was called with Kit replaced by a stand-in: right header returns 200; right `?secret=` with no header now returns 401.
+- **Not checked:** the live route after this change. The next real approval will show it in the automation's Run history.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
