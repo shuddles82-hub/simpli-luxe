@@ -1,6 +1,6 @@
 import LuxeCodeCard from './LuxeCodeCard';
 
-// Plain grid, no filter chips — episodes are just chronological, and
+// Plain grid, no filter chips: episodes are just chronological, and
 // this already scales gracefully well past a season's 24+ episodes
 // (same responsive auto-fit grid used across the site).
 export default function LuxeCodeExplorer({ items }) {

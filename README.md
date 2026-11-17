@@ -45,14 +45,16 @@ these steps are done, the site simply hides those features.
    - Project URL
    - anon public key (the long one labeled "anon" "public")
 4. Paste them into `.env.local` as `NEXT_PUBLIC_SUPABASE_URL` and
-   `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Never copy the "service_role" key
-   anywhere; it stays in Supabase.
+   `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Do not use the "service_role" key
+   for either of these. It is added later, on its own server-only line
+   (see "Turn on Luxe Insider").
 5. In Supabase, go to Authentication > URL Configuration and set the
    Site URL to your website address (while testing on your computer,
    `http://localhost:3000`). When you deploy, change it to your live
    address and add it under Redirect URLs too.
 6. Restart `npm run dev`. The Members tab now offers email sign-in
-   (a magic link, no passwords), and every shift, note, lesson, and
+   (email and password, with an emailed sign-in link as an option),
+   and every shift, note, lesson, and
    sip shows a ✦ Save button.
 
 ## Turn on the vision board (one time)
@@ -158,8 +160,10 @@ to keep this simple).
 3. In the project's Settings > Environment Variables, add
    `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, `NEXT_PUBLIC_SUPABASE_URL`,
    `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `ANTHROPIC_API_KEY`,
-   `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET`, and
-   `SUPABASE_SERVICE_ROLE_KEY` with the same values as your `.env.local`.
+   `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET`,
+   `SUPABASE_SERVICE_ROLE_KEY`, `KIT_API_KEY`,
+   `CONTENT_ALERT_WEBHOOK_SECRET`, and `CRON_SECRET` with the same
+   values as your `.env.local`.
 4. Deploy. Content updates flow automatically; no redeploy needed
    when you publish new records.
 
@@ -175,6 +179,9 @@ Each series reads only `Status = Published` rows from its own table:
 | /edit | The Simpli Edit |
 | /styled | Simpli Styled |
 | /shop | Shop Collections (homepage spotlight uses Featured) |
+| /luxe-code | Luxe Code |
+| /luxuries | Life's Little Luxuries |
+| /insider | Insider Weekly |
 
 The Content Queue table is your AI review inbox only. The site never
 shows records from it. Approve a draft there, promote it into the

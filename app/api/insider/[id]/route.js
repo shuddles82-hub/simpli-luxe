@@ -1,4 +1,4 @@
-import { getInsiderItemById } from '@/lib/content';
+import { getInsiderItemById, insiderTeaser } from '@/lib/content';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { getMemberFromRequest } from '@/lib/auth-server';
 
@@ -27,6 +27,5 @@ export async function GET(request, { params }) {
   }
   if (isInsider) return Response.json({ item, locked: false });
 
-  const { body, quote, ...teaser } = item;
-  return Response.json({ item: teaser, locked: true });
+  return Response.json({ item: insiderTeaser(item), locked: true });
 }

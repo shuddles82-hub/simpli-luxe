@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
 import InsiderDetailGate from '@/components/InsiderDetailGate';
-import { getInsiderItemById } from '@/lib/content';
+import { getInsiderItemById, insiderTeaser } from '@/lib/content';
 
 export const revalidate = 600;
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
 
 export default async function InsiderDetailPage({ params }) {
   const { id } = await params;
-  const item = await getInsiderItemById(id);
+  const item = insiderTeaser(await getInsiderItemById(id));
   if (!item) notFound();
 
   return (

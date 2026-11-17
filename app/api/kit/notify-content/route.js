@@ -8,7 +8,7 @@ import { listEmailsWithTag, setKitTag } from '@/lib/kit';
 // event, so re-tagging someone who already has the trigger tag does
 // nothing. To make this repeatable, every call first clears the
 // trigger tag from whoever has it, then re-applies it fresh to the
-// opted-in segment — a real "add" every time.
+// opted-in segment, so it is a real "add" every time.
 //
 // Protected by a shared secret (?secret=...) since this has to be a
 // public URL for Airtable to call; anyone else hitting it without the
