@@ -4,7 +4,7 @@ import QuoteBand from '@/components/QuoteBand';
 import HeroQuotes from '@/components/HeroQuotes';
 import CollectionCard from '@/components/CollectionCard';
 import InsiderDropsWidget from '@/components/InsiderDropsWidget';
-import { getFeaturedCollections } from '@/lib/content';
+import { getEditIssuesContent, getFeaturedCollections } from '@/lib/content';
 
 export const revalidate = 600;
 
@@ -67,7 +67,7 @@ const SERIES = [
     n: '01',
     tag: 'Digital Magazine',
     title: 'The Simpli Edit',
-    desc: 'Your curated guide to affordable luxury, soft living, and intentional style. All 7 vols available.',
+    desc: 'Your curated guide to affordable luxury, soft living, and intentional style.',
   },
   {
     href: '/styled',
@@ -106,8 +106,25 @@ const SERIES = [
   },
 ];
 
+// The current Era comes from the latest Simpli Edit issue, so the home
+// page moves into each new Era as soon as its issue is published.
+function quarterLabel(date = new Date()) {
+  return `Q${Math.floor(date.getMonth() / 3) + 1} ${date.getFullYear()}`;
+}
+
 export default async function HomePage() {
-  const featured = await getFeaturedCollections();
+  const [featured, editIssues] = await Promise.all([
+    getFeaturedCollections(),
+    getEditIssuesContent(),
+  ]);
+  const latest = editIssues[0];
+  const latestHref = latest ? `/edit/${latest.htmlUrl ? latest.slug : latest.id}` : '/edit';
+  const latestVol = latest?.volume ? `Vol ${String(latest.volume).padStart(2, '0')}` : null;
+  const series = SERIES.map((s) =>
+    s.href === '/edit'
+      ? { ...s, desc: `${s.desc} All ${editIssues.length} vols available.` }
+      : s
+  );
 
   return (
     <>
@@ -124,7 +141,10 @@ export default async function HomePage() {
           <HeroQuotes />
           <div className="era-b an d3">
             <div className="era-dot" />
-            <div className="era-txt">Now in The Expansion Era · Q3 2026</div>
+            <div className="era-txt">
+              {latest?.era ? `Now in ${latest.era} · ` : ''}
+              {quarterLabel()}
+            </div>
           </div>
           <div className="hpills an d3">
             <Link href="/edit" className="hpill">
@@ -140,7 +160,7 @@ export default async function HomePage() {
               Styling Services
             </Link>
           </div>
-          <Link href="/edit" className="hcta an d4">
+          <Link href={latestHref} className="hcta an d4">
             Read the Latest Issue
           </Link>
         </div>
@@ -273,7 +293,7 @@ export default async function HomePage() {
         </h2>
       </div>
       <div className="sgrid">
-        {SERIES.map((s) => (
+        {series.map((s) => (
           <Link key={s.href} href={s.href} className="sc">
             <div className="scn">{s.n}</div>
             <div className="sct">{s.tag}</div>
@@ -328,10 +348,12 @@ export default async function HomePage() {
         </Link>
       </div>
 
-      <QuoteBand
-        quote="Expansion is not something you chase. It is something you grow into, slowly, intentionally, on your own terms."
-        cite="The Simpli Edit, Vol 07 · The In Full Sun Edit"
-      />
+      {latest?.pullQuote && (
+        <QuoteBand
+          quote={latest.pullQuote}
+          cite={`The Simpli Edit, ${[latestVol, latest.title].filter(Boolean).join(' · ')}`}
+        />
+      )}
       <Footer links={['Instagram', 'TikTok', 'Pinterest', 'LTK', 'YouTube']} />
     </>
   );

@@ -24,7 +24,11 @@ export default function EditExplorer({ issues }) {
       <FilterBar allLabel="All Issues" chips={chips} active={active} onChange={setActive} />
       <div className="igg">
         {visible.map((issue) => (
-          <Link key={issue.id} href={`/edit/${issue.id}`} style={{ display: 'block' }}>
+          <Link
+            key={issue.id}
+            href={`/edit/${issue.htmlUrl ? issue.slug : issue.id}`}
+            style={{ display: 'block' }}
+          >
             <EditCover issue={issue} />
           </Link>
         ))}

@@ -5,6 +5,7 @@ import Nav from '@/components/Nav';
 import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 
 export const metadata = {
+  metadataBase: new URL('https://simpliluxe.com'),
   title: 'Simpli Luxe',
   description:
     'A life that feels as good as it looks. Affordable luxury, intentional living, the soft life.',

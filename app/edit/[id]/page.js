@@ -5,6 +5,7 @@ import QuoteBand from '@/components/QuoteBand';
 import SaveButton from '@/components/SaveButton';
 import ShareRow from '@/components/ShareRow';
 import { linkify } from '@/components/RichText';
+import EditMagazine from '@/components/EditMagazine';
 import { getEditIssueById } from '@/lib/content';
 
 export const revalidate = 600;
@@ -48,6 +49,7 @@ export default async function EditIssueDetailPage({ params }) {
   const { id } = await params;
   const issue = await getEditIssueById(id);
   if (!issue) notFound();
+  if (issue.htmlUrl) return <EditMagazine issue={issue} />;
 
   const tagLine = [
     issue.volume ? `Vol ${String(issue.volume).padStart(2, '0')}` : null,
