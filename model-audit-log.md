@@ -79,6 +79,17 @@ Branch: `model-audit-2026-11-16-c`.
 - **Checked:** build passes. Webhook, run locally with signed test events against a customer id that does not exist: bad signature 400, each subscription and checkout event 200, a checkout for a member id that is not in the database 500, unrelated event 200. No rows were written. Library: asked Supabase for a real signed link before and after; the download name went from `The Simpli Edit _ Vol 07` to `The Simpli Edit _ Vol 07.pdf`. CSS: every class used in the code is still defined, and all pages load.
 - **Not checked:** a real Stripe event for a real member (renewal keeping the date). The local setup has no webhook secret, so a temporary local-only test secret was used and removed.
 
+### Fourth batch, 2026-11-17 (item 4 code half, item 14)
+
+Branch: `model-audit-2026-11-16-d`.
+
+- **Item 4, code half.** `/api/kit/notify-content` now accepts the secret in an `x-webhook-secret` header. The old `?secret=` form still works so the Airtable automation keeps running. The saved permission line that held the real secret was removed from `../.claude/settings.local.json`.
+- **Item 4, still open, needs Staci:** make a new secret, put it in Vercel as `CONTENT_ALERT_WEBHOOK_SECRET`, change the Airtable automation to send it as the `x-webhook-secret` header, then ask for the `?secret=` fallback to be removed.
+- **Item 14.** Added `CLAUDE.md` inside this repo, brought up to date (routes, the teaser rule for premium content, Kit tags, the Supabase pause note, no em dashes). Added a "Turn on email notifications (Kit)" section to `README.md`. Updated the Claude memory notes (live address, sign-in method, pointer to this log).
+- **Item 14, left alone:** `../starter-kit/CLAUDE.md` and the other starter-kit docs are outside this repo, so changes there cannot be undone with git. The old CLAUDE.md is now out of date and the starter-kit docs still contain em dashes. The other one-off lines in `settings.local.json` were not touched.
+- **Checked:** build passes. The alert route was tested with Kit replaced by a stand-in, so no email could be sent: no secret, wrong header and wrong query all return 401; right header and right query both return 200.
+- **Not checked:** the alert route end to end with the real secret, since that would email every opted-in member.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.

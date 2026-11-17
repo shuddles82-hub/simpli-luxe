@@ -153,6 +153,39 @@ to keep this simple).
    - It appears on the live Library page within a minute or two for any
      signed-in member (or Luxe Insiders only, if you set that tier).
 
+## Turn on email notifications (Kit)
+
+New members are added to your Kit list, and members can choose two
+kinds of email on the Members page: new content alerts and Soft Life
+Reminders. The app only adds and removes tags in Kit. The emails
+themselves are the automations and sequences you build in Kit.
+
+1. In Kit, go to Settings > Developer > API Keys and copy the v4 API
+   key into `.env.local` as `KIT_API_KEY`.
+2. In Supabase, open the SQL Editor and run
+   `supabase/notification-prefs.sql`, then
+   `supabase/reminder-retrigger.sql`. They add the on/off settings to
+   member profiles.
+3. Make up two long random values and save them as
+   `CONTENT_ALERT_WEBHOOK_SECRET` and `CRON_SECRET`.
+4. The app creates these tags in Kit the first time each is needed.
+   Build your Kit automations on them:
+   - `App Member`: added when a new member signs in for the first time.
+   - `Notify: New Content`: the member ticked new content alerts.
+   - `Content Alert - Fire`: added to every opted-in member each time
+     new content is announced. Trigger your "new content is live" email
+     on this tag being added.
+   - `Soft Life Reminders - Opt In`: the member ticked Soft Life
+     Reminders. Trigger the reminder sequence on this tag being added.
+5. To announce new content, have your Airtable automation send a POST
+   request to `https://your-site/api/kit/notify-content` with a header
+   named `x-webhook-secret` holding your `CONTENT_ALERT_WEBHOOK_SECRET`.
+6. Two jobs run on their own once deployed (see `vercel.json`):
+   - Weekly: members who finished the reminder sequence more than five
+     weeks ago are started through it again.
+   - Daily: a tiny database read that keeps a free-plan Supabase project
+     from being paused for inactivity.
+
 ## Deploy to Vercel
 
 1. Push this folder to a GitHub repository.

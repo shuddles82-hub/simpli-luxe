@@ -10,9 +10,12 @@ import { listEmailsWithTag, setKitTag } from '@/lib/kit';
 // trigger tag from whoever has it, then re-applies it fresh to the
 // opted-in segment, so it is a real "add" every time.
 //
-// Protected by a shared secret (?secret=...) since this has to be a
-// public URL for Airtable to call; anyone else hitting it without the
-// secret gets nothing.
+// Protected by a shared secret, since this has to be a public URL for
+// Airtable to call; anyone else hitting it without the secret gets
+// nothing. Send the secret in an "x-webhook-secret" header. The older
+// ?secret=... form still works so the existing automation keeps running,
+// but a secret in a web address ends up in logs, so move to the header
+// and then remove the fallback below.
 
 export const runtime = 'nodejs';
 
@@ -21,7 +24,7 @@ const TRIGGER_TAG = 'Content Alert - Fire';
 
 export async function POST(request) {
   const { searchParams } = new URL(request.url);
-  const secret = searchParams.get('secret');
+  const secret = request.headers.get('x-webhook-secret') || searchParams.get('secret');
   if (!process.env.CONTENT_ALERT_WEBHOOK_SECRET || secret !== process.env.CONTENT_ALERT_WEBHOOK_SECRET) {
     return Response.json({ ok: false }, { status: 401 });
   }
