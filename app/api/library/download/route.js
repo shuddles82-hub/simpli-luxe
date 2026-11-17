@@ -6,6 +6,15 @@ import { getMemberFromRequest } from '@/lib/auth-server';
 
 export const runtime = 'nodejs';
 
+// The saved file is named after the item's title. The title has no file
+// extension, so borrow it from the stored file; without one, a phone or
+// laptop may not know how to open the download.
+function downloadName(title, storagePath) {
+  const ext = (String(storagePath || '').match(/\.[A-Za-z0-9]{1,5}$/) || [''])[0];
+  const name = String(title || '').trim() || 'Simpli Luxe download';
+  return ext && !name.toLowerCase().endsWith(ext.toLowerCase()) ? name + ext : name;
+}
+
 export async function POST(request) {
   const admin = getSupabaseAdmin();
   if (!admin) return Response.json({ error: 'The Library is not quite ready yet.' });
@@ -45,7 +54,9 @@ export async function POST(request) {
 
   const { data: signed, error } = await admin.storage
     .from('library')
-    .createSignedUrl(item.storage_path, 300, { download: item.title });
+    .createSignedUrl(item.storage_path, 300, {
+      download: downloadName(item.title, item.storage_path),
+    });
   if (error || !signed) {
     return Response.json({ error: 'We could not open that file just now. Please try again.' });
   }

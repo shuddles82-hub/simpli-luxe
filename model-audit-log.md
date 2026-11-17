@@ -59,6 +59,26 @@ Branch: `model-audit-2026-11-16-b`. Items 1 and 2 were merged to `main` and are 
 - **Not checked:** anything that needs a real signed-in member: a new sign-up landing on the Kit list, and the notification checkboxes end to end. No test account was created.
 - **Behaviour to know about:** a member who joined before the Kit sync existed is added to the Kit list (tagged App Member) the moment she turns on a notification.
 
+### Confirmed by Staci on the live site after the second batch
+
+- Password reset and sign-in link emails arrive.
+- Ticking a notification applies the Kit tag.
+- Still unconfirmed: a brand new sign-up landing on the Kit list.
+
+### Supabase pause, 2026-11-16
+
+The free-plan Supabase project had been paused, which took sign-in and every member feature offline. Staci restored it. Added `/api/cron/keep-alive`, a daily Vercel cron that reads one row id so the project stays counted as active. Whether a daily read is enough can only be confirmed over the following weeks.
+
+### Approved and done on 2026-11-16, third batch (items 5, 9, 12)
+
+Branch: `model-audit-2026-11-16-c`.
+
+- **Item 5.** Stripe webhook: "Insider since" is now only filled in when it is empty, so renewals no longer move it. Every database write is checked, and a failed write returns a 500 so Stripe retries. Before, failures were invisible, because Supabase returns errors and does not throw them.
+- **Item 9.** Library downloads now carry the file extension of the stored file (for example `.pdf` or `.xlsx`).
+- **Item 12.** Deleted `components/SipModal.js` and 21 unused CSS rules (the old premium waitlist form, `.rm` and `.rm.open` which only SipModal used, `siph-img`, `bm2m`, `bath`, `cbg4`).
+- **Checked:** build passes. Webhook, run locally with signed test events against a customer id that does not exist: bad signature 400, each subscription and checkout event 200, a checkout for a member id that is not in the database 500, unrelated event 200. No rows were written. Library: asked Supabase for a real signed link before and after; the download name went from `The Simpli Edit _ Vol 07` to `The Simpli Edit _ Vol 07.pdf`. CSS: every class used in the code is still defined, and all pages load.
+- **Not checked:** a real Stripe event for a real member (renewal keeping the date). The local setup has no webhook secret, so a temporary local-only test secret was used and removed.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
