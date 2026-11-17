@@ -83,8 +83,8 @@ export default function SimpliBotPanel() {
         <div className="acc-card">
           <div className="shch">Members Only, Softly</div>
           <p className="acc-note">
-            SimpliBot is part of your member space. Sign in with your email (no password needed)
-            and your soft life coach will be waiting.
+            SimpliBot is part of your member space. Sign in and your soft life coach will be
+            waiting.
           </p>
           <Link href="/account" className="acc-btn" style={{ display: 'inline-block' }}>
             Sign In to Begin

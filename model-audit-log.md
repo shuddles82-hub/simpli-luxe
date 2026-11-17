@@ -100,6 +100,17 @@ Branch: `model-audit-2026-11-17-e`.
 - **Checked:** build passes. The route was called with Kit replaced by a stand-in: right header returns 200; right `?secret=` with no header now returns 401.
 - **Not checked:** the live route after this change. The next real approval will show it in the automation's Run history.
 
+### Sixth batch, 2026-11-17 (items 8, 10, 15)
+
+Branch: `model-audit-2026-11-17-f`. Run by Claude Opus 5.5.
+
+- **Item 10.** The homepage era line was already correct (it reads the era from the latest Simpli Edit issue: "Now in The Arrival Era · Q4 2026", confirmed on the live site). The Library, Planner and SimpliBot sign-in cards now say "Sign in and your ... will be waiting." with no "no password needed".
+- **Item 15.** Fallback content: "Becoming Era Summer Capsule" is now "Expansion Era Summer Capsule"; the morning coffee moment moved from Soft Evenings to Everyday Indulgence.
+- **Item 8, allowance.** New `supabase/simplibot-usage.sql` creates `simplibot_usage`, readable and writable only by the server. `/api/simplibot` now counts there over a rolling 24 hours, uses the shared sign-in check, and only counts a reply that was actually delivered. Until the SQL is run, the count cannot be read and conversations go ahead without a limit, so run the SQL before merging. Old `simplibot_message` rows in `planner_entries` are left in place and no longer used.
+- **Item 8, model.** SimpliBot moved from `claude-opus-4-8` to `claude-opus-5-5` at effort `low`, max_tokens 8000, with server-side fallback to `claude-opus-4-8` if the new model's safety filter declines a request. The prompt now asks for plain text (the chat window showed `#` and `**` literally) and plans of about 350 words.
+- **Checked:** build passes. The route returns the signed-out message with no token and with a bad token. Pages load, and the new sign-in wording shows. Real API comparison (about $0.20 in total): on a feelings check-in, $0.0172 on 4.8 vs $0.0156 on 5.5; on a capsule plan, $0.0309 on 4.8 vs $0.0279 on 5.5 after the length guidance (it was $0.0482 before it). No em dashes in any reply.
+- **Not checked:** a signed-in member chatting end to end, the limit being reached, or the fallback firing.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
