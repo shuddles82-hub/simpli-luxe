@@ -26,7 +26,7 @@ alter table public.library_items enable row level security;
 -- table. Members reach it exclusively through /api/library.
 
 -- Private storage bucket for the actual files. No public access, no
--- policies for signed-in members either — the server issues short-lived
+-- policies for signed-in members either. The server issues short-lived
 -- signed download links after checking the member's tier.
 insert into storage.buckets (id, name, public, file_size_limit)
 values ('library', 'library', false, 52428800) -- 50 MB per file
