@@ -3,16 +3,16 @@ import { notFound } from 'next/navigation';
 import Footer from '@/components/Footer';
 import QuoteBand from '@/components/QuoteBand';
 import LessonDetailGate from '@/components/LessonDetailGate';
-import { getLessonById } from '@/lib/content';
+import { getLessonById, lessonTeaser } from '@/lib/content';
 
 export const revalidate = 600;
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const item = await getLessonById(id);
+  const item = lessonTeaser(await getLessonById(id));
   if (!item) return { title: 'Luxe Life Lessons · Simpli Luxe' };
   const title = `${item.title} · Luxe Life Lessons`;
-  const description = String(item.body || '').slice(0, 160);
+  const description = String(item.body || item.subtitle || '').slice(0, 160);
   return {
     title,
     description,
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
 
 export default async function LessonDetailPage({ params }) {
   const { id } = await params;
-  const item = await getLessonById(id);
+  const item = lessonTeaser(await getLessonById(id));
   if (!item) notFound();
 
   const subLine = [

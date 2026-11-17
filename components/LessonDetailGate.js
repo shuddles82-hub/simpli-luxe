@@ -37,7 +37,13 @@ export default function LessonDetailGate({ item }) {
       });
       const json = await res.json().catch(() => null);
       if (cancelled) return;
-      setState({ ready: true, locked: Boolean(json?.locked), data: json?.item || item });
+      // `item` is only a teaser for premium content, so if the full
+      // item did not come back, stay locked instead of showing it empty.
+      setState({
+        ready: true,
+        locked: json?.item ? Boolean(json.locked) : true,
+        data: json?.item || item,
+      });
     })();
     return () => {
       cancelled = true;

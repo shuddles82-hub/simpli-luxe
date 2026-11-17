@@ -1,4 +1,4 @@
-import { getSipById } from '@/lib/content';
+import { getSipById, sipTeaser } from '@/lib/content';
 import { getSupabaseAdmin } from '@/lib/supabase-admin';
 import { getMemberFromRequest } from '@/lib/auth-server';
 
@@ -27,6 +27,5 @@ export async function GET(request, { params }) {
   }
   if (isInsider) return Response.json({ sip, locked: false });
 
-  const { ingredients, howToMake, ritualMoment, vibeNotes, flavorProfile, ...teaser } = sip;
-  return Response.json({ sip: teaser, locked: true });
+  return Response.json({ sip: sipTeaser(sip), locked: true });
 }

@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer';
 import PageHeader from '@/components/PageHeader';
 import SipExplorer from '@/components/SipExplorer';
-import { getSipsContent } from '@/lib/content';
+import { getSipsContent, sipTeaser } from '@/lib/content';
 
 export const revalidate = 600;
 
@@ -15,7 +15,7 @@ export const metadata = {
 };
 
 export default async function SipPage() {
-  const sips = await getSipsContent();
+  const sips = (await getSipsContent()).map(sipTeaser);
 
   return (
     <>

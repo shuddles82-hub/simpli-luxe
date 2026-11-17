@@ -26,7 +26,13 @@ export default function SipDetailGate({ sip }) {
       });
       const json = await res.json().catch(() => null);
       if (cancelled) return;
-      setState({ ready: true, locked: Boolean(json?.locked), data: json?.sip || sip });
+      // `sip` is only a teaser for premium content, so if the full
+      // recipe did not come back, stay locked instead of showing it empty.
+      setState({
+        ready: true,
+        locked: json?.sip ? Boolean(json.locked) : true,
+        data: json?.sip || sip,
+      });
     })();
     return () => {
       cancelled = true;

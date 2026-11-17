@@ -38,6 +38,15 @@ Checks run: `npm run build` (passes), a search for em dashes, a search for unuse
 14. **Instruction files outside this repo.** `../starter-kit/CLAUDE.md` is in a subfolder, so Claude Code does not load it automatically. Its route lists are out of date (no Luxe Code, Kit preferences, notify-content, or cron) and its rule 7 says premium content is redacted, which item 1 shows is not true. The starter-kit docs contain 56 em dashes. The Claude memory file still gives the live address as simpli-luxe.vercel.app and says both "no password exists or is planned" and "password auth replaces magic link". README has no setup section for email notifications (`notification-prefs.sql`, `reminder-retrigger.sql`, the Kit tags, the cron). `settings.local.json` holds about 130 one-off permission lines.
 15. **Small content mismatches in the built-in fallback content.** "Becoming Era Summer Capsule" (summer is the Expansion Era elsewhere), a morning coffee moment filed under "Soft Evenings". The checkout route comment mentions Anthropic.
 
+### Approved and done on 2026-11-16 (items 1 and 2)
+
+- **Item 1.** Added `insiderTeaser`, `lessonTeaser` and `sipTeaser` to `lib/content.js`. The `/insider`, `/lessons` and `/sip` list pages and their detail pages now pass only the teaser for premium items, and the three `/api/*/[id]` routes use the same helpers. The three DetailGate components now stay locked if the full item does not come back, where before they fell back to the item from the page. The premium Lesson page description now uses the subtitle, not the body.
+- **Item 2.** Deleted the nine unused list routes.
+- **Checked:** build passes. Run locally against the live Airtable data: none of the 17 premium Insider bodies or quotes appear in the `/insider` page or a premium detail page, `/api/insider/[id]` returns locked with no body or quote, all nine deleted routes return 404, and every series page still loads.
+- **What customers will notice:** premium Insider cards now show the title and pillar only, with no quote or excerpt.
+- **Not checked:** a signed-in Luxe Insider opening a premium item (no test sign-in was used). That code path was not changed.
+- **Not live yet:** the leak stays open on simpliluxe.com until this branch is merged to `main` and deployed.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
