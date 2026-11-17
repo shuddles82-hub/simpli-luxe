@@ -228,7 +228,7 @@ export default function SimpliBotPanel() {
             <ul className="bot-modal-list">
               {GUIDE_ITEMS.map((item) => (
                 <li key={item.label}>
-                  <b>{item.label}</b> — {item.body}
+                  <b>{item.label}:</b> {item.body}
                 </li>
               ))}
             </ul>

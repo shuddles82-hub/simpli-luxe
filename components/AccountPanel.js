@@ -28,6 +28,7 @@ export default function AccountPanel() {
   const [notifyNewContent, setNotifyNewContent] = useState(false);
   const [notifyDailyReminder, setNotifyDailyReminder] = useState(false);
   const [notifyBusy, setNotifyBusy] = useState('');
+  const [notifyMsg, setNotifyMsg] = useState('');
 
   useEffect(() => {
     if (!supabase) return;
@@ -62,6 +63,35 @@ export default function AccountPanel() {
       cancelled = true;
     };
   }, [supabase, session]);
+
+  // Add a new member to the Kit list the first time she has a session in
+  // this browser. The server uses the email on her account and only acts
+  // for accounts created recently, so this is safe to repeat. A Kit
+  // hiccup should never get in her way, so failures are silent.
+  useEffect(() => {
+    if (!session) return;
+    const key = `sl-kit-synced-${session.user.id}`;
+    try {
+      if (window.localStorage.getItem(key)) return;
+    } catch {
+      // storage unavailable; the server call is safe to repeat
+    }
+    fetch('/api/kit/subscribe', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.ok) {
+          try {
+            window.localStorage.setItem(key, '1');
+          } catch {
+            // nothing to do
+          }
+        }
+      })
+      .catch(() => {});
+  }, [session]);
 
   // The Luxe Insider price, pulled from Stripe. Absent until Staci
   // finishes the payment setup, in which case the upsell stays hidden.
@@ -133,9 +163,10 @@ export default function AccountPanel() {
     if (notifyBusy) return;
     const next = !current;
     setNotifyBusy(type);
+    setNotifyMsg('');
     setter(next);
     try {
-      await fetch('/api/kit/preferences', {
+      const res = await fetch('/api/kit/preferences', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,8 +174,11 @@ export default function AccountPanel() {
         },
         body: JSON.stringify({ type, enabled: next }),
       });
+      const data = await res.json().catch(() => null);
+      if (!data?.ok) throw new Error('not saved');
     } catch {
       setter(current); // revert on failure
+      setNotifyMsg('We could not update that just now. Please try again in a moment.');
     }
     setNotifyBusy('');
   }
@@ -227,12 +261,8 @@ export default function AccountPanel() {
                 : 'We could not create your account just now. Please try again in a moment.'
             );
           } else {
-            // Fire-and-forget: a Kit hiccup should never block account creation.
-            fetch('/api/kit/subscribe', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email }),
-            }).catch(() => {});
+            // The Kit list sync happens once she has a signed-in session
+            // (see the effect above), so it is always tied to her own account.
             if (!data.session) {
               setCheckEmailMsg(
                 'Almost there. Check your inbox for a confirmation link, then come back and sign in.'
@@ -463,10 +493,15 @@ export default function AccountPanel() {
               onChange={() => toggleNotify('reminder', notifyDailyReminder, setNotifyDailyReminder)}
             />
             <span className="acc-note" style={{ marginBottom: 0 }}>
-              ✦ Soft Life Reminders — a few intentional nudges each week (journal, habits, vision
+              ✦ Soft Life Reminders: a few intentional nudges each week (journal, habits, vision
               board)
             </span>
           </label>
+          {notifyMsg && (
+            <p className="acc-note" style={{ color: 'var(--gold)', marginTop: 10, marginBottom: 0 }}>
+              {notifyMsg}
+            </p>
+          )}
         </div>
         <p className="acc-note" style={{ marginTop: 14, marginBottom: 0 }}>
           Questions about your account or membership? Email{' '}

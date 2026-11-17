@@ -1,21 +1,26 @@
 import { addMemberToKit } from '@/lib/kit';
+import { getMemberFromRequest } from '@/lib/auth-server';
 
-// Called right after a member creates her account. The Kit API key
-// lives here, server-side only.
+// Adds a new member to the Kit list. The Kit API key lives here,
+// server-side only. The caller must be a signed-in member, and the
+// address added is always the one on her own account, never one sent
+// in the request, so this route cannot be used to add someone else.
+// Only accounts created in the last two weeks are added, so signing in
+// on a new device never re-adds a long-standing member.
 
 export const runtime = 'nodejs';
 
+const NEW_MEMBER_WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
+
 export async function POST(request) {
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return Response.json({ ok: false });
+  const member = await getMemberFromRequest(request);
+  if (!member?.email) return Response.json({ ok: false }, { status: 401 });
+
+  const created = member.createdAt ? new Date(member.createdAt).getTime() : NaN;
+  if (!Number.isFinite(created) || Date.now() - created > NEW_MEMBER_WINDOW_MS) {
+    return Response.json({ ok: true, skipped: true });
   }
 
-  const email = typeof body?.email === 'string' ? body.email.trim() : '';
-  if (!email.includes('@')) return Response.json({ ok: false });
-
-  await addMemberToKit({ email, displayName: body?.displayName });
+  await addMemberToKit({ email: member.email });
   return Response.json({ ok: true });
 }

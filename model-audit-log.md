@@ -47,6 +47,18 @@ Checks run: `npm run build` (passes), a search for em dashes, a search for unuse
 - **Not checked:** a signed-in Luxe Insider opening a premium item (no test sign-in was used). That code path was not changed.
 - **Not live yet:** the leak stays open on simpliluxe.com until this branch is merged to `main` and deployed.
 
+### Approved and done on 2026-11-16, second batch (items 3, 6, 7, 11)
+
+Branch: `model-audit-2026-11-16-b`. Items 1 and 2 were merged to `main` and are live.
+
+- **Item 3.** `/api/kit/subscribe` now requires a signed-in member and always uses the email on her own account. It ignores any address sent in the request. It only adds accounts created in the last 14 days. `AccountPanel` no longer calls it at sign-up without a session; it calls it the first time a member has a session in that browser.
+- **Item 6.** `setKitTag` in `lib/kit.js` now returns whether Kit accepted the change (a 404 on removing a tag counts as done). The preferences route changes the Kit tag first and only then saves the on/off state. If a member turns a notification on and is not on the Kit list yet, she is added and the tag is tried once more. If it still fails, her checkbox goes back and she sees a short "could not update" note. The weekly reminder job and the content alert count now reflect real results.
+- **Item 7.** `lib/airtable.js` follows Airtable's paging, up to 1,000 published records per table.
+- **Item 11.** The three em dashes in customer copy are replaced with a colon or comma.
+- **Checked:** build passes. Against the live Airtable base, all nine series return the same records in the same order as before, and the same again when forced to page 7 at a time. Against Kit with an address that does not exist, tagging returns false and untagging returns true. Locally, the subscribe and preferences routes return 401 with no sign-in and with a bad token, and all pages load.
+- **Not checked:** anything that needs a real signed-in member: a new sign-up landing on the Kit list, and the notification checkboxes end to end. No test account was created.
+- **Behaviour to know about:** a member who joined before the Kit sync existed is added to the Kit list (tagged App Member) the moment she turns on a notification.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
