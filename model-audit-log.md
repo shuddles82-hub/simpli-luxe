@@ -111,6 +111,13 @@ Branch: `model-audit-2026-11-17-f`. Run by Claude Opus 5.5.
 - **Checked:** build passes. The route returns the signed-out message with no token and with a bad token. Pages load, and the new sign-in wording shows. Real API comparison (about $0.20 in total): on a feelings check-in, $0.0172 on 4.8 vs $0.0156 on 5.5; on a capsule plan, $0.0309 on 4.8 vs $0.0279 on 5.5 after the length guidance (it was $0.0482 before it). No em dashes in any reply.
 - **Not checked:** a signed-in member chatting end to end, the limit being reached, or the fallback firing.
 
+### Confirmed by Staci on the live site, 2026-11-18
+
+- **Live and confirmed:** premium Insider content is no longer public (item 1). Password reset and sign-in link emails arrive. Ticking a notification reaches Kit (item 6). SimpliBot runs on `claude-opus-5-5` in her voice, with the new daily limit (item 8).
+- **Live, waiting on a real event:** a brand new sign-up landing in Kit with the App Member tag (item 3) shows the next time someone joins. The Stripe "Insider since" fix (item 5) shows at the next renewal, when that member's date should stay the same.
+- **Watch over the coming weeks:** the daily keep-alive should stop Supabase pausing. If it pauses anyway, the paid Supabase plan is the reliable fix.
+- **Skipped on purpose:** item 13, the repeated code, since it brings no change members would see.
+
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
