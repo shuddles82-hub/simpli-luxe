@@ -18,10 +18,14 @@ In this repo:
 
 - `README.md`: setup steps in plain language for Staci.
 - `model-audit-log.md`: what each new-model audit found, fixed, and left open. Read it before auditing.
+- `docs/simpli-luxe-concierge.md`, `docs/simpli-luxe-link-desk.md`, `docs/simpli-luxe-pr-desk.md`: Staci's Simpli Luxe Concierge, a separate morning back office that runs as a scheduled task and a private page. Not part of the app and not deployed.
+- `tools/reel/make_reel.py`: Footage to Reel, a local ffmpeg script for branded 9:16 rough cuts. Not part of the app.
+
+Never commit income figures, collab rates or contract terms to this repo. Those live in Airtable and on the private Concierge page.
 
 ## Stack (decided, do not substitute)
 
-Next.js (App Router), plain CSS using design tokens (no Tailwind, no component libraries). Hosting: Vercel. Content: Airtable, read on the server only. Auth and user data: Supabase, email and password as the primary sign-in (with an optional emailed sign-in link) and row-level security. Payments: Stripe (live mode). AI: Anthropic API (`claude-opus-4-8`). Email list: Kit (ConvertKit). Mobile: PWA (built); a native wrapper only if traction ever justifies it.
+Next.js (App Router), plain CSS using design tokens (no Tailwind, no component libraries). Hosting: Vercel. Content: Airtable, read on the server only. Auth and user data: Supabase, email and password as the primary sign-in (with an optional emailed sign-in link) and row-level security. Payments: Stripe (live mode). AI: Anthropic API (`claude-opus-5-5` for SimpliBot, falling back to `claude-opus-4-8` if the newer model declines a request). Email list: Kit (ConvertKit). Mobile: PWA (built); a native wrapper only if traction ever justifies it.
 
 The Supabase project is on the free plan, which pauses after about a week without activity and takes every member feature offline. `/api/cron/keep-alive` runs daily to prevent that. If sign-in or email suddenly fails for everyone, check whether the project is paused before looking at code.
 
