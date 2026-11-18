@@ -146,3 +146,10 @@ Item 2 under Fixed. The sixth app batch changed SimpliBot's model in the code an
 
 - **Item 4.** Deleted the old, connector-less copy of the Simpli Luxe Concierge scheduled task. The working copy, with Gmail, Google Calendar, Kit and Airtable on, is untouched and still runs weekdays at 6:10 AM.
 - **Item 6.** Renamed the Simpli Sip checkbox "Prmoted" to "Promoted" in Airtable. Airtable automations refer to fields by id, so they keep working. Not checked: whether a Make scenario refers to the old name. If one stops filling that checkbox, point it at "Promoted".
+
+### Approved and done on 2026-11-18 (Concierge items 2, 3 and 5)
+
+- **Item 2.** The Concierge now covers what the COS Daily Brief did: a Life Admin section (events from email not on the calendar, RSVPs and decisions with deadlines, appointments, account and security alerts, bills and statements), this week's content plan from the Chief of Staff project doc, her #1 priority from the daily review log, and a push notification with the day's deadlines. The COS Daily Brief is paused. The COS Daily Review and Weekly Review still run, since they keep the log the Concierge reads.
+- **Item 3.** The morning task now checks every caption against the Simpli Luxe AI Accent Remover rules and puts #ad or #affiliate at the end.
+- **Item 5.** Pitches go out from staci.d.huddleston@gmail.com; inquiries stay in the main inbox. `docs/simpli-luxe-pr-desk.md` explains the Gmail "Send mail as" and forwarding setup.
+- **Not checked yet:** the next morning run. The project doc can only be read once the Concierge task sits inside the Simpli Luxe COO project.

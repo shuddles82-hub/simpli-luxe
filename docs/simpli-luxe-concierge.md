@@ -1,6 +1,6 @@
 # The Simpli Luxe Concierge
 
-Staci's morning back office for Simpli Luxe. One page with four sections (Overview, Studio, Pitch Room, Link Desk), rebuilt every weekday morning from the tools Simpli Luxe already runs on. Nothing is posted or sent without Staci's approval.
+Staci's morning back office for Simpli Luxe. One page with five sections (Overview, Studio, Pitch Room, Link Desk, Life Admin), rebuilt every weekday morning from the tools Simpli Luxe already runs on. Nothing is posted or sent without Staci's approval.
 
 Live page: https://claude.ai/artifact/2bQ7PmzApk1qCotpyaQQjj
 The live page is its own source. It is not kept in this repo, because it holds income figures and contract terms.
@@ -10,7 +10,9 @@ The live page is its own source. It is not kept in this repo, because it holds i
 - A scheduled task named **Simpli Luxe Concierge** runs weekdays at 6:10 AM Eastern, with Gmail, Google Calendar, Kit and Airtable turned on.
 - It reads the live page, gathers fresh data, updates only the content, and republishes to the same link.
 - Its full instructions, including the monthly goal, live in the scheduled task itself, not in this repo.
-- It is read only. Publishing the page is the only thing it changes.
+- It replaced the COS Daily Brief (paused Nov 18), so it also covers her whole inbox and calendar in Life Admin, this week's content plan from the Chief of Staff project doc, and a push notification with the day's deadlines.
+- It reads the Chief of Staff doc and daily review log only when the task is inside the Simpli Luxe COO project, where the Projects tool is available.
+- It is read only. Publishing the page and the push notification are the only things it does.
 
 ## Where each section gets its facts
 
@@ -23,6 +25,8 @@ The live page is its own source. It is not kept in this repo, because it holds i
 | Studio | Airtable, series tables and Portfolio Pipeline | Unfinished episodes, seasonal timing, and UGC portfolio pieces to film or edit, see `docs/simpli-luxe-pr-desk.md` |
 | Pitch Room | Gmail | Brand, collab, UGC, PR, gifting, gift guide, creator network and event emails, payment notices, and affiliate earnings emails from the last 3 days |
 | Pitch Room | Airtable, Pitch Tracker and Rate Card | Pitches drafted, follow-ups due, rates to quote |
+| Studio | Chief of Staff project doc | This week's content plan: theme, Luxe Code episode and CTA, series pairing, planned Kit sends |
+| Life Admin | Gmail and Google Calendar | Events from email not on the calendar, RSVPs and decisions with deadlines, appointments, account and security alerts, bills and statements. Kept out of Simpli Luxe content. |
 | Link Desk | Airtable, Link Library | Active product links and pieces marked Needs link, see `docs/simpli-luxe-link-desk.md` |
 
 ## Rules for every run

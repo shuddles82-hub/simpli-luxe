@@ -26,7 +26,8 @@ Aim for at least one piece per category on the rate card, and at least one of ea
 - Quote only rates from the Rate Card table. Lead with The Starter for a first project unless the brand asks for more.
 - Professional register: clear, warm, specific about the product, no hashtags, no brand catchphrases in the body.
 - Every pitch includes one concrete content idea for that product.
-- Drafts come from the connected Gmail account. The rate card lists a different contact address, so check the From line before sending.
+- Pitches go out from the business address on the rate card, staci.d.huddleston@gmail.com. Inquiries and current business stay in Staci's main inbox, which is the Gmail account the Concierge reads.
+- Claude drafts pitches in the main inbox. For them to send from the business address, add it in that Gmail under Settings, Accounts and Import, "Send mail as", then pick it in the From line. To keep replies visible to the Concierge, forward the business address to the main inbox (in the business Gmail: Settings, Forwarding and POP/IMAP).
 - Follow up once, 5 business days after sending, then mark the brand Passed or keep it on a monthly list.
 
 ## Pitch template
@@ -46,7 +47,7 @@ Subject: UGC for [Brand]: [one-line idea]
 > Warmly,
 > Staci Huddleston
 > Simpli Luxe Studio
-> [contact email] · @simpli_staci
+> staci.d.huddleston@gmail.com · @simpli_staci
 
 ## Follow-up template
 
