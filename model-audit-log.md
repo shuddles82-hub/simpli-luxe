@@ -141,3 +141,8 @@ Scope: the Concierge, not the app. Branch: `claude/bold-sagan-v9x294` (the Conci
 ### What this model caught (a guess for the Concierge, since this is its first audit)
 
 Item 2 under Fixed. The sixth app batch changed SimpliBot's model in the code and the log but not in `CLAUDE.md`, so the next model reading `CLAUDE.md` would have been told the wrong model. It only shows when the instruction file is checked against the code after the batch that changed it. Waiting item 2 also needed every scheduled task on the account side by side, not just the Concierge.
+
+### Approved and done on 2026-11-18 (Concierge items 4 and 6)
+
+- **Item 4.** Deleted the old, connector-less copy of the Simpli Luxe Concierge scheduled task. The working copy, with Gmail, Google Calendar, Kit and Airtable on, is untouched and still runs weekdays at 6:10 AM.
+- **Item 6.** Renamed the Simpli Sip checkbox "Prmoted" to "Promoted" in Airtable. Airtable automations refer to fields by id, so they keep working. Not checked: whether a Make scenario refers to the old name. If one stops filling that checkbox, point it at "Promoted".
