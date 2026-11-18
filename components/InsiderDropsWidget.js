@@ -48,7 +48,7 @@ export default function InsiderDropsWidget() {
     <div className={`acc-card${!isInsider ? ' insider-upsell' : ''}`}>
       {isInsider && <div className="insider-badge">✦ Luxe Insider</div>}
       <div className="shch">Insider Drops</div>
-      <p className="acc-note">New content twice a month — always a surprise.</p>
+      <p className="acc-note">New content twice a month, always a surprise.</p>
       <ul className="shl" style={{ marginBottom: 16 }}>
         {DROPS.map((d) => (
           <li key={d}>{d}</li>

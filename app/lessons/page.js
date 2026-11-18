@@ -2,7 +2,7 @@ import Footer from '@/components/Footer';
 import PageHeader from '@/components/PageHeader';
 import QuoteBand from '@/components/QuoteBand';
 import LessonsExplorer from '@/components/LessonsExplorer';
-import { getLessonsContent } from '@/lib/content';
+import { getLessonsContent, lessonTeaser } from '@/lib/content';
 
 export const revalidate = 600;
 
@@ -16,7 +16,7 @@ export const metadata = {
 };
 
 export default async function LessonsPage() {
-  const lessons = await getLessonsContent();
+  const lessons = (await getLessonsContent()).map(lessonTeaser);
 
   return (
     <>

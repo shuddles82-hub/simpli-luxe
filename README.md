@@ -45,14 +45,16 @@ these steps are done, the site simply hides those features.
    - Project URL
    - anon public key (the long one labeled "anon" "public")
 4. Paste them into `.env.local` as `NEXT_PUBLIC_SUPABASE_URL` and
-   `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Never copy the "service_role" key
-   anywhere; it stays in Supabase.
+   `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Do not use the "service_role" key
+   for either of these. It is added later, on its own server-only line
+   (see "Turn on Luxe Insider").
 5. In Supabase, go to Authentication > URL Configuration and set the
    Site URL to your website address (while testing on your computer,
    `http://localhost:3000`). When you deploy, change it to your live
    address and add it under Redirect URLs too.
 6. Restart `npm run dev`. The Members tab now offers email sign-in
-   (a magic link, no passwords), and every shift, note, lesson, and
+   (email and password, with an emailed sign-in link as an option),
+   and every shift, note, lesson, and
    sip shows a ✦ Save button.
 
 ## Turn on the vision board (one time)
@@ -151,6 +153,39 @@ to keep this simple).
    - It appears on the live Library page within a minute or two for any
      signed-in member (or Luxe Insiders only, if you set that tier).
 
+## Turn on email notifications (Kit)
+
+New members are added to your Kit list, and members can choose two
+kinds of email on the Members page: new content alerts and Soft Life
+Reminders. The app only adds and removes tags in Kit. The emails
+themselves are the automations and sequences you build in Kit.
+
+1. In Kit, go to Settings > Developer > API Keys and copy the v4 API
+   key into `.env.local` as `KIT_API_KEY`.
+2. In Supabase, open the SQL Editor and run
+   `supabase/notification-prefs.sql`, then
+   `supabase/reminder-retrigger.sql`. They add the on/off settings to
+   member profiles.
+3. Make up two long random values and save them as
+   `CONTENT_ALERT_WEBHOOK_SECRET` and `CRON_SECRET`.
+4. The app creates these tags in Kit the first time each is needed.
+   Build your Kit automations on them:
+   - `App Member`: added when a new member signs in for the first time.
+   - `Notify: New Content`: the member ticked new content alerts.
+   - `Content Alert - Fire`: added to every opted-in member each time
+     new content is announced. Trigger your "new content is live" email
+     on this tag being added.
+   - `Soft Life Reminders - Opt In`: the member ticked Soft Life
+     Reminders. Trigger the reminder sequence on this tag being added.
+5. To announce new content, have your Airtable automation send a POST
+   request to `https://your-site/api/kit/notify-content` with a header
+   named `x-webhook-secret` holding your `CONTENT_ALERT_WEBHOOK_SECRET`.
+6. Two jobs run on their own once deployed (see `vercel.json`):
+   - Weekly: members who finished the reminder sequence more than five
+     weeks ago are started through it again.
+   - Daily: a tiny database read that keeps a free-plan Supabase project
+     from being paused for inactivity.
+
 ## Deploy to Vercel
 
 1. Push this folder to a GitHub repository.
@@ -158,8 +193,10 @@ to keep this simple).
 3. In the project's Settings > Environment Variables, add
    `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, `NEXT_PUBLIC_SUPABASE_URL`,
    `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `ANTHROPIC_API_KEY`,
-   `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET`, and
-   `SUPABASE_SERVICE_ROLE_KEY` with the same values as your `.env.local`.
+   `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET`,
+   `SUPABASE_SERVICE_ROLE_KEY`, `KIT_API_KEY`,
+   `CONTENT_ALERT_WEBHOOK_SECRET`, and `CRON_SECRET` with the same
+   values as your `.env.local`.
 4. Deploy. Content updates flow automatically; no redeploy needed
    when you publish new records.
 
@@ -175,6 +212,9 @@ Each series reads only `Status = Published` rows from its own table:
 | /edit | The Simpli Edit |
 | /styled | Simpli Styled |
 | /shop | Shop Collections (homepage spotlight uses Featured) |
+| /luxe-code | Luxe Code |
+| /luxuries | Life's Little Luxuries |
+| /insider | Insider Weekly |
 
 The Content Queue table is your AI review inbox only. The site never
 shows records from it. Approve a draft there, promote it into the

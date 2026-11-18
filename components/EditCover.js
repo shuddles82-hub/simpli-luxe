@@ -8,7 +8,7 @@ const SEASON_CLASS = {
 
 function eraShort(era) {
   if (!era) return '';
-  return era.replace(/^The /, 'The ').replace(' Era', '');
+  return era.replace(' Era', '');
 }
 
 // One issue tile in The Simpli Edit grid. Live records with a cover

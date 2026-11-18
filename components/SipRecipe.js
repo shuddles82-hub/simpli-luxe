@@ -1,7 +1,7 @@
 import { linkify } from './RichText';
 
 // The recipe card body (flavor profile, ingredients, steps, ritual,
-// vibe bar). Used by the /sip/[id] detail page and the SipModal.
+// vibe bar). Used by the /sip/[id] detail page.
 export default function SipRecipe({ sip }) {
   return (
     <div className="rbd">

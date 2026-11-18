@@ -5,13 +5,13 @@ import SaveButton from '@/components/SaveButton';
 import ShareRow from '@/components/ShareRow';
 import { sipTagLine } from '@/components/SipRecipe';
 import SipDetailGate from '@/components/SipDetailGate';
-import { getSipById } from '@/lib/content';
+import { getSipById, sipTeaser } from '@/lib/content';
 
 export const revalidate = 600;
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const sip = await getSipById(id);
+  const sip = sipTeaser(await getSipById(id));
   if (!sip) return { title: 'The Simpli Sip · Simpli Luxe' };
   const title = `${sip.title} · The Simpli Sip`;
   const description = String(sip.flavorProfile || sip.vibe || '').slice(0, 160);
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
 
 export default async function SipDetailPage({ params }) {
   const { id } = await params;
-  const sip = await getSipById(id);
+  const sip = sipTeaser(await getSipById(id));
   if (!sip) notFound();
 
   return (

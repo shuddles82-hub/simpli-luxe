@@ -1,5 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { simpliBotSystemPrompt } from '@/lib/simplibot-prompt';
+import { getMemberFromRequest } from '@/lib/auth-server';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 
 // SimpliBot chat endpoint. The Anthropic key lives here, server-side
 // only. Members-only: the browser sends the member's Supabase session
@@ -21,36 +23,23 @@ const GENTLE = {
 
 const DAILY_LIMIT_MEMBER = 10;
 const DAILY_LIMIT_INSIDER = 100;
+const WINDOW_MS = 24 * 60 * 60 * 1000;
 const MAX_HISTORY = 12;
 
-function localDate() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
-    d.getDate()
-  ).padStart(2, '0')}`;
-}
+// Claude Opus 5.5 always thinks before it answers; effort "low" keeps that
+// short, which suits a warm chat and keeps the cost per reply down.
+// Thinking counts toward max_tokens, so leave room for a full plan.
+const MODEL = 'claude-opus-5-5';
+const EFFORT = 'low';
+const MAX_TOKENS = 8000;
+// If Opus 5.5's safety filter declines a harmless question, the same
+// request is answered by the model SimpliBot used before.
+const FALLBACK_MODEL = 'claude-opus-4-8';
 
 // The brand bans em dashes everywhere; the prompt enforces it, this is
 // the safety net.
 function softenPunctuation(text) {
   return String(text).replace(/\s*—\s*/g, ', ');
-}
-
-async function supabaseFetch(path, token, options = {}) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return null;
-  const res = await fetch(`${url.replace(/\/+$/, '')}${path}`, {
-    ...options,
-    headers: {
-      apikey: anonKey,
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-      ...(options.headers || {}),
-    },
-    cache: 'no-store',
-  });
-  return res;
 }
 
 export async function POST(request) {
@@ -61,50 +50,40 @@ export async function POST(request) {
     return Response.json({ reply: GENTLE.trouble });
   }
 
-  const token = (request.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
-  if (!token) return Response.json({ reply: GENTLE.signedOut, signedOut: true });
-
-  // Verify the member's session against Supabase.
-  const userRes = await supabaseFetch('/auth/v1/user', token);
-  if (!userRes || !userRes.ok) {
-    return Response.json({ reply: GENTLE.signedOut, signedOut: true });
-  }
-  const user = await userRes.json();
-  if (!user?.id) return Response.json({ reply: GENTLE.signedOut, signedOut: true });
+  const member = await getMemberFromRequest(request);
+  if (!member) return Response.json({ reply: GENTLE.signedOut, signedOut: true });
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return Response.json({ reply: GENTLE.notConfigured });
   }
 
-  // Gentle daily allowance, expanded for Luxe Insiders. Usage rows live
-  // in planner_entries under the member's own row-level security.
-  try {
-    const today = localDate();
-    const [usageRes, profileRes] = await Promise.all([
-      supabaseFetch(
-        `/rest/v1/planner_entries?kind=eq.simplibot_message&entry_date=eq.${today}&select=id`,
-        token
-      ),
-      supabaseFetch(`/rest/v1/profiles?id=eq.${user.id}&select=is_insider`, token),
-    ]);
-    const usage = usageRes?.ok ? await usageRes.json() : [];
-    const profile = profileRes?.ok ? await profileRes.json() : [];
-    const isInsider = Boolean(profile?.[0]?.is_insider);
-    const limit = isInsider ? DAILY_LIMIT_INSIDER : DAILY_LIMIT_MEMBER;
-    if (Array.isArray(usage) && usage.length >= limit) {
-      return Response.json({ reply: GENTLE.limitReached, limitReached: true });
+  // Gentle allowance over the last 24 hours, expanded for Luxe Insiders.
+  // Counted in simplibot_usage, which only the server can read or write
+  // (supabase/simplibot-usage.sql), so a member cannot reset her own count.
+  // If the count cannot be read, the conversation goes ahead.
+  const admin = getSupabaseAdmin();
+  let countingWorks = false;
+  if (admin) {
+    try {
+      const since = new Date(Date.now() - WINDOW_MS).toISOString();
+      const [usageRes, profileRes] = await Promise.all([
+        admin
+          .from('simplibot_usage')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', member.id)
+          .gte('created_at', since),
+        admin.from('profiles').select('is_insider').eq('id', member.id).maybeSingle(),
+      ]);
+      if (!usageRes.error) {
+        countingWorks = true;
+        const limit = profileRes.data?.is_insider ? DAILY_LIMIT_INSIDER : DAILY_LIMIT_MEMBER;
+        if ((usageRes.count ?? 0) >= limit) {
+          return Response.json({ reply: GENTLE.limitReached, limitReached: true });
+        }
+      }
+    } catch {
+      // let the conversation continue
     }
-    await supabaseFetch('/rest/v1/planner_entries', token, {
-      method: 'POST',
-      body: JSON.stringify({
-        user_id: user.id,
-        kind: 'simplibot_message',
-        title: 'SimpliBot conversation',
-        entry_date: today,
-      }),
-    });
-  } catch {
-    // If usage tracking hiccups, let the conversation continue.
   }
 
   // Sanitize the chat history: only role + string content, recent turns.
@@ -123,24 +102,39 @@ export async function POST(request) {
     return Response.json({ reply: GENTLE.trouble });
   }
 
+  let reply = '';
   try {
     const anthropic = new Anthropic();
-    const response = await anthropic.messages.create({
-      model: 'claude-opus-4-8',
-      max_tokens: 2048,
+    const response = await anthropic.beta.messages.create({
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      output_config: { effort: EFFORT },
+      betas: ['server-side-fallback-2026-07-01'],
+      fallbacks: [{ model: FALLBACK_MODEL }],
       system: simpliBotSystemPrompt(),
       messages: history,
     });
     if (response.stop_reason === 'refusal') {
       return Response.json({ reply: GENTLE.trouble });
     }
-    const reply = response.content
+    reply = response.content
       .filter((block) => block.type === 'text')
       .map((block) => block.text)
       .join('\n')
       .trim();
-    return Response.json({ reply: softenPunctuation(reply) || GENTLE.trouble });
   } catch {
     return Response.json({ reply: GENTLE.trouble });
   }
+  if (!reply) return Response.json({ reply: GENTLE.trouble });
+
+  // Only a real reply uses up a moment.
+  if (countingWorks) {
+    try {
+      await admin.from('simplibot_usage').insert({ user_id: member.id });
+    } catch {
+      // a missed count should never cost her the reply
+    }
+  }
+
+  return Response.json({ reply: softenPunctuation(reply) });
 }

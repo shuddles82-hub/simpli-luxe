@@ -2,7 +2,7 @@ import Footer from '@/components/Footer';
 import PageHeader from '@/components/PageHeader';
 import QuoteBand from '@/components/QuoteBand';
 import InsiderExplorer from '@/components/InsiderExplorer';
-import { getInsiderWeeklyContent } from '@/lib/content';
+import { getInsiderWeeklyContent, insiderTeaser } from '@/lib/content';
 
 export const revalidate = 600;
 
@@ -16,7 +16,7 @@ export const metadata = {
 };
 
 export default async function InsiderPage() {
-  const items = await getInsiderWeeklyContent();
+  const items = (await getInsiderWeeklyContent()).map(insiderTeaser);
 
   return (
     <>
