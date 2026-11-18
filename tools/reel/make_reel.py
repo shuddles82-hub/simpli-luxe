@@ -29,6 +29,7 @@ plan.json
   [{"text": "...", "from": 4, "to": 10, "pos": "top|middle|bottom" or pixels}]
   with times in seconds after that clip's trim start.
   A clip can also be a photo (.jpg/.png) held for "duration" seconds.
+  "end_card": false leaves off the Simpli Luxe end card, for brand UGC.
   start/end are seconds within each clip and are optional. "text" is an
   optional lower-third line for that clip. cover_at is a time in the
   finished Reel to save as a cover frame (out name with .jpg).

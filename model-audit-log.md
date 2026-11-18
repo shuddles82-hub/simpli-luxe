@@ -114,3 +114,30 @@ Branch: `model-audit-2026-11-17-f`. Run by Claude Opus 5.5.
 ### What this model caught (a guess, no earlier log exists)
 
 Items 1, 3, 4, 7 and the CLAUDE.md location in item 14. The code comments, CLAUDE.md and the memory notes all state that premium content is redacted on the server, and the per-item routes do redact it, so a reviewer who trusted those notes would pass it. It only shows when the list route and the data handed to browser components are followed end to end and then checked on the live site.
+
+## 2026-11-18, Claude Opus 5.5 (claude-opus-5-5): Simpli Luxe Concierge
+
+Scope: the Concierge, not the app. Branch: `claude/bold-sagan-v9x294` (the Concierge's own branch, not yet merged to `main`; `main` was merged into it first so this log stays in one place).
+
+### What was read
+
+`docs/simpli-luxe-concierge.md`, `docs/simpli-luxe-link-desk.md`, `docs/simpli-luxe-pr-desk.md`, `tools/reel/make_reel.py` and its fonts, `.gitignore`, `CLAUDE.md`, this log, the live Concierge page (Nov 17 run), the Concierge's Airtable tables (Link Library, Income Ledger, Rate Card, Portfolio Pipeline, Pitch Tracker), and every scheduled task on the account. Checks run: em dash search, a test build of a Reel (photo clip first, voice leveling, no end card, clean cover), and a check of which model the app code actually uses.
+
+### Fixed (docs only, nothing customers or members see)
+
+1. `docs/simpli-luxe-concierge.md` described the first version: three sections, an "income" figure, income from screenshots, and a "Numbers to give the Concierge" list with blanks. Rewritten to match how it runs now: four sections, the weekday scheduled task, the Income Ledger, Pitch Tracker and Portfolio Pipeline, and links to the related guides. Checked by rereading against the scheduled task and the live page.
+2. `CLAUDE.md` still named `claude-opus-4-8` as the app's AI model. The sixth app batch moved SimpliBot to `claude-opus-5-5` with 4.8 as a fallback. Updated, and added a short note that the Concierge docs and `tools/reel` are not part of the app, plus the rule that income, rates and contract terms never go in this repo. Checked against `app/api/simplibot/route.js`.
+3. `tools/reel/make_reel.py`: the `end_card` option worked but was not documented, while the PR Desk guide tells you to leave the end card off for brand UGC. Added to the usage notes. Checked by building a test Reel with `"end_card": false`.
+
+### Waiting on Staci (riskiest first)
+
+1. **The Concierge branch has never been merged.** Everything Concierge-related in this repo (the three guides, the Reel tool, this entry) is only on `claude/bold-sagan-v9x294`. Merging to `main` triggers a Vercel deploy, but nothing in it changes the app.
+2. **Two morning briefs, five minutes apart.** "Simpli Luxe Concierge" runs weekdays at 6:10 AM and "SImpli Luxe COS - Daily Brief" runs every day at 6:15 AM. Both read Gmail and the calendar. Suggested: pause the COS brief on weekdays, or narrow it to what the Concierge does not cover. (The COS task name also has a capital I typo.)
+3. **The Concierge's caption slipped into an AI phrase.** The Nov 17 Studio caption ended "One cardigan, three tables. That's the whole formula." and placed #affiliate mid-caption. Suggested: add one line to the scheduled task telling it to check every caption against the Simpli Luxe AI Accent Remover rules and put disclosure at the end.
+4. **An old copy of the Concierge task is still on the account,** turned off and with no connectors. Suggested: delete it. Deleting also removes the one session it ran on Nov 16.
+5. **Rate card contact email.** The rate card lists a different email from the Gmail account pitches would be drafted in. Decide which address brands should see.
+6. **Airtable field name typo.** The Simpli Sip table has a checkbox named "Prmoted". The app does not read it, so nothing breaks. Rename only after checking that no Airtable automation or Make scenario uses it.
+
+### What this model caught (a guess for the Concierge, since this is its first audit)
+
+Item 2 under Fixed. The sixth app batch changed SimpliBot's model in the code and the log but not in `CLAUDE.md`, so the next model reading `CLAUDE.md` would have been told the wrong model. It only shows when the instruction file is checked against the code after the batch that changed it. Waiting item 2 also needed every scheduled task on the account side by side, not just the Concierge.
