@@ -9,6 +9,7 @@ The live page is its own source. It is not kept in this repo, because it holds i
 
 - A scheduled task named **Simpli Luxe Concierge** runs weekdays at 6:10 AM Eastern, with Gmail, Google Calendar, Kit and Airtable turned on.
 - It reads the live page, gathers fresh data, updates only the content, and republishes to the same link.
+- The Overview opens with a dashboard: income against the goal with a pace marker, a month-to-date chart, income by source, six tiles, an Amazon storefront card and a table view. The page draws all of it from one JSON data block, which is the only part of the dashboard the morning task edits.
 - Its full instructions, including the monthly goal, live in the scheduled task itself, not in this repo.
 - It replaced the COS Daily Brief (paused Nov 18), so it also covers her whole inbox and calendar in Life Admin, this week's content plan from the Chief of Staff project doc, and a push notification with the day's deadlines.
 - It reads the Chief of Staff doc and daily review log only when the task is inside the Simpli Luxe COO project, where the Projects tool is available.
@@ -20,6 +21,7 @@ The live page is its own source. It is not kept in this repo, because it holds i
 | --- | --- | --- |
 | Overview | Airtable, Income Ledger | This month's paid and pending income against the goal. Staci adds rows from ShopMy, LTK, Amazon and payment screenshots, since none of those platforms has a connector. |
 | Overview | Google Calendar | Today and the next 3 days |
+| Overview | Gmail and Income Ledger | Amazon storefront (https://a.co/d/0evyo9Yv): clicks, orders, shipped and earnings from Associates emails and Staci's screenshots. There is no Amazon connector. |
 | Overview | Kit | Simpli Society subscriber count and new signups this month, days since the last broadcast, any scheduled or draft broadcasts |
 | Overview | Airtable, Content Queue | Rows with Review Status "Pending Review", approved rows scheduled in the next 7 days |
 | Studio | Airtable, series tables and Portfolio Pipeline | Unfinished episodes, seasonal timing, and UGC portfolio pieces to film or edit, see `docs/simpli-luxe-pr-desk.md` |

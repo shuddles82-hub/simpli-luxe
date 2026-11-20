@@ -30,11 +30,11 @@ Walmart Creator and Sam's Club Creator aren't in Kris's guide. Claude in Chrome 
 - LTK: https://www.shopltk.com/explore/Simpli_Staci
 - Walmart Creator storefront: https://walmrt.us/3WmMxZ8
 - Sam's Club Creator storefront: https://samsclub.co/4k8Ruyr
-- Amazon Associates
+- Amazon storefront: https://a.co/d/0evyo9Yv
 - Simpli Luxe App: simpliluxe.com
 - Instagram: @simpli_staci
 
-All four shop links are also rows in the Link Library, for posts that point to a whole shop.
+All five shop links are also rows in the Link Library, for posts that point to a whole shop.
 
 ## Rules for every prompt
 
