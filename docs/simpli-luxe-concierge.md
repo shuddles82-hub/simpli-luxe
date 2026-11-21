@@ -25,6 +25,7 @@ The live page is its own source. It is not kept in this repo, because it holds i
 | Overview | Kit | Simpli Society subscriber count and new signups this month, days since the last broadcast, any scheduled or draft broadcasts |
 | Overview | Airtable, Content Queue | Rows with Review Status "Pending Review", approved rows scheduled in the next 7 days |
 | Studio | Airtable, series tables and Portfolio Pipeline | Unfinished episodes, seasonal timing, and UGC portfolio pieces to film or edit, see `docs/simpli-luxe-pr-desk.md` |
+| Overview | Airtable, Production Schedule | Dated film, edit, Short, Kit and publish steps for projects like Winter Sessions. Due in the next 7 days or overdue goes in What's due. |
 | Pitch Room | Gmail | Brand, collab, UGC, PR, gifting, gift guide, creator network and event emails, payment notices, and affiliate earnings emails from the last 3 days |
 | Pitch Room | Airtable, Pitch Tracker and Rate Card | Pitches drafted, follow-ups due, rates to quote |
 | Studio | Chief of Staff project doc | This week's content plan: theme, Luxe Code episode and CTA, series pairing, planned Kit sends |
